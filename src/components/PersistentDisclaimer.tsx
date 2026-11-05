@@ -53,7 +53,7 @@ export default function PersistentDisclaimer() {
         <button
           type="button"
           onClick={handleDismiss}
-          className="flex-none self-end rounded-lg border border-calm-200 bg-white px-3 py-1.5 text-xs font-medium text-calm-700 shadow-sm transition hover:bg-calm-50 hover:text-calm-900 focus-visible:outline-none sm:self-center"
+          className="flex-none self-end rounded-lg border border-calm-200 bg-white px-3 py-1.5 text-xs font-medium text-calm-700 shadow-sm transition-all hover:border-lavender-400 hover:bg-lavender-50/60 hover:text-calm-900 hover:ring-2 hover:ring-lavender-300/50 focus-visible:outline-none sm:self-center"
         >
           I understand
         </button>
