@@ -45,9 +45,6 @@ export default function HomePage() {
       <StageIndicator current="discover" />
 
       <section className="rds-card bg-gradient-to-br from-white to-lavender-50">
-        <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-lavender-100 px-3 py-1 text-xs font-medium text-lavender-700">
-          Private · On your device · EU-focused
-        </p>
         <h1 className="max-w-2xl text-3xl font-semibold leading-tight text-calm-900 sm:text-4xl">
           A calm, private way to respond to non-consensual intimate imagery
         </h1>
