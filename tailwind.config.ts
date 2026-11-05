@@ -53,13 +53,15 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
-          "var(--font-inter)",
-          "ui-sans-serif",
-          "system-ui",
           "-apple-system",
-          "Segoe UI",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
           "Roboto",
+          "Helvetica",
+          "Arial",
           "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
         ],
       },
       boxShadow: {

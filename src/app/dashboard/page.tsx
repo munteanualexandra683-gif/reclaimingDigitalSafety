@@ -83,11 +83,6 @@ export default function DashboardPage() {
         </Link>
       </header>
 
-      {/* Privacy reassurance */}
-      <div className="mb-6 flex items-center gap-2 rounded-xl border border-sage-200 bg-sage-100 px-4 py-3 text-sm font-medium text-sage-700">
-        <span aria-hidden>🔒</span>
-        Stored locally on this device only · no cloud account · no server copy
-      </div>
 
       {!hydrated ? (
         <div className="rds-card text-sm text-calm-500">Loading your log…</div>

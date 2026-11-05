@@ -132,6 +132,38 @@ export interface EncryptedPayload {
   data: string;
 }
 
+export interface SyncRecordSummary {
+  id: string;
+  platformId: string;
+  platformName: string;
+  dispatch: "api" | "closed";
+  status: ReportStatus;
+  contentUrl: string;
+  evidenceHash?: string;
+  createdAt: string;
+  updatedAt: string;
+  notes?: string;
+}
+
+/**
+ * Strips verbose template notices from records before QR encoding so
+ * the payload fits comfortably within standard QR code capacity.
+ */
+function toSyncPayload(reports: ReportRecord[]): SyncRecordSummary[] {
+  return reports.map((r) => ({
+    id: r.id,
+    platformId: r.platformId,
+    platformName: r.platformName,
+    dispatch: r.dispatch,
+    status: r.status,
+    contentUrl: r.contentUrl,
+    evidenceHash: r.evidenceHash,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    notes: r.notes,
+  }));
+}
+
 /**
  * Encrypt the current log into a compact JSON payload suitable for a QR code.
  * The passphrase never leaves the device; the receiving device must know it.
@@ -143,7 +175,8 @@ export async function encryptLogForSync(
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await deriveKey(passphrase, salt);
-  const plaintext = textEncoder.encode(JSON.stringify(reports));
+  const compactRecords = toSyncPayload(reports);
+  const plaintext = textEncoder.encode(JSON.stringify(compactRecords));
   const ciphertext = await crypto.subtle.encrypt(
     { name: "AES-GCM", iv },
     key,
@@ -172,5 +205,17 @@ export async function decryptSyncedLog(
   );
   const parsed = JSON.parse(textDecoder.decode(plaintext));
   if (!Array.isArray(parsed)) throw new Error("Invalid synced log format.");
-  return parsed as ReportRecord[];
+  return (parsed as Array<Partial<ReportRecord>>).map((r) => ({
+    id: r.id || makeId(),
+    platformId: r.platformId || "other",
+    platformName: r.platformName || "Platform",
+    dispatch: r.dispatch || "closed",
+    status: r.status || "submitted",
+    contentUrl: r.contentUrl || "",
+    evidenceHash: r.evidenceHash,
+    noticeText: r.noticeText || "[Synchronized case log entry]",
+    createdAt: r.createdAt || new Date().toISOString(),
+    updatedAt: r.updatedAt || new Date().toISOString(),
+    notes: r.notes,
+  }));
 }

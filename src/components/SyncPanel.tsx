@@ -32,12 +32,17 @@ export default function SyncPanel({ reports, onReceived }: SyncPanelProps) {
   const [recvMsg, setRecvMsg] = useState<string | null>(null);
   const [recvError, setRecvError] = useState<string | null>(null);
 
+  const [syncError, setSyncError] = useState<string | null>(null);
+
   async function generateQr() {
     setSendBusy(true);
     setPayload(null);
+    setSyncError(null);
     try {
       const encrypted = await encryptLogForSync(reports, sendPass || "sync");
       setPayload(JSON.stringify(encrypted));
+    } catch (err) {
+      setSyncError("Failed to prepare sync payload. Please try again.");
     } finally {
       setSendBusy(false);
     }
@@ -143,9 +148,13 @@ export default function SyncPanel({ reports, onReceived }: SyncPanelProps) {
             onChange={(e) => {
               setSendPass(e.target.value);
               setPayload(null);
+              setSyncError(null);
             }}
             className="rds-input"
           />
+          {syncError && (
+            <p className="mt-2 text-sm text-lavender-800">{syncError}</p>
+          )}
           <button
             type="button"
             onClick={generateQr}
@@ -162,7 +171,7 @@ export default function SyncPanel({ reports, onReceived }: SyncPanelProps) {
               <QRCodeCanvas
                 value={payload}
                 size={240}
-                level="M"
+                level="L"
                 marginSize={2}
                 aria-label="Encrypted case log QR code"
               />
