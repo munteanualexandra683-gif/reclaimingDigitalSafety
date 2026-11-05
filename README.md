@@ -76,6 +76,26 @@ npm run build
 The fully static site is emitted to `out/`. Serve it from any static host
 (GitHub Pages, Netlify, S3, etc.) over HTTPS. No backend required.
 
+## Cross-device sync (QR + encrypted file)
+
+The log is gzip-compressed (via the browser's built-in `CompressionStream`) and
+then encrypted with AES-GCM before being shared. Thanks to compression, a
+typical log of dozens of reports fits comfortably in a **single QR code**. For
+very large logs that exceed a QR code's capacity, the UI automatically offers an
+**encrypted `.rdsync` file download** instead of attempting (and failing) to
+render an oversized QR code. The receiving device can import either the scanned
+QR text or the `.rdsync` file. The passphrase never leaves your device.
+
+You can validate the sync cryptography without installing dependencies (it uses
+only built-in Web APIs available in Node 18+):
+
+```bash
+node scripts/verify-sync.mjs
+```
+
+This exercises encrypt → compress → decrypt round-trips, wrong-passphrase
+rejection, QR-capacity sizing, and the large-log file-fallback path.
+
 ## Verifying the privacy guarantee
 
 Open your browser's DevTools → **Network** tab, then upload an image and submit a

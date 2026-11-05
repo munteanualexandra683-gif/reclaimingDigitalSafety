@@ -63,9 +63,14 @@ export async function computeFileFingerprint(
 
 /** Human-friendly byte formatting for display. */
 export function formatBytes(bytes: number): string {
-  if (bytes === 0) return "0 B";
-  const units = ["B", "KB", "MB", "GB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB", "TB", "PB"];
+  // Clamp the unit index so we never index past the units array, even for
+  // extremely large files (e.g. multi-terabyte videos).
+  const i = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1,
+  );
   const value = bytes / Math.pow(1024, i);
   return `${value.toFixed(value >= 10 || i === 0 ? 0 : 1)} ${units[i]}`;
 }

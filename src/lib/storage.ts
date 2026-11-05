@@ -105,6 +105,33 @@ function fromBase64(b64: string): Uint8Array {
   return bytes;
 }
 
+/* ----- Optional gzip compression (built-in, no dependency) ----- */
+
+function supportsCompression(): boolean {
+  return (
+    typeof CompressionStream !== "undefined" &&
+    typeof DecompressionStream !== "undefined"
+  );
+}
+
+async function gzip(bytes: Uint8Array): Promise<Uint8Array> {
+  const stream = new Response(
+    new Blob([bytes as BlobPart]).stream().pipeThrough(
+      new CompressionStream("gzip"),
+    ),
+  );
+  return new Uint8Array(await stream.arrayBuffer());
+}
+
+async function gunzip(bytes: Uint8Array): Promise<Uint8Array> {
+  const stream = new Response(
+    new Blob([bytes as BlobPart]).stream().pipeThrough(
+      new DecompressionStream("gzip"),
+    ),
+  );
+  return new Uint8Array(await stream.arrayBuffer());
+}
+
 async function deriveKey(
   passphrase: string,
   salt: Uint8Array,
@@ -127,14 +154,32 @@ async function deriveKey(
 
 export interface EncryptedPayload {
   v: 1;
+  /** 1 = payload was gzip-compressed before encryption. */
+  c?: 0 | 1;
   salt: string;
   iv: string;
   data: string;
 }
 
 /**
- * Encrypt the current log into a compact JSON payload suitable for a QR code.
- * The passphrase never leaves the device; the receiving device must know it.
+ * Practical capacity (in characters of the JSON string) that a single QR code
+ * can reliably hold at error-correction level "M". Above this we switch to an
+ * encrypted file download instead of rendering a QR code, so the UI never
+ * throws "Data too long".
+ */
+export const QR_CHAR_CAPACITY = 2200;
+
+/** True when the serialized payload is small enough to render as one QR code. */
+export function payloadFitsInQr(serialized: string): boolean {
+  return serialized.length <= QR_CHAR_CAPACITY;
+}
+
+/**
+ * Encrypt the current log into a compact JSON payload.
+ *
+ * The plaintext JSON is gzip-compressed (when the browser supports it) before
+ * encryption, which dramatically shrinks the payload — the long DSA notice
+ * texts compress very well. The passphrase never leaves the device.
  */
 export async function encryptLogForSync(
   reports: ReportRecord[],
@@ -143,7 +188,20 @@ export async function encryptLogForSync(
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await deriveKey(passphrase, salt);
-  const plaintext = textEncoder.encode(JSON.stringify(reports));
+
+  let plaintext = textEncoder.encode(JSON.stringify(reports));
+  let compressed: 0 | 1 = 0;
+  if (supportsCompression()) {
+    try {
+      plaintext = await gzip(plaintext);
+      compressed = 1;
+    } catch {
+      // Fall back to uncompressed if compression fails for any reason.
+      plaintext = textEncoder.encode(JSON.stringify(reports));
+      compressed = 0;
+    }
+  }
+
   const ciphertext = await crypto.subtle.encrypt(
     { name: "AES-GCM", iv },
     key,
@@ -151,13 +209,14 @@ export async function encryptLogForSync(
   );
   return {
     v: 1,
+    c: compressed,
     salt: toBase64(salt),
     iv: toBase64(iv),
     data: toBase64(new Uint8Array(ciphertext)),
   };
 }
 
-/** Decrypt a payload scanned from another device. */
+/** Decrypt a payload scanned or imported from another device. */
 export async function decryptSyncedLog(
   payload: EncryptedPayload,
   passphrase: string,
@@ -165,12 +224,17 @@ export async function decryptSyncedLog(
   const salt = fromBase64(payload.salt);
   const iv = fromBase64(payload.iv);
   const key = await deriveKey(passphrase, salt);
-  const plaintext = await crypto.subtle.decrypt(
-    { name: "AES-GCM", iv },
-    key,
-    fromBase64(payload.data),
+  const decrypted = new Uint8Array(
+    await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv },
+      key,
+      fromBase64(payload.data),
+    ),
   );
-  const parsed = JSON.parse(textDecoder.decode(plaintext));
+
+  const jsonBytes =
+    payload.c === 1 ? await gunzip(decrypted) : decrypted;
+  const parsed = JSON.parse(textDecoder.decode(jsonBytes));
   if (!Array.isArray(parsed)) throw new Error("Invalid synced log format.");
   return parsed as ReportRecord[];
 }
