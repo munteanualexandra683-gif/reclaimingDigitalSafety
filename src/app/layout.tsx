@@ -1,31 +1,34 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import PersistentDisclaimer from "@/components/PersistentDisclaimer";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import PersistentDisclaimer from "@/components/PersistentDisclaimer";
 
 export const metadata: Metadata = {
-  title: "Reclaiming Digital Safety",
+  title: "Reclaiming Digital Safety | Privacy-Preserving NCII & Deepfake Navigator",
   description:
-    "A privacy-preserving digital navigator that helps you prepare, submit, and track takedown reports for non-consensual intimate imagery — entirely on your own device.",
-  robots: { index: false, follow: false },
+    "A privacy-preserving, survivor-centred digital toolkit helping you document, prepare, and follow up on AI-generated intimate image abuse entirely on your own device.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen bg-white font-sans text-deep-indigo antialiased selection:bg-lavender-200 selection:text-deep-indigo">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-calm-700 focus:shadow-card"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-white focus:px-4 focus:py-2 focus:text-accent focus:shadow-card focus:ring-2 focus:ring-accent"
         >
           Skip to main content
         </a>
         <SiteHeader />
-        <main id="main" className="mx-auto w-full max-w-5xl px-4 pb-32 pt-8 sm:px-6">
+        <main id="main">
           {children}
         </main>
+        <SiteFooter />
         <PersistentDisclaimer />
       </body>
     </html>

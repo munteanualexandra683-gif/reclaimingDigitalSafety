@@ -83,7 +83,7 @@ export default function ReportPage() {
   }
 
   return (
-    <div>
+    <div className="mx-auto w-full max-w-4xl px-4 pb-32 pt-8 sm:px-6">
       <StageIndicator current={stage} />
 
       <header className="mb-6">

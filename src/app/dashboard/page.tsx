@@ -67,7 +67,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div>
+    <div className="mx-auto w-full max-w-4xl px-4 pb-32 pt-8 sm:px-6">
       <StageIndicator current="followup" />
 
       <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
