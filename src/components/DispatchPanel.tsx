@@ -70,7 +70,7 @@ export default function DispatchPanel({
             onClick={copyAndOpen}
             className="rds-btn-primary"
           >
-            {copied ? "Copied ✓" : "Copy to clipboard"}
+            {copied ? "Copied" : "Copy to clipboard"}
             {platform.reportUrl ? " & open official form" : ""}
           </button>
           {!platform.reportUrl && (
@@ -122,8 +122,11 @@ export default function DispatchPanel({
           </button>
         ) : (
           <div className="rounded-xl border border-sage-200 bg-sage-100 px-4 py-4">
-            <p className="flex items-center gap-2 text-sm font-semibold text-sage-700">
-              <span aria-hidden>✓</span> Report dispatched successfully
+            <p className="flex items-center gap-2 text-sm font-semibold text-sage-800">
+              <svg className="h-4 w-4 text-sage-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Report dispatched successfully
             </p>
             <p className="mt-1 text-sm text-sage-700/90">
               {platform.name} has received your notice reference. We&apos;ve added

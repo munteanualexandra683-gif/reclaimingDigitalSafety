@@ -139,8 +139,11 @@ export default function EvidenceModule({
       {fingerprint && (
         <div className="mt-4 rounded-2xl border border-calm-200 bg-calm-50 p-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-semibold text-calm-800">
-              Fingerprint created locally ✓
+            <p className="flex items-center gap-1.5 text-sm font-semibold text-sage-800">
+              <svg className="h-4 w-4 text-sage-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Fingerprint created locally
             </p>
             <button
               type="button"

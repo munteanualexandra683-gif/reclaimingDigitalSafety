@@ -171,7 +171,7 @@ export default function HomePage() {
                 href="/report"
                 className="rds-btn-primary w-full text-center text-sm py-2.5"
               >
-                Prepare a report →
+                Prepare a report
               </Link>
             </div>
           </div>
@@ -265,189 +265,127 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 4: WHAT CAN RDS HELP YOU DO?                         */}
-      {/* ============================================================ */}
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-wider text-accent">
-            Practical Assistance
-          </span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-calm-900 sm:text-4xl">
-            Clearer steps. Less confusion. More control.
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-calm-600 sm:text-lg">
-            Dealing with different reporting systems can feel complicated. Our
-            goal is to bring the most important steps together in a guided
-            experience.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Step 1 */}
-          <div className="rds-card">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-soft-blue-100 text-calm-800 font-bold text-sm">
-              01
-            </div>
-            <h3 className="mt-4 text-lg font-semibold text-calm-900">
-              Understand your reporting options
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-calm-600">
-              Identify where harmful content appears and explore relevant
-              platform reporting pathways tailored to their specific policies.
-            </p>
-          </div>
-
-          {/* Step 2 */}
-          <div className="rds-card">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-lavender-100 text-lavender-700 font-bold text-sm">
-              02
-            </div>
-            <h3 className="mt-4 text-lg font-semibold text-calm-900">
-              Document privately
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-calm-600">
-              If you have the file, the tool generates a cryptographic SHA-256
-              fingerprint directly in your browser. The file itself is never
-              uploaded or transmitted.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="rds-card">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent font-bold text-sm">
-              03
-            </div>
-            <h3 className="mt-4 text-lg font-semibold text-calm-900">
-              Prepare a structured notice
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-calm-600">
-              Use guided templates informed by Article 16 of the EU Digital
-              Services Act (DSA) to organize the information platforms need to act.
-            </p>
-          </div>
-
-          {/* Step 4 */}
-          <div className="rds-card">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sage-100 text-sage-700 font-bold text-sm">
-              04
-            </div>
-            <h3 className="mt-4 text-lg font-semibold text-calm-900">
-              Organize a follow-up
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-calm-600">
-              Keep notes on reporting actions, dates, and responses in your
-              private browser-based log, with encrypted device-to-device sync.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/* SECTION 5: HOW DOES IT WORK? (4-STAGE JOURNEY)              */}
+      {/* SECTION 4: HOW DOES IT WORK? (FOUR-STAGE GUIDED JOURNEY)     */}
       {/* ============================================================ */}
       <section id="how-it-works" className="border-t border-calm-200/60 bg-gradient-to-b from-white to-lavender-50/40 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-wider text-accent">
-              A Four-Stage Journey
+              How It Works
             </span>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-calm-900 sm:text-4xl">
               Four steps. At your own pace.
             </h2>
             <p className="mt-4 text-base leading-relaxed text-calm-600 sm:text-lg">
-              You decide how far you want to go. The tool is designed to make
-              the reporting process easier to understand, without forcing you to
-              take action before you are ready.
+              Clearer steps, less confusion, and more control. You decide how
+              far you want to go—the tool guides you through the reporting process
+              without forcing you to take action before you are ready.
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-4">
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {/* Stage 1 */}
-            <div className="relative rounded-2xl border border-calm-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-calm-600 text-xs font-bold text-white">
-                  1
-                </span>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-calm-400">
-                  Stage 1
-                </span>
+            <div className="rds-card flex flex-col justify-between border-t-4 border-t-calm-400 hover:shadow-card-hover transition-all">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-calm-100 text-sm font-bold text-calm-800">
+                    01
+                  </span>
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-calm-400">
+                    Stage 1
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-calm-900">
+                  Discover &amp; Assess
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-calm-600">
+                  Identify where harmful content appears and understand your
+                  options in a safe, non-judgmental space without pressure.
+                </p>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                Discover &amp; Assess
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                Assess what occurred in a safe, non-judgmental space. Review
-                definitions, identify what content has been distributed, and
-                clarify your priorities without pressure.
-              </p>
+              <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-calm-500">
+                Explore platform policies
+              </div>
             </div>
 
             {/* Stage 2 */}
-            <div className="relative rounded-2xl border border-calm-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-calm-600 text-xs font-bold text-white">
-                  2
-                </span>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-calm-400">
-                  Stage 2
-                </span>
+            <div className="rds-card flex flex-col justify-between border-t-4 border-t-lavender-500 hover:shadow-card-hover transition-all">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-lavender-100 text-sm font-bold text-lavender-800">
+                    02
+                  </span>
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-lavender-600">
+                    Stage 2
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-calm-900">
+                  Document Privately
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-calm-600">
+                  Create a cryptographic SHA-256 fingerprint on your device to
+                  prove file integrity. Your original image is never uploaded.
+                </p>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                Reporting Pathway
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                Select the platform (social network, search engine, web host, or
-                messaging service) to determine whether an automated API notice or
-                official form submission is required.
-              </p>
+              <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-lavender-700">
+                In-browser cryptography
+              </div>
             </div>
 
             {/* Stage 3 */}
-            <div className="relative rounded-2xl border border-calm-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">
-                  3
-                </span>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-accent font-bold">
-                  Stage 3
-                </span>
+            <div className="rds-card flex flex-col justify-between border-t-4 border-t-accent hover:shadow-card-hover transition-all bg-gradient-to-b from-white to-lavender-50/20">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/15 text-sm font-bold text-accent">
+                    03
+                  </span>
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">
+                    Stage 3
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-calm-900">
+                  Prepare a DSA Notice
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-calm-600">
+                  Auto-generate a standardized Article 16 notice under the EU
+                  Digital Services Act, with full freedom to review and edit.
+                </p>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                Report Preparation
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                Assemble evidence hash fingerprints and auto-generate an Article
-                16 DSA takedown notice. Review, edit, and copy or submit on your
-                terms.
-              </p>
+              <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-accent">
+                EU Regulation 2022/2065
+              </div>
             </div>
 
             {/* Stage 4 */}
-            <div className="relative rounded-2xl border border-calm-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-500 text-xs font-bold text-white">
-                  4
-                </span>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-calm-400">
-                  Stage 4
-                </span>
+            <div className="rds-card flex flex-col justify-between border-t-4 border-t-sage-500 hover:shadow-card-hover transition-all">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sage-100 text-sm font-bold text-sage-800">
+                    04
+                  </span>
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-sage-600">
+                    Stage 4
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-calm-900">
+                  Follow-up &amp; Sync
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-calm-600">
+                  Keep notes and track status in your private browser log, with
+                  encrypted QR code sync to transfer records directly to your phone.
+                </p>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                Follow-up &amp; Sync
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                Track status updates, keep personal notes, and sync encrypted
-                records to your mobile phone via QR code without saving data to
-                any cloud server.
-              </p>
+              <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-sage-700">
+                Peer-to-peer encrypted sync
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 6: YOUR PRIVACY MATTERS                              */}
-      {/* Pale blue background with lock and shield illustrations      */}
+      {/* SECTION 5: YOUR PRIVACY MATTERS                              */}
+      {/* Reassuring pale blue layout with 2x2 high-impact pillars     */}
       {/* ============================================================ */}
       <section
         id="privacy"
@@ -465,81 +403,88 @@ export default function HomePage() {
               Your evidence. Your information. Your control.
             </h2>
             <p className="mt-4 text-base leading-relaxed text-calm-700 sm:text-lg">
-              Privacy is a central part of Reclaiming Digital Safety. We
-              recognize that someone dealing with such abuse should not have to
-              expose sensitive data to another unnecessary service just to
-              understand their reporting options.
+              Privacy is a central part of Reclaiming Digital Safety. Someone
+              dealing with digital abuse should never have to expose sensitive data
+              to another third-party service just to understand their reporting options.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Card 1 */}
-            <div className="rounded-2xl border border-soft-blue-200 bg-white p-6 shadow-sm">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {/* Pillar 1 */}
+            <div className="flex gap-4 rounded-2xl border border-soft-blue-200/90 bg-white p-6 shadow-sm">
+              <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                Your evidence stays on your device
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                The tool generates a cryptographic fingerprint (SHA-256) of an
-                image within your browser. The original image is{" "}
-                <strong>never uploaded or transmitted</strong> to our system or
-                any cloud server.
-              </p>
+              <div>
+                <h3 className="text-base font-semibold text-calm-900">
+                  Your evidence stays strictly on your device
+                </h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-calm-600 sm:text-sm">
+                  The tool generates a cryptographic fingerprint (SHA-256) of an image
+                  within your browser memory. The original photo is{" "}
+                  <strong>never uploaded, ingested, or transmitted</strong> to our system
+                  or any cloud server.
+                </p>
+              </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="rounded-2xl border border-soft-blue-200 bg-white p-6 shadow-sm">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
+            {/* Pillar 2 */}
+            <div className="flex gap-4 rounded-2xl border border-soft-blue-200/90 bg-white p-6 shadow-sm">
+              <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                No account required
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                You do not need to register, verify an email, or create a
-                personal profile to use the reporting preparation and case-log
-                features. There are no passwords to track or breach.
-              </p>
+              <div>
+                <h3 className="text-base font-semibold text-calm-900">
+                  No accounts, passwords, or telemetry
+                </h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-calm-600 sm:text-sm">
+                  You do not need to register, verify an email, or create a personal
+                  profile. We collect zero tracking telemetry, meaning there are no
+                  passwords or account databases that could ever be compromised.
+                </p>
+              </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="rounded-2xl border border-soft-blue-200 bg-white p-6 shadow-sm">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
+            {/* Pillar 3 */}
+            <div className="flex gap-4 rounded-2xl border border-soft-blue-200/90 bg-white p-6 shadow-sm">
+              <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                A private case log
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                Your reporting history and notes are stored strictly in your
-                browser&apos;s localStorage rather than a central database. You
-                decide if and when to transfer them via encrypted QR.
-              </p>
+              <div>
+                <h3 className="text-base font-semibold text-calm-900">
+                  Private case log with peer-to-peer sync
+                </h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-calm-600 sm:text-sm">
+                  Your reporting history and notes are saved exclusively in your browser&apos;s
+                  local storage. You can transfer them directly to your phone via an encrypted
+                  QR code without passing through any intermediate server.
+                </p>
+              </div>
             </div>
 
-            {/* Card 4 */}
-            <div className="rounded-2xl border border-soft-blue-200 bg-white p-6 shadow-sm">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
+            {/* Pillar 4 */}
+            <div className="flex gap-4 rounded-2xl border border-soft-blue-200/90 bg-white p-6 shadow-sm">
+              <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-soft-blue-100 text-calm-800">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                 </svg>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-calm-900">
-                You decide what happens next
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-calm-600">
-                You can prepare, review, and edit information without committing
-                to a platform submission. Nothing is ever sent to an external
-                service without your explicit, informed action.
-              </p>
+              <div>
+                <h3 className="text-base font-semibold text-calm-900">
+                  Full survivor sovereignty
+                </h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-calm-600 sm:text-sm">
+                  You can prepare, inspect, and customize all information without
+                  committing to a platform submission. Nothing is ever submitted to
+                  external channels without your explicit, deliberate choice.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -785,7 +730,10 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="rds-btn-warm w-full text-center text-xs"
                 >
-                  Victim Support Europe ↗
+                  <span>Victim Support Europe</span>
+                  <svg className="ml-1.5 h-3 w-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
                 </a>
               </div>
             </div>
@@ -812,7 +760,10 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="rds-btn-warm w-full text-center text-xs"
                 >
-                  Visit StopNCII.org ↗
+                  <span>Visit StopNCII.org</span>
+                  <svg className="ml-1.5 h-3 w-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
                 </a>
               </div>
             </div>
@@ -839,7 +790,10 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="rds-btn-warm w-full text-center text-xs"
                 >
-                  Explore EDRi Network ↗
+                  <span>Explore EDRi Network</span>
+                  <svg className="ml-1.5 h-3 w-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
                 </a>
               </div>
             </div>
@@ -866,7 +820,10 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="rds-btn-warm w-full text-center text-xs"
                 >
-                  Mental Health Europe ↗
+                  <span>Mental Health Europe</span>
+                  <svg className="ml-1.5 h-3 w-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
                 </a>
               </div>
             </div>
