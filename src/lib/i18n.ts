@@ -6,6 +6,7 @@ export type Language = "en" | "es";
 export type Dictionary = typeof en;
 
 const en = {
+  appName: "NEST",
   quickExit: "Quick exit",
   discreetMode: "Discreet mode",
   language: "Language",
@@ -51,6 +52,7 @@ const en = {
 // Spanish translations are intentionally partial: missing keys fall back to English.
 // TODO(review-es): Have all Spanish pilot copy reviewed with a Spanish partner.
 const es: Partial<Dictionary> = {
+  appName: "NEST",
   quickExit: "Salida rápida",
   discreetMode: "Modo discreto",
   language: "Idioma",

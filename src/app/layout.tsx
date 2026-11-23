@@ -6,9 +6,10 @@ import PersistentDisclaimer from "@/components/PersistentDisclaimer";
 import QuickExit from "@/components/QuickExit";
 
 export const metadata: Metadata = {
-  title: "Reclaiming Digital Safety | Privacy-Preserving NCII & Deepfake Navigator",
-  description:
-    "A privacy-preserving, survivor-centred digital toolkit helping you document, prepare, and follow up on AI-generated intimate image abuse entirely on your own device.",
+  // Neutral on purpose: the tab title and description are visible in browser
+  // history and on shared screens, so they must not reveal what the app is for.
+  title: "NEST",
+  description: "NEST: private notes and next steps, kept on your own device.",
 };
 
 export default function RootLayout({

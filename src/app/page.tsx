@@ -252,7 +252,7 @@ export default function HomePage() {
               </div>
 
               <p className="text-sm text-calm-600">
-                <strong>Reclaiming Digital Safety</strong> was developed with a
+                <strong>NEST</strong> was developed with a
                 particular focus on young women aged 18–24 regardless of race,
                 ethnicity, nationality, social background, profession or
                 occupation in the European Union — a group identified by
@@ -423,7 +423,7 @@ export default function HomePage() {
               Your evidence. Your information. Your control.
             </h2>
             <p className="mt-4 text-base leading-relaxed text-calm-700 sm:text-lg">
-              Privacy is a central part of Reclaiming Digital Safety. Someone
+              Privacy is a central part of NEST. Someone
               dealing with digital abuse should never have to expose sensitive data
               to another third-party service just to understand their reporting options.
             </p>
@@ -520,12 +520,12 @@ export default function HomePage() {
           </div>
 
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-calm-900">
-            About Reclaiming Digital Safety
+            About NEST
           </h2>
 
           <div className="mt-6 space-y-4 text-base leading-relaxed text-calm-700">
             <p>
-              <strong>Reclaiming Digital Safety</strong> was developed with the
+              <strong>NEST</strong> was developed with the
               goal of improving how people affected by AI-generated
               non-consensual intimate imagery navigate reporting procedures.
             </p>
@@ -616,7 +616,7 @@ export default function HomePage() {
                 * Note: Trusted Flagger status is granted by the relevant national
                 Digital Services Coordinator following an assessment of
                 eligibility. It does not guarantee content removal, and
-                Reclaiming Digital Safety does not currently hold this status.
+                NEST does not currently hold this status.
               </p>
             </div>
           </div>
@@ -890,7 +890,7 @@ export default function HomePage() {
           </div>
 
           <p className="mt-8 text-xs text-calm-500">
-            Reclaiming Digital Safety · Zero-Knowledge · Privacy First · Open Source
+            NEST · Zero-Knowledge · Privacy First · Open Source
           </p>
         </div>
       </section>

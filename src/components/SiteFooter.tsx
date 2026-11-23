@@ -35,7 +35,7 @@ export default function SiteFooter() {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </span>
-              <span>Reclaiming Digital Safety</span>
+              <span>NEST</span>
             </Link>
             <p className="mt-3 text-xs leading-relaxed text-calm-600">
               A privacy-preserving, client-side digital navigator helping survivors

@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Reclaiming Digital Safety - Trauma-informed palette
+ * NEST - Trauma-informed palette
  * Soft blues, lavenders, warm neutrals, and calming indigos.
  */
 const config: Config = {

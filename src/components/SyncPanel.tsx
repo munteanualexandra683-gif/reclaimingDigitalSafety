@@ -68,7 +68,7 @@ export default function SyncPanel({ reports, cases = [], onReceived, onCasesRece
     const a = document.createElement("a");
     const stamp = new Date().toISOString().slice(0, 10);
     a.href = url;
-    a.download = `digital-safety-caselog-${stamp}.rdsync`;
+    a.download = `nest-backup-${stamp}.rdsync`;
     document.body.appendChild(a);
     a.click();
     a.remove();

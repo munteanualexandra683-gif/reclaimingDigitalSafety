@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useT } from "@/lib/i18n";
 
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 ];
 
 export default function SiteHeader() {
+  const t = useT();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -62,8 +64,7 @@ export default function SiteHeader() {
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
           </span>
-          <span className="hidden sm:inline">Reclaiming Digital Safety</span>
-          <span className="sm:hidden">RDS</span>
+          <span>{t("appName")}</span>
         </Link>
 
         {/* Desktop nav */}

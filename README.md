@@ -1,4 +1,11 @@
-# Reclaiming Digital Safety
+# NEST
+
+> **About the name.** NEST is deliberately neutral: the name, the browser-tab
+> title, and the icon do not reveal what the app is for, so it is safer to
+> have open on a shared device. Always write it in capitals. There is no long
+> form. Internal identifiers (`localStorage` keys such as `rds.cases.v1`, the
+> `.rdsync` sync format, CSS classes such as `rds-card`) keep their old `rds`
+> prefix on purpose so that existing saved cases still load.
 
 A **privacy-preserving, client-side-only** digital navigator that helps EU-based
 women (aged 18–24) who are survivors of non-consensual intimate imagery (NCII)
