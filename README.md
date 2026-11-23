@@ -152,3 +152,39 @@ The `/case` route provides one guided, locally saved Spain-pilot journey:
 5. Follow-up & support
 
 The existing `/report` route remains available as a quick single-platform path. All case data stays in `localStorage`, and encrypted sync includes both cases and reports. Platform dispatch remains mocked. The support directory contains unverified candidates only and must be reviewed with partner organisations before pilot use.
+
+## About the project
+
+*(Moved here from the home page, which now speaks only to the person using
+NEST.)*
+
+NEST was developed to improve how people affected by AI-generated
+non-consensual intimate imagery navigate reporting procedures. It focuses on
+women aged 18–24 across the European Union, regardless of race, ethnicity,
+nationality, social background, profession or occupation, a group identified
+by research and civil society as facing acute risks of technology-facilitated
+gender-based violence.
+
+The aim is to reduce the time, uncertainty and repeated effort involved in
+reporting intimate-image abuse, through a privacy-preserving, survivor-centred
+tool that connects evidence documentation, reporting guidance, notice
+preparation and follow-up in one place.
+
+**UN Sustainable Development Goals.** The project contributes to SDG 3 (Good
+Health & Well-being), SDG 5 (Gender Equality), SDG 10 (Reduced Inequalities)
+and SDG 16 (Peace, Justice & Strong Institutions).
+
+**Long-term vision: Trusted Flagger.** In the long term the team aims to build
+the expertise, partnerships and organisational capacity needed to apply for
+Trusted Flagger status under Article 22 of the EU Digital Services Act:
+
+1. *Rigorous technology*: develop and evaluate the privacy-preserving
+   reporting technology to high security standards.
+2. *Cross-sector alliances*: partnerships with victim-support organisations,
+   legal experts, researchers and digital-rights initiatives.
+3. *Designated independence*: the expertise, independence and reliable
+   reporting procedures required for designation.
+
+Trusted Flagger status is granted by the national Digital Services
+Coordinator after an eligibility assessment. It does not guarantee content
+removal, and NEST does not currently hold this status.
