@@ -270,6 +270,73 @@ export const es: Partial<typeof en> = {
   routeNeedFileOptional: "el archivo de la imagen en tu dispositivo, solo si lo tienes y quieres usarlo",
   routeNeedWebsite: "el nombre de la web",
 
+  /* Case log (/dashboard) */
+  logTitle: "Mi registro",
+  logIntro: "Guardado solo en este navegador, en este dispositivo. Nada de esto se envía a ningún sitio.",
+  logEmptyTitle: "Todavía no hay nada",
+  logEmptyText: "Cuando prepares denuncias en tu caso, aparecerán aquí para que hagas el seguimiento a tu ritmo.",
+  logCaseTitle: "Caso iniciado el {date}",
+  logCaseCounts: "{places} sitio(s) · {reports} denuncia(s)",
+  logCaseNoReports: "Todavía no hay denuncias. Tus notas están guardadas y puedes continuar cuando quieras.",
+  logCaseDeleted: "El caso se ha borrado de este navegador.",
+  logOtherReports: "Otras denuncias",
+  logAgainText: "¿Lo has encontrado en otro sitio? Añade el nuevo enlace y NEST preparará una nueva denuncia.",
+  logAgainButton: "Añadir un nuevo enlace",
+
+  logStatus: "Estado",
+  logStatusDraft: "Listo para enviar",
+  logStatusSubmitted: "Enviado",
+  logStatusSubmittedSimulated: "Enviado (simulado)",
+  logStatusAcknowledged: "Han respondido",
+  logStatusFollowUp: "Esperando respuesta",
+  logStatusRemoved: "Contenido retirado",
+  logStatusDeclined: "Rechazado",
+  logRoutePlatform: "Denuncia a una plataforma",
+  logRouteSearch: "Resultados de búsqueda",
+  logRouteNational: "Autoridad nacional",
+  logRouteHash: "StopNCII",
+  logRouteHost: "Alojamiento de la web",
+  logNoLink: "No hay enlace guardado",
+  logPrepared: "Preparado el {date}",
+  logExpected: "respuesta prevista antes del {date}",
+
+  logReadyText: "Todavía tienes que enviarlo tú. Copia el texto y pégalo en el formulario oficial.",
+  logCopyText: "Copiar el texto",
+
+  logNoAnswerTitle: "¿Todavía sin respuesta?",
+  logNoAnswerText: "Ya ha pasado la fecha prevista. Puedes enviar un breve recordatorio:",
+  logReminderTemplate:
+    "Escribo para hacer seguimiento de mi denuncia del {date}. Mi referencia es {reference}. Les ruego que me confirmen el estado y los próximos pasos.",
+  logReminderSent: "He enviado un recordatorio",
+  logReminderDone: "Recordatorio enviado el {date}",
+
+  logDeclinedTitle: "Te han dicho que no",
+  logDeclinedText: "No es el final. Puedes pedirles que revisen su decisión:",
+  logReviewTemplate:
+    "Les pido que revisen su decisión de rechazar mi denuncia del {date} (referencia {reference}). Les ruego que vuelvan a examinar la denuncia y los motivos que expuse, y que me comuniquen el resultado.",
+  logReviewSent: "He enviado esta petición",
+  logReviewDone: "Revisión pedida el {date}",
+  logDeclinedMore: // TODO(review-es): legal wording
+    "Según la Ley de Servicios Digitales de la UE, las plataformas deben ofrecer un sistema interno de reclamaciones sobre sus decisiones (artículo 20). También puedes acudir a un órgano certificado de resolución extrajudicial de litigios (artículo 21) o reclamar ante el Coordinador de Servicios Digitales de tu país (artículo 53).",
+  logReferencePlaceholder: "[referencia]",
+
+  logDetails: "Detalles y notas",
+  logReference: "Número de referencia",
+  logExpectedLabel: "Respuesta prevista antes del",
+  logNotes: "Notas privadas",
+  logNotesPlaceholder: "Por ejemplo: la fecha en que respondieron, qué dijeron",
+  logFingerprint: "Huella del archivo (SHA-256)",
+  logShowText: "Ver el texto que se preparó",
+  logDeleteReport: "Borrar esta denuncia",
+  logDeleteReportConfirm: "¿Borrar esta denuncia de este navegador? No se puede deshacer.",
+
+  logDeleteAllTitle: "Borrar todo",
+  logDeleteAllText: "Elimina en cualquier momento todos los casos, denuncias y notas de este navegador.",
+  logDeleteAll: "Borrar todo",
+  logDeleteAllConfirm: "Esto borra todos los casos, denuncias y notas de este navegador. No se puede deshacer. ¿Seguro?",
+  logDeleteAllYes: "Sí, borrar todo",
+  logAllDeleted: "Se ha borrado todo de este navegador.",
+
   /* Support directory */
   supportSpainTitle: "En España",
   supportEuTitle: "En cualquier país de la UE",

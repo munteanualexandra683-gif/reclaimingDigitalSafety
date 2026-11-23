@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import StageIndicator from "@/components/StageIndicator";
 import SyncPanel from "@/components/SyncPanel";
+import { officialUrl } from "@/lib/caseRoutes";
+import { formatDate, useLanguage, useT, type TKey } from "@/lib/i18n";
 import {
   clearAllData,
+  deleteCaseAndReports,
   deleteReport,
   loadCases,
   loadReports,
@@ -13,39 +15,57 @@ import {
   type Case,
   type ReportRecord,
   type ReportStatus,
+  type Route,
 } from "@/lib/storage";
 
-const STATUS_OPTIONS: { value: ReportStatus; label: string }[] = [
-  { value: "draft", label: "Draft" },
-  { value: "submitted", label: "Submitted" },
-  { value: "acknowledged", label: "Acknowledged" },
-  { value: "follow-up", label: "Awaiting follow-up" },
-  { value: "removed", label: "Content removed" },
-  { value: "declined", label: "Declined" },
-];
+const DAY = 24 * 60 * 60 * 1000;
+
+const STATUS_LABELS: Record<ReportStatus, TKey> = {
+  draft: "logStatusDraft",
+  submitted: "logStatusSubmitted",
+  acknowledged: "logStatusAcknowledged",
+  "follow-up": "logStatusFollowUp",
+  removed: "logStatusRemoved",
+  declined: "logStatusDeclined",
+};
+
+const STATUS_ORDER: ReportStatus[] = ["draft", "submitted", "follow-up", "acknowledged", "removed", "declined"];
 
 const STATUS_STYLES: Record<ReportStatus, string> = {
-  draft: "bg-calm-100 text-calm-600",
-  submitted: "bg-calm-200 text-calm-700",
-  acknowledged: "bg-lavender-100 text-lavender-700",
-  "follow-up": "bg-sand-200 text-calm-700",
+  draft: "bg-sand-200 text-calm-800",
+  submitted: "bg-calm-200 text-calm-800",
+  acknowledged: "bg-lavender-100 text-lavender-800",
+  "follow-up": "bg-calm-100 text-calm-800",
   removed: "bg-sage-200 text-sage-700",
   declined: "bg-lavender-200 text-lavender-800",
 };
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+const ROUTE_LABELS: Record<Route["type"], TKey> = {
+  "dsa-notice": "logRoutePlatform",
+  deindex: "logRouteSearch",
+  national: "logRouteNational",
+  "hash-handoff": "logRouteHash",
+  "host-abuse": "logRouteHost",
+};
+
+const WAITING: ReportStatus[] = ["submitted", "acknowledged", "follow-up"];
+
+function expectedBy(r: ReportRecord): string | undefined {
+  if (r.expectedResponseBy) return r.expectedResponseBy;
+  if (r.status === "draft") return undefined;
+  return new Date(new Date(r.createdAt).getTime() + 7 * DAY).toISOString();
 }
 
 export default function DashboardPage() {
+  const t = useT();
+  const language = useLanguage();
   const [reports, setReports] = useState<ReportRecord[]>([]);
   const [cases, setCases] = useState<Case[]>([]);
   const [hydrated, setHydrated] = useState(false);
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [confirmAll, setConfirmAll] = useState(false);
+  const [confirmId, setConfirmId] = useState<string | null>(null);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     setReports(loadReports());
@@ -53,343 +73,349 @@ export default function DashboardPage() {
     setHydrated(true);
   }, []);
 
-  function handleStatus(id: string, status: ReportStatus) {
-    setReports(updateReport(id, { status }));
+  const date = (iso?: string) => formatDate(iso, language);
+  const patch = (id: string, value: Partial<ReportRecord>) => setReports(updateReport(id, value));
+
+  async function copy(key: string, text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey(null), 1800);
+    } catch {
+      /* clipboard may be blocked */
+    }
   }
 
-  function handleNotes(id: string, notes: string) {
-    setReports(updateReport(id, { notes }));
+  function addEscalation(r: ReportRecord, kind: "reminder" | "review") {
+    patch(r.id, { escalations: [...(r.escalations ?? []), `${kind}|${new Date().toISOString()}`] });
   }
 
-  function handleDelete(id: string) {
-    setReports(deleteReport(id));
+  function removeCase(id: string) {
+    const next = deleteCaseAndReports(id);
+    setCases(next.cases);
+    setReports(next.reports);
+    setConfirmId(null);
+    setNotice(t("logCaseDeleted"));
   }
 
-  function handleClearAll() {
+  function removeAll() {
     clearAllData();
     setReports([]);
     setCases([]);
+    setConfirmAll(false);
+    setNotice(t("logAllDeleted"));
   }
 
-  function handleReference(id: string, referenceNumber: string) {
-    setReports(updateReport(id, { referenceNumber }));
-  }
+  const hasData = reports.length > 0 || cases.length > 0;
+  const caseIds = new Set(cases.map((c) => c.id));
+  const otherReports = reports.filter((r) => !r.caseId || !caseIds.has(r.caseId));
 
-  function handleExpectedDate(id: string, expectedResponseBy: string) {
-    setReports(updateReport(id, { expectedResponseBy }));
-  }
-
-  return (
-    <div className="mx-auto w-full max-w-4xl px-4 pb-32 pt-8 sm:px-6">
-      <StageIndicator current="followup" />
-
-      <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-semibold text-calm-900">My case log</h1>
-          <p className="mt-1 max-w-2xl text-sm leading-relaxed text-calm-600">
-            Everything here is stored only in this browser. Track each report,
-            keep private notes, and sync to another device whenever you like.
-          </p>
+  function confirmBox(id: string, message: string, onYes: () => void, yesLabel: string) {
+    if (confirmId !== id) return null;
+    return (
+      <div className="mt-3 rounded-xl border border-lavender-300 bg-lavender-50 p-3" role="alert">
+        <p className="text-sm text-calm-800">{message}</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <button type="button" className="rds-btn-secondary border-lavender-400 px-4 py-2 text-sm text-lavender-800" onClick={onYes}>
+            {yesLabel}
+          </button>
+          <button type="button" className="rds-btn-secondary px-4 py-2 text-sm" onClick={() => setConfirmId(null)}>
+            {t("cancel")}
+          </button>
         </div>
-        <Link href="/report" className="rds-btn-primary">
-          Prepare a new report
-        </Link>
-      </header>
+      </div>
+    );
+  }
 
-      {!hydrated ? (
-        <div className="rds-card text-sm text-calm-500">Loading your log…</div>
-      ) : reports.length === 0 ? (
-        <div className="rds-card text-center">
-          <p className="text-base font-medium text-calm-800">
-            Your case log is empty
-          </p>
-          <p className="mx-auto mt-1 max-w-md text-sm text-calm-600">
-            When you prepare and submit a report, it will appear here so you can
-            follow up at your own pace.
-          </p>
-          <Link href="/report" className="rds-btn-primary mt-4">
-            Prepare your first report
-          </Link>
+  // A render function (not a nested component) so inputs keep focus while typing.
+  function renderReport(r: ReportRecord) {
+    const due = expectedBy(r);
+    const overdue = WAITING.includes(r.status) && due !== undefined && due < new Date().toISOString();
+    const statusLabel =
+      r.status === "submitted" && r.dispatch === "api" ? t("logStatusSubmittedSimulated") : t(STATUS_LABELS[r.status]);
+    const reference = r.referenceNumber?.trim() || t("logReferencePlaceholder");
+    const reminderText = t("logReminderTemplate", { date: date(r.createdAt), reference });
+    const reviewText = t("logReviewTemplate", { date: date(r.createdAt), reference });
+    const formUrl = officialUrl(r.routeType, r.platformId);
+
+    return (
+      <li key={r.id} className="rds-card p-5">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h3 className="font-semibold text-calm-900">{r.platformName}</h3>
+            <p className="text-xs text-calm-600">{t(ROUTE_LABELS[r.routeType ?? "dsa-notice"])}</p>
+          </div>
+          <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[r.status]}`}>{statusLabel}</span>
         </div>
-      ) : (
-        <>
-          {cases.map((item) => {
-            const grouped = reports.filter((report) => report.caseId === item.id);
-            if (!grouped.length) return null;
-            return (
-              <section key={item.id} className="rds-card mb-4">
-                <h2 className="text-base font-semibold text-calm-900">
-                  Case · {item.country}
-                </h2>
-                <p className="mt-1 text-xs text-calm-500">
-                  Created {formatDate(item.createdAt)} ·{" "}
-                  {grouped.length} linked report(s)
-                </p>
-                <ul className="mt-3 space-y-2">
-                  {grouped.map((report) => (
-                    <li
-                      key={report.id}
-                      className="rounded-xl border border-calm-100 p-3 text-sm"
-                    >
-                      <strong>{report.platformName}</strong>
-                      <span className="ml-2 text-xs text-calm-500">
-                        {report.routeType ?? "report"}
-                      </span>
-                      <p className="mt-1 break-all text-calm-600">
-                        {report.contentUrl || "Manual route prepared"}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            );
-          })}
-          <ul className="flex flex-col gap-4">
-            {reports.map((r) => {
-              const open = expanded === r.id;
+        <p className="mt-2 break-all text-sm text-calm-700">{r.contentUrl || t("logNoLink")}</p>
+        <p className="mt-1 text-xs text-calm-600">
+          {t("logPrepared", { date: date(r.createdAt) })}
+          {due && ` · ${t("logExpected", { date: date(due) })}`}
+        </p>
+
+        {/* Ready to send (manual route) */}
+        {r.status === "draft" && (
+          <div className="mt-3 rounded-xl border border-sand-200 bg-sand-50 p-3 text-sm">
+            <p className="text-calm-800">{t("logReadyText")}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <button
+                type="button"
+                className="rds-btn-secondary px-4 py-2 text-sm"
+                onClick={() => {
+                  void copy(`send-${r.id}`, r.noticeText);
+                  if (formUrl) window.open(formUrl, "_blank", "noopener,noreferrer");
+                }}
+              >
+                {copiedKey === `send-${r.id}` ? t("copied") : formUrl ? t("caseCopyOpen") : t("logCopyText")}
+              </button>
+              <button
+                type="button"
+                className="rds-btn-secondary px-4 py-2 text-sm"
+                onClick={() => patch(r.id, { status: "submitted", expectedResponseBy: new Date(Date.now() + 7 * DAY).toISOString() })}
+              >
+                {t("caseMarkSent")}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* No answer yet */}
+        {overdue && (
+          <div className="mt-3 rounded-xl border border-lavender-200 bg-lavender-50 p-3 text-sm">
+            <p className="font-semibold text-calm-900">{t("logNoAnswerTitle")}</p>
+            <p className="mt-1 text-calm-700">{t("logNoAnswerText")}</p>
+            <blockquote className="mt-2 rounded-lg bg-white p-2 text-calm-800">{reminderText}</blockquote>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <button type="button" className="rds-btn-secondary px-4 py-2 text-sm" onClick={() => copy(`rem-${r.id}`, reminderText)}>
+                {copiedKey === `rem-${r.id}` ? t("copied") : t("copy")}
+              </button>
+              <button type="button" className="rds-btn-secondary px-4 py-2 text-sm" onClick={() => addEscalation(r, "reminder")}>
+                {t("logReminderSent")}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Declined */}
+        {r.status === "declined" && (
+          <div className="mt-3 rounded-xl border border-calm-200 bg-calm-50 p-3 text-sm">
+            <p className="font-semibold text-calm-900">{t("logDeclinedTitle")}</p>
+            <p className="mt-1 text-calm-700">{t("logDeclinedText")}</p>
+            <blockquote className="mt-2 rounded-lg bg-white p-2 text-calm-800">{reviewText}</blockquote>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <button type="button" className="rds-btn-secondary px-4 py-2 text-sm" onClick={() => copy(`rev-${r.id}`, reviewText)}>
+                {copiedKey === `rev-${r.id}` ? t("copied") : t("copy")}
+              </button>
+              <button type="button" className="rds-btn-secondary px-4 py-2 text-sm" onClick={() => addEscalation(r, "review")}>
+                {t("logReviewSent")}
+              </button>
+            </div>
+            <details className="mt-2">
+              <summary className="cursor-pointer font-medium text-accent">{t("learnMore")}</summary>
+              <p className="mt-1 text-calm-700">{t("logDeclinedMore")}</p>
+              <p className="mt-1 text-xs text-lavender-800">{t("toBeVerified")}</p>
+            </details>
+            <Link href="/#support" className="mt-2 inline-block font-medium text-accent underline underline-offset-2">
+              {t("caseSupportTitle")}
+            </Link>
+          </div>
+        )}
+
+        {/* Escalation history */}
+        {(r.escalations ?? []).length > 0 && (
+          <ul className="mt-3 space-y-1 text-xs text-calm-700">
+            {(r.escalations ?? []).map((entry) => {
+              const [kind, when] = entry.split("|");
               return (
-                <li key={r.id} className="rds-card">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h2 className="text-base font-semibold text-calm-800">
-                          {r.platformName}
-                        </h2>
-                        <span
-                          className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[r.status]}`}
-                        >
-                          {STATUS_OPTIONS.find((s) => s.value === r.status)
-                            ?.label ?? r.status}
-                        </span>
-                      </div>
-                      <p className="mt-1 truncate text-sm text-calm-500">
-                        {r.contentUrl || "No link recorded"}
-                      </p>
-                      <p className="mt-0.5 text-xs text-calm-400">
-                        Created {formatDate(r.createdAt)} · Updated{" "}
-                        {formatDate(r.updatedAt)}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col items-end gap-2">
-                      <label className="sr-only" htmlFor={`status-${r.id}`}>
-                        Update status
-                      </label>
-                      <select
-                        id={`status-${r.id}`}
-                        value={r.status}
-                        onChange={(e) =>
-                          handleStatus(r.id, e.target.value as ReportStatus)
-                        }
-                        className="rds-input w-auto px-3 py-2 text-sm"
-                      >
-                        {STATUS_OPTIONS.map((s) => (
-                          <option key={s.value} value={s.value}>
-                            {s.label}
-                          </option>
-                        ))}
-                      </select>
-                      <button
-                        type="button"
-                        onClick={() => setExpanded(open ? null : r.id)}
-                        className="text-xs font-medium text-calm-500 underline-offset-2 hover:underline"
-                      >
-                        {open ? "Hide details" : "View details"}
-                      </button>
-                    </div>
-                  </div>
-
-                  {open && (
-                    <div className="mt-4 border-t border-calm-100 pt-4">
-                      <div className="mb-3 grid gap-3 sm:grid-cols-2">
-                        <div>
-                          <label htmlFor={`reference-${r.id}`} className="rds-label">
-                            Reference number
-                          </label>
-                          <input
-                            id={`reference-${r.id}`}
-                            className="rds-input"
-                            value={r.referenceNumber ?? ""}
-                            onChange={(e) =>
-                              handleReference(r.id, e.target.value)
-                            }
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor={`expected-${r.id}`} className="rds-label">
-                            Expected response by
-                          </label>
-                          <input
-                            id={`expected-${r.id}`}
-                            type="date"
-                            className="rds-input"
-                            value={
-                              (r.expectedResponseBy ?? new Date(
-                                new Date(r.createdAt).getTime() + 7 * 86400000
-                              ).toISOString())
-                                .slice(0, 10)
-                            }
-                            onChange={(e) =>
-                              handleExpectedDate(
-                                r.id,
-                                new Date(e.target.value).toISOString()
-                              )
-                            }
-                          />
-                        </div>
-                      </div>
-                      {r.status !== "removed" &&
-                        (r.expectedResponseBy ?? new Date(
-                          new Date(r.createdAt).getTime() + 7 * 86400000
-                        ).toISOString()) < new Date().toISOString() && (
-                          <div className="mb-3 rounded-xl border border-lavender-200 bg-lavender-50 p-3 text-sm">
-                            <strong>No answer yet.</strong> Reminder template: “I am
-                            following up on my report from{" "}
-                            {formatDate(r.createdAt)}. My reference is{" "}
-                            {r.referenceNumber || "[reference]"}.
-                            Please confirm the status and any next step.”
-                          </div>
-                        )}
-                      {r.status === "declined" && (
-                        <div className="mb-3 rounded-xl border border-calm-200 bg-calm-50 p-3 text-sm">
-                          <strong>DSA Article 20 internal complaint template</strong>
-                          <p className="mt-1">
-                            “I ask you to reconsider your decision to decline this
-                            notice. Please review the notice, evidence, and reasons
-                            provided, and explain the result of the internal
-                            complaint process.”
-                          </p>
-                          <p className="mt-2">
-                            Article 21 allows out-of-court dispute settlement. A
-                            complaint may also be considered by the Digital Services
-                            Coordinator under Article 53. All routes and eligibility
-                            are to be verified with a partner organisation before the
-                            pilot.
-                          </p>
-                        </div>
-                      )}
-                      {r.evidenceHash && (
-                        <div className="mb-3">
-                          <p className="text-xs text-calm-500">
-                            Evidence fingerprint (SHA-256)
-                          </p>
-                          <code className="mt-1 block break-all rounded-lg bg-calm-50 px-3 py-2 font-mono text-xs text-calm-700">
-                            {r.evidenceHash}
-                          </code>
-                        </div>
-                      )}
-
-                      <div className="mb-3">
-                        <label
-                          htmlFor={`notes-${r.id}`}
-                          className="rds-label"
-                        >
-                          Private notes
-                        </label>
-                        <textarea
-                          id={`notes-${r.id}`}
-                          rows={2}
-                          value={r.notes ?? ""}
-                          placeholder="e.g. Reference number, date of platform reply…"
-                          onChange={(e) => handleNotes(r.id, e.target.value)}
-                          className="rds-input resize-y"
-                        />
-                      </div>
-
-                      <div className="mb-3">
-                        <label
-                          htmlFor={`reference-${r.id}`}
-                          className="rds-label"
-                        >
-                          Reference number
-                        </label>
-                        <input
-                          id={`reference-${r.id}`}
-                          type="text"
-                          value={r.referenceNumber ?? ""}
-                          placeholder="e.g. 1234-5678"
-                          onChange={(e) =>
-                            handleReference(r.id, e.target.value)
-                          }
-                          className="rds-input"
-                        />
-                      </div>
-
-                      <div className="mb-3">
-                        <label
-                          htmlFor={`expected-response-${r.id}`}
-                          className="rds-label"
-                        >
-                          Expected response by
-                        </label>
-                        <input
-                          id={`expected-response-${r.id}`}
-                          type="date"
-                          value={
-                            r.expectedResponseBy
-                              ? formatDate(r.expectedResponseBy)
-                              : ""
-                          }
-                          onChange={(e) =>
-                            handleExpectedDate(r.id, e.target.value)
-                          }
-                          className="rds-input"
-                        />
-                      </div>
-
-                      <details className="mb-3">
-                        <summary className="cursor-pointer text-sm font-medium text-calm-600">
-                          Show submitted notice text
-                        </summary>
-                        <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap rounded-lg bg-calm-50 p-3 font-mono text-xs text-calm-700">
-                          {r.noticeText}
-                        </pre>
-                      </details>
-
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(r.id)}
-                        className="text-xs font-medium text-lavender-700 underline-offset-2 hover:underline"
-                      >
-                        Delete this report
-                      </button>
-                    </div>
-                  )}
+                <li key={entry}>
+                  {kind === "review" ? t("logReviewDone", { date: date(when) }) : t("logReminderDone", { date: date(when) })}
                 </li>
               );
             })}
           </ul>
-        </>
-      )}
+        )}
 
-      {/* Sync */}
-      <div className="mt-6">
-        <SyncPanel
-          reports={reports}
-          cases={cases}
-          onReceived={setReports}
-          onCasesReceived={setCases}
-        />
-      </div>
+        <div className="mt-3">
+          <label className="rds-label" htmlFor={`status-${r.id}`}>{t("logStatus")}</label>
+          <select
+            id={`status-${r.id}`}
+            value={r.status}
+            onChange={(e) => patch(r.id, { status: e.target.value as ReportStatus })}
+            className="rds-input w-full py-2 text-sm sm:w-auto"
+          >
+            {STATUS_ORDER.map((s) => (
+              <option key={s} value={s}>{t(STATUS_LABELS[s])}</option>
+            ))}
+          </select>
+        </div>
 
-      {/* Danger-free data controls */}
-      {reports.length > 0 && (
-        <div className="mt-6 rounded-2xl border border-calm-200 bg-sand-50 p-6">
-          <h2 className="text-base font-semibold text-calm-800">
-            Your data, your choice
-          </h2>
-          <p className="mt-1 text-sm text-calm-600">
-            You can permanently remove everything from this device at any time.
-            This cannot be undone.
-          </p>
+        <details className="mt-3">
+          <summary className="cursor-pointer text-sm font-medium text-accent">{t("logDetails")}</summary>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div>
+              <label htmlFor={`reference-${r.id}`} className="rds-label">{t("logReference")}</label>
+              <input
+                id={`reference-${r.id}`}
+                className="rds-input"
+                value={r.referenceNumber ?? ""}
+                placeholder="1234-5678"
+                onChange={(e) => patch(r.id, { referenceNumber: e.target.value })}
+              />
+            </div>
+            <div>
+              <label htmlFor={`expected-${r.id}`} className="rds-label">{t("logExpectedLabel")}</label>
+              <input
+                id={`expected-${r.id}`}
+                type="date"
+                className="rds-input"
+                value={due ? due.slice(0, 10) : ""}
+                onChange={(e) =>
+                  patch(r.id, {
+                    expectedResponseBy: e.target.value ? new Date(`${e.target.value}T12:00:00`).toISOString() : undefined,
+                  })
+                }
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label htmlFor={`notes-${r.id}`} className="rds-label">{t("logNotes")}</label>
+              <textarea
+                id={`notes-${r.id}`}
+                rows={2}
+                value={r.notes ?? ""}
+                placeholder={t("logNotesPlaceholder")}
+                onChange={(e) => patch(r.id, { notes: e.target.value })}
+                className="rds-input resize-y"
+              />
+            </div>
+          </div>
+          {r.evidenceHash && (
+            <div className="mt-3">
+              <p className="text-xs text-calm-600">{t("logFingerprint")}</p>
+              <code className="mt-1 block break-all rounded-lg bg-calm-50 px-3 py-2 font-mono text-xs text-calm-700">{r.evidenceHash}</code>
+            </div>
+          )}
+          <details className="mt-3">
+            <summary className="cursor-pointer text-sm font-medium text-calm-700">{t("logShowText")}</summary>
+            <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap rounded-lg bg-calm-50 p-3 font-mono text-xs text-calm-700">{r.noticeText}</pre>
+          </details>
           <button
             type="button"
-            onClick={handleClearAll}
-            className="rds-btn-secondary mt-3 border-lavender-300 text-lavender-700 hover:bg-lavender-50"
+            onClick={() => setConfirmId(`report-${r.id}`)}
+            className="mt-3 text-sm font-medium text-lavender-800 underline underline-offset-2"
           >
-            Delete my entire case log
+            {t("logDeleteReport")}
           </button>
+          {confirmBox(`report-${r.id}`, t("logDeleteReportConfirm"), () => {
+            setReports(deleteReport(r.id));
+            setConfirmId(null);
+          }, t("caseDeleteYes"))}
+        </details>
+      </li>
+    );
+  }
+
+  return (
+    <div className="mx-auto w-full max-w-3xl px-4 pb-32 pt-8 sm:px-6">
+      <header className="mb-6">
+        <p className="text-xs font-semibold uppercase tracking-wider text-accent">{t("stageFollowup")}</p>
+        <h1 className="mt-1 text-2xl font-semibold text-calm-900">{t("logTitle")}</h1>
+        <p className="mt-1 text-sm text-calm-700">{t("logIntro")}</p>
+        {hydrated && (
+          <Link href={cases.length ? "/case?go=continue" : "/case"} className="rds-btn-primary mt-4 w-full sm:w-auto">
+            {cases.length ? t("caseSavedBack") : t("homeStart")}
+          </Link>
+        )}
+      </header>
+
+      {notice && (
+        <p className="mb-4 rounded-xl bg-sage-100 px-4 py-3 text-sm text-sage-700" role="status">{notice}</p>
+      )}
+
+      {!hydrated ? (
+        <div className="rds-card text-sm text-calm-700">{t("loading")}</div>
+      ) : !hasData ? (
+        <div className="rds-card text-center">
+          <p className="text-base font-medium text-calm-900">{t("logEmptyTitle")}</p>
+          <p className="mx-auto mt-1 max-w-md text-sm text-calm-700">{t("logEmptyText")}</p>
         </div>
+      ) : (
+        <div className="flex flex-col gap-8">
+          {cases.map((item) => {
+            const grouped = reports.filter((r) => r.caseId === item.id);
+            return (
+              <section key={item.id} aria-labelledby={`case-${item.id}`}>
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h2 id={`case-${item.id}`} className="text-lg font-semibold text-calm-900">
+                    {t("logCaseTitle", { date: date(item.createdAt) })}
+                  </h2>
+                  <p className="text-xs text-calm-600">
+                    {t("logCaseCounts", { places: item.locations.length, reports: grouped.length })}
+                  </p>
+                </div>
+                {grouped.length === 0 ? (
+                  <p className="mt-2 rounded-xl border border-calm-200 bg-white p-4 text-sm text-calm-700">{t("logCaseNoReports")}</p>
+                ) : (
+                  <ul className="mt-3 flex flex-col gap-4">
+                    {grouped.map(renderReport)}
+                  </ul>
+                )}
+                <button
+                  type="button"
+                  className="mt-3 text-sm font-medium text-lavender-800 underline underline-offset-2"
+                  onClick={() => setConfirmId(`case-${item.id}`)}
+                >
+                  {t("caseDelete")}
+                </button>
+                {confirmBox(`case-${item.id}`, t("caseDeleteConfirm"), () => removeCase(item.id), t("caseDeleteYes"))}
+              </section>
+            );
+          })}
+
+          {otherReports.length > 0 && (
+            <section aria-labelledby="other-reports">
+              <h2 id="other-reports" className="text-lg font-semibold text-calm-900">{t("logOtherReports")}</h2>
+              <ul className="mt-3 flex flex-col gap-4">
+                {otherReports.map(renderReport)}
+              </ul>
+            </section>
+          )}
+
+          {cases.length > 0 && (
+            <section className="rds-card" aria-labelledby="again-title">
+              <h2 id="again-title" className="text-lg font-semibold text-calm-900">{t("caseAgainTitle")}</h2>
+              <p className="mt-1 text-sm text-calm-700">{t("logAgainText")}</p>
+              <Link href="/case?go=again" className="rds-btn-secondary mt-3">{t("logAgainButton")}</Link>
+            </section>
+          )}
+        </div>
+      )}
+
+      {hydrated && hasData && (
+        <div className="mt-8">
+          <SyncPanel reports={reports} cases={cases} onReceived={setReports} onCasesReceived={setCases} />
+        </div>
+      )}
+
+      {hydrated && hasData && (
+        <section className="mt-6 rounded-2xl border border-calm-200 bg-sand-50 p-6" aria-labelledby="delete-all">
+          <h2 id="delete-all" className="text-base font-semibold text-calm-900">{t("logDeleteAllTitle")}</h2>
+          <p className="mt-1 text-sm text-calm-700">{t("logDeleteAllText")}</p>
+          {confirmAll ? (
+            <div className="mt-3 rounded-xl border border-lavender-300 bg-lavender-50 p-3" role="alert">
+              <p className="text-sm text-calm-800">{t("logDeleteAllConfirm")}</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <button type="button" className="rds-btn-secondary border-lavender-400 text-lavender-800" onClick={removeAll}>
+                  {t("logDeleteAllYes")}
+                </button>
+                <button type="button" className="rds-btn-secondary" onClick={() => setConfirmAll(false)}>{t("cancel")}</button>
+              </div>
+            </div>
+          ) : (
+            <button type="button" onClick={() => setConfirmAll(true)} className="rds-btn-secondary mt-3 border-lavender-300 text-lavender-800">
+              {t("logDeleteAll")}
+            </button>
+          )}
+        </section>
       )}
     </div>
   );

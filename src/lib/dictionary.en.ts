@@ -273,6 +273,75 @@ export const en = {
   routeNeedWebsite: "the website's name",
 
   /* ------------------------------------------------------------------ */
+  /* Case log (/dashboard)                                               */
+  /* ------------------------------------------------------------------ */
+  logTitle: "My case log",
+  logIntro: "Saved only in this browser, on this device. Nothing here is sent anywhere.",
+  logEmptyTitle: "Nothing here yet",
+  logEmptyText: "When you prepare reports in your case, they appear here so you can follow up at your own pace.",
+  logCaseTitle: "Case started {date}",
+  logCaseCounts: "{places} place(s) · {reports} report(s)",
+  logCaseNoReports: "No reports yet. Your notes are saved and you can continue whenever you want.",
+  logCaseDeleted: "The case was deleted from this browser.",
+  logOtherReports: "Other reports",
+  logAgainText: "Found it somewhere new? Add the new link and NEST will prepare a new report.",
+  logAgainButton: "Add a new link",
+
+  logStatus: "Status",
+  logStatusDraft: "Ready to send",
+  logStatusSubmitted: "Sent",
+  logStatusSubmittedSimulated: "Sent (simulated)",
+  logStatusAcknowledged: "They replied",
+  logStatusFollowUp: "Waiting for an answer",
+  logStatusRemoved: "Content removed",
+  logStatusDeclined: "Declined",
+  logRoutePlatform: "Report to a platform",
+  logRouteSearch: "Search results",
+  logRouteNational: "National authority",
+  logRouteHash: "StopNCII",
+  logRouteHost: "Website host",
+  logNoLink: "No link recorded",
+  logPrepared: "Prepared {date}",
+  logExpected: "answer expected by {date}",
+
+  logReadyText: "You still need to send this yourself. Copy the text and paste it into the official form.",
+  logCopyText: "Copy text",
+
+  logNoAnswerTitle: "No answer yet?",
+  logNoAnswerText: "The expected date has passed. You can send a short reminder:",
+  logReminderTemplate:
+    "I am following up on my report from {date}. My reference is {reference}. Please confirm the status and any next step.",
+  logReminderSent: "I sent a reminder",
+  logReminderDone: "Reminder sent on {date}",
+
+  logDeclinedTitle: "They said no",
+  logDeclinedText: "That is not the end. You can ask them to look at their decision again:",
+  logReviewTemplate:
+    "I ask you to review your decision to decline my report from {date} (reference {reference}). Please look again at the report and the reasons I gave, and tell me the outcome.",
+  logReviewSent: "I sent this request",
+  logReviewDone: "Review requested on {date}",
+  logDeclinedMore:
+    "Under the EU Digital Services Act, platforms must offer an internal complaint system for their decisions (Article 20). You can also use a certified out-of-court dispute settlement body (Article 21), or complain to the national Digital Services Coordinator (Article 53).",
+  logReferencePlaceholder: "[reference]",
+
+  logDetails: "Details and notes",
+  logReference: "Reference number",
+  logExpectedLabel: "Answer expected by",
+  logNotes: "Private notes",
+  logNotesPlaceholder: "For example: the date they replied, what they said",
+  logFingerprint: "File fingerprint (SHA-256)",
+  logShowText: "Show the text that was prepared",
+  logDeleteReport: "Delete this report",
+  logDeleteReportConfirm: "Delete this report from this browser? It can't be undone.",
+
+  logDeleteAllTitle: "Delete everything",
+  logDeleteAllText: "Remove all cases, reports and notes from this browser at any time.",
+  logDeleteAll: "Delete everything",
+  logDeleteAllConfirm: "This removes all cases, reports and notes from this browser. It can't be undone. Are you sure?",
+  logDeleteAllYes: "Yes, delete everything",
+  logAllDeleted: "Everything was deleted from this browser.",
+
+  /* ------------------------------------------------------------------ */
   /* Support directory (shared by home and the guided case)              */
   /* ------------------------------------------------------------------ */
   supportSpainTitle: "In Spain",

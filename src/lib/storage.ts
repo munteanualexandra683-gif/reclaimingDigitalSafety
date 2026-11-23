@@ -125,9 +125,12 @@ export function clearAllData(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(STORAGE_KEY);
   window.localStorage.removeItem(CASES_STORAGE_KEY);
+  // Remove every case-data key ("rds.*"). Preferences such as language,
+  // discreet mode and the dismissed disclaimer ("rds_*") are kept on purpose,
+  // so discreet mode does not silently switch off after deleting.
   const keys = Object.keys(window.localStorage);
   for (const key of keys) {
-    if (key.startsWith("rds") || key.startsWith("rds_")) {
+    if (key.startsWith("rds.")) {
       window.localStorage.removeItem(key);
     }
   }
