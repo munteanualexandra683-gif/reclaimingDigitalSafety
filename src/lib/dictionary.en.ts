@@ -36,24 +36,6 @@ export const en = {
   stageOf: "Step {current} of {total}",
   progressLabel: "Your progress",
 
-  /* Legacy keys still used by the guided case (replaced in the /case update) */
-  rightsTitle: "Is this abuse?",
-  exposureTitle: "A safe exposure check",
-  locationsTitle: "Where did you find it?",
-  addLocation: "Add location",
-  reportNow: "Report now",
-  documentOnly: "Only document for now",
-  talkFirst: "Talk to someone first",
-  notNow: "Not now (save and leave)",
-  supportDirectory: "Verified support directory (Spain)",
-  evidenceTitle: "Evidence, URL first",
-  describeOnce: "Describe once",
-  disclosureTitle: "Review what will be shared",
-  sendSelected: "Send selected",
-  followupTitle: "Follow-up & support",
-  appearedAgain: "The content appeared again",
-  talkSomeone: "Talk to someone",
-
   /* ------------------------------------------------------------------ */
   /* Home                                                                */
   /* ------------------------------------------------------------------ */
@@ -108,6 +90,187 @@ export const en = {
   homeFaqPauseQ: "Can I stop and come back later?",
   homeFaqPauseA:
     "Yes. NEST saves your case in this browser. Open NEST again on the same device and choose “Start or continue”.",
+
+  /* ------------------------------------------------------------------ */
+  /* Guided case (/case)                                                 */
+  /* ------------------------------------------------------------------ */
+  caseNavLabel: "Case steps",
+  caseDeleted: "Your case was deleted from this browser.",
+  caseDelete: "Delete this case",
+  caseDeleteConfirm:
+    "This removes the case and its reports from this browser. It can't be undone. Delete it?",
+  caseDeleteYes: "Yes, delete it",
+
+  caseResumeTitle: "Welcome back",
+  caseResumeText: "You have a saved case, last changed on {date}. You were at: {stage}.",
+  caseResumeContinue: "Continue my case",
+  caseResumeNew: "Start a new case",
+  caseResumeNewHint: "Starting a new case keeps the old one in your case log.",
+
+  caseSavedTitle: "Your case is saved",
+  caseSavedText:
+    "It is saved in this browser on this device. When you're ready, open NEST again and choose “Start or continue”. Nothing has been sent.",
+  caseSavedShared:
+    "On a shared device, anyone using this browser could open it. You can delete it below, or use Quick exit at any time.",
+  caseSavedHome: "Go to the home page",
+  caseSavedBack: "Back to my case",
+
+  caseDiscoverIntro:
+    "Take your time. Start by noting where you saw it. You don't need to look at the image again.",
+  caseWhereTitle: "Where did you see it?",
+  caseWhereText: "Add each place separately. Links are enough; you never need to upload the image.",
+  caseWhereLink: "Link (web address)",
+  caseWhereNoLink: "I don't have a link",
+  caseWherePlatform: "Which platform or website?",
+  caseWhereDescribe: "Describe where it is",
+  caseWhereDescribePlaceholder: "For example: the name of the Telegram group",
+  caseWhereMore: "Add more details (optional)",
+  caseWhereAccount: "Account or username that posted it",
+  caseWhereDate: "Date you saw it",
+  caseWhereNote: "Short note",
+  caseWhereAdd: "Add this place",
+  caseWhereRemove: "Remove",
+  caseWhereRemoveLabel: "Remove {place}",
+
+  caseCheckTitle: "Not sure where it appears? Safe ways to check",
+  caseCheckWarning:
+    "You may see the image while checking. If you'd rather not, a person you trust can do these checks for you.",
+  caseCheckImage: "Search with an image",
+  caseCheckImageText: "Look for copies of a picture with an image search.",
+  caseCheckName: "Search your name",
+  caseCheckNameText: "Search your name, in quotes, in Google and Bing.",
+  caseCheckPlatforms: "Check the platforms you use",
+  caseCheckPlatformsText: "Look at your accounts and at groups where people you know may share things.",
+  caseCheckOpen: "Open {name}",
+
+  caseRightsTitle: "Is this abuse?",
+  caseRightsText:
+    "Yes. Making or sharing an intimate image of someone without consent is abuse, even if the image is fake or made with AI. It is not your fault, and you don't need to decide anything now.",
+  caseRightsMore: "What can be done?",
+  caseRightsMoreText:
+    "You can ask platforms and search engines to remove it. In Spain there are also national services that can act quickly and support you. You'll see these options in step 3.",
+
+  caseDecideIntro: "What would you like to do now? Every choice is okay, and you can change your mind later.",
+  caseDecideReportNow: "Report now",
+  caseDecideReportNowText: "See where you can ask for it to be removed, and prepare the reports.",
+  caseDecideDocument: "Only keep a record for now",
+  caseDecideDocumentText: "Write down what happened and save it, without reporting anything.",
+  caseDecideTalk: "Talk to someone first",
+  caseDecideTalkText: "See support services you can contact before deciding.",
+  caseDecideNotNow: "Not now",
+  caseDecideNotNowText: "Save what you have and leave. You can come back whenever you are ready.",
+  caseDecideHint: "Choose one option above to continue.",
+  caseDecideGoRoutes: "See reporting options",
+  caseDecideGoDocument: "Continue to write it down",
+  caseDecideTalkRoutes: "Look at reporting options anyway",
+  caseSupportTitle: "Talk to someone",
+
+  casePathwayIntro:
+    "These are the places you can ask for help with removal. We've selected the ones that fit what you added. Choose the ones you want.",
+  casePathwayEmpty: "Add at least one place in step 1 first.",
+  casePathwayEmptyLink: "Go to step 1",
+  casePathwayNeeds: "You'll need: {items}",
+  casePathwayAlreadySent: "Already sent",
+  casePathwayAlreadyPrepared: "Already prepared",
+  casePathwayChooseHint: "Choose at least one option to continue.",
+  casePathwayContinue: "Continue to prepare",
+  casePathwayLawTitle: "About the law",
+  casePathwayLawText:
+    "In the EU, the Digital Services Act requires platforms to review reports about illegal content. Whether an AI-made intimate image is illegal currently depends on national law. An EU directive (2024/1385) must be applied in all member states by June 2027.",
+
+  casePrepareIntro:
+    "Describe what happened once; NEST uses it for every report. Then check what each place will receive.",
+  casePrepareIntroDocument: "Write down what happened. Nothing will be sent.",
+  casePrepareGoFollowup: "Continue to follow-up",
+  casePrepareSwitchToReport: "I'd like to report after all",
+
+  caseEvidenceTitle: "Keep a record before it changes",
+  caseEvidenceTip1: "Save the links and usernames before you block or report an account. Posts and disappearing messages can vanish.",
+  caseEvidenceTip2: "Don't forward the image, and don't keep it in a shared cloud folder.",
+  caseEvidenceTip3: "On a shared device, use a private window.",
+  caseEvidenceFingerprint: "Optional: create a fingerprint of a file you already have",
+
+  caseDescribeTitle: "Describe it once",
+  caseDescribeLabel: "What happened, and where does it appear?",
+  caseDescribeName: "Your name or a pseudonym",
+  caseDescribeEmail: "Email for replies (optional)",
+  caseDescribeNotSaved:
+    "Your name and email are not saved on this device. If you leave, you'll need to type them again.",
+
+  caseDisclosureTitle: "Check what will be shared",
+  caseDisclosureIntro:
+    "A report to a platform normally includes your name and email; without them it may not be processed. Platforms may tell the reported account that a report was made. Check what each place will receive.",
+  caseDisclosureNone: "No options are selected.",
+  caseDisclosureNoneLink: "Choose options in step 3",
+  caseDisclosureWillReceive: "{recipient} will receive: {items}.",
+  caseDisclosureEdit: "View or edit the text",
+  caseDisclosureEditLabel: "Text for: {title}",
+  caseDisclosureReset: "Go back to the original text",
+  caseDisclosureReviewed: "I've checked what will be shared",
+  caseShareName: "your name or pseudonym",
+  caseSharePlaceholder: "a placeholder instead of your name",
+  caseShareEmail: "your email",
+  caseShareLinks: "the links",
+  caseShareDescription: "your description",
+  caseShareFingerprint: "the file fingerprint",
+  caseShareHash: "nothing from NEST. You use StopNCII yourself, only if you choose to",
+  caseSend: "Send selected ({count})",
+  caseSending: "Preparing…",
+  caseSendSimulated: "This is a prototype: nothing is really sent. Sending is simulated.",
+
+  caseSentTitle: "Saved to your case log",
+  caseSentText: "Here is what happened with each option.",
+  caseSentSimulated: "{recipient}: sending simulated. In this prototype nothing leaves your device.",
+  caseSentManual: "{recipient}: ready for you to send. Copy the text and paste it into the official form.",
+  caseSentMarked: "Marked as sent.",
+  caseCopyOpen: "Copy text and open the official form",
+  caseMarkSent: "I've sent it",
+
+  caseFollowNextTitle: "What happens next",
+  caseFollowNextText:
+    "Platforms often reply within a few days, but it can take longer. NEST sets a reminder date 7 days after you send. In your case log you can note answers, get a reminder message, or ask for a review if a report is declined.",
+  caseFollowOpenLog: "Open my case log",
+  caseFollowSupportText: "Support services can help with how you feel, and with legal questions.",
+  caseFollowShowSupport: "Show support services",
+  caseAgainTitle: "It appeared again",
+  caseAgainText: "Add the new link and NEST will prepare a new report. Reports you already made stay as they are.",
+  caseAgainLink: "New link",
+  caseAgainAdd: "Add and prepare a new report",
+  caseRepeatNote: "Appeared again",
+  reportMoved: "This page has moved. Taking you to your case…",
+
+  /* Reporting routes */
+  routeOtherPlatform: "Other platform",
+  routeDsaTitle: "Report to {platform}",
+  routeDsaAbout:
+    "Platforms in the EU have to review reports about illegal content. Whether they accept reports about AI-made images when you don't know who made them still needs to be checked with each platform.",
+  routeDeindexTitle: "Ask Google or Bing to hide search results",
+  routeDeindexRecipient: "Google or Bing",
+  routeDeindexAbout:
+    "This hides the result in search, but does not delete the image from the website where it is. Check the search engine's current policy for AI-made intimate images.",
+  routeNationalTitle: "AEPD priority channel (Spain)",
+  routeNationalRecipient: "AEPD",
+  routeNationalAbout:
+    "Spain's data protection authority (AEPD) has a fast channel for sexual content published without consent. Check on its website what it needs and whether it accepts AI-made images.",
+  routeHashTitle: "StopNCII: help stop it being uploaded again",
+  routeHashRecipient: "StopNCII",
+  routeHashAbout:
+    "StopNCII creates a fingerprint of an image on your own device and shares only the fingerprint with participating platforms. You do this yourself on their website, and only if you have the image. If the image was made when you were under 18, Take It Down is the service for that.",
+  routeHostTitle: "Report to the website host",
+  routeHostRecipient: "Website host or registrar",
+  routeHostAbout:
+    "If the image is on an independent website, the company that hosts the website may remove it. A public lookup tool can show who hosts a website.",
+  routeNeedLink: "the link",
+  routeNeedLinks: "the links",
+  routeNeedAccount: "the account name, if you know it",
+  routeNeedDate: "the date you saw it",
+  routeNeedDescription: "a short description",
+  routeNeedSearchLink: "the link to the search result",
+  routeNeedSearchWords: "the words you searched for",
+  routeNeedName: "your name or a pseudonym",
+  routeNeedEmailOptional: "an email (optional)",
+  routeNeedFileOptional: "the image file on your device, only if you have it and want to use it",
+  routeNeedWebsite: "the website's name",
 
   /* ------------------------------------------------------------------ */
   /* Support directory (shared by home and the guided case)              */

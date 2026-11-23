@@ -25,6 +25,8 @@ export interface TemplateInput {
 }
 
 export interface CaseTemplateInput {
+  /** Recipient platform name, e.g. "Instagram (Meta)". */
+  platformName?: string;
   description: string;
   urls: string[];
   account?: string;
@@ -99,7 +101,7 @@ This notice is submitted under the notice-and-action mechanism of the Digital Se
 export function buildDsaNoticeForUrls(input: CaseTemplateInput): string {
   const urls = input.urls.length ? input.urls.join("\n") : "[URL]";
   return buildDsaNotice({
-    platformName: "Hosting platform — Trust & Safety / Legal Notice Team",
+    platformName: input.platformName?.trim() || "Hosting platform",
     contentUrl: urls,
     contentDescription: input.description,
     evidenceHash: input.evidenceHash,
@@ -156,4 +158,17 @@ Reporter: ${input.reporterName?.trim() || "[Name or pseudonym]"}
 Contact: ${input.contactEmail?.trim() || "[Optional email]"}
 
 Please check the official AEPD page for current access requirements before submitting. This summary is not legal advice and does not promise removal.\n\nTo be verified with a partner organisation before the pilot.`;
+}
+
+export function buildStopNciiHandoff(): string {
+  return `STOPNCII HAND-OFF
+
+StopNCII is a service that may let you create a fingerprint (hash) of an intimate image on your own device, without uploading the image, and share only that fingerprint with participating platforms. NEST does not create or send this for you: you do it yourself on the StopNCII website, only if you have the image and choose to.
+
+If the image was made when you were under 18, Take It Down is the service for that situation.
+
+Official StopNCII: https://stopncii.org/
+Take It Down (content made when under 18): https://takeitdown.ncmec.org/
+
+To be verified with a partner organisation before the pilot.`;
 }

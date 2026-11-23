@@ -38,23 +38,6 @@ export const es: Partial<typeof en> = {
   stageOf: "Paso {current} de {total}",
   progressLabel: "Tu progreso",
 
-  rightsTitle: "¿Es esto abuso?",
-  exposureTitle: "Comprobación segura",
-  locationsTitle: "¿Dónde lo encontraste?",
-  addLocation: "Añadir ubicación",
-  reportNow: "Denunciar ahora", // TODO(review-es)
-  documentOnly: "Solo documentar por ahora",
-  talkFirst: "Hablar antes con alguien",
-  notNow: "Ahora no (guardar y salir)",
-  supportDirectory: "Directorio de apoyo (España)",
-  evidenceTitle: "Pruebas: primero los enlaces",
-  describeOnce: "Describe una sola vez",
-  disclosureTitle: "Revisa qué se compartirá",
-  sendSelected: "Enviar seleccionados",
-  followupTitle: "Seguimiento y apoyo",
-  appearedAgain: "El contenido apareció de nuevo",
-  talkSomeone: "Hablar con alguien",
-
   /* Home */
   homeHeroTitle: "Tú decides qué pasa ahora.",
   homeHeroText:
@@ -107,6 +90,185 @@ export const es: Partial<typeof en> = {
   homeFaqPauseQ: "¿Puedo parar y volver más tarde?",
   homeFaqPauseA:
     "Sí. NEST guarda tu caso en este navegador. Vuelve a abrir NEST en el mismo dispositivo y elige «Empezar o continuar».",
+
+  /* Guided case (/case) */
+  caseNavLabel: "Pasos del caso",
+  caseDeleted: "Tu caso se ha borrado de este navegador.",
+  caseDelete: "Borrar este caso",
+  caseDeleteConfirm:
+    "Esto borra el caso y sus denuncias de este navegador. No se puede deshacer. ¿Quieres borrarlo?",
+  caseDeleteYes: "Sí, borrarlo",
+
+  caseResumeTitle: "Hola de nuevo",
+  caseResumeText: "Tienes un caso guardado, modificado por última vez el {date}. Estabas en: {stage}.",
+  caseResumeContinue: "Continuar mi caso",
+  caseResumeNew: "Empezar un caso nuevo",
+  caseResumeNewHint: "Si empiezas un caso nuevo, el anterior se queda en tu registro.",
+
+  caseSavedTitle: "Tu caso está guardado",
+  caseSavedText:
+    "Está guardado en este navegador, en este dispositivo. Cuando quieras, vuelve a abrir NEST y elige «Empezar o continuar». No se ha enviado nada.",
+  caseSavedShared:
+    "En un dispositivo compartido, cualquiera que use este navegador podría abrirlo. Puedes borrarlo aquí abajo o usar la salida rápida en cualquier momento.",
+  caseSavedHome: "Ir a la página de inicio",
+  caseSavedBack: "Volver a mi caso",
+
+  caseDiscoverIntro:
+    "Tómate tu tiempo. Empieza anotando dónde lo viste. No hace falta que vuelvas a mirar la imagen.",
+  caseWhereTitle: "¿Dónde lo viste?",
+  caseWhereText: "Añade cada sitio por separado. Basta con los enlaces; nunca tienes que subir la imagen.",
+  caseWhereLink: "Enlace (dirección web)",
+  caseWhereNoLink: "No tengo un enlace",
+  caseWherePlatform: "¿Qué plataforma o web?",
+  caseWhereDescribe: "Describe dónde está",
+  caseWhereDescribePlaceholder: "Por ejemplo: el nombre del grupo de Telegram",
+  caseWhereMore: "Añadir más detalles (opcional)",
+  caseWhereAccount: "Cuenta o usuario que lo publicó",
+  caseWhereDate: "Fecha en que lo viste",
+  caseWhereNote: "Nota breve",
+  caseWhereAdd: "Añadir este sitio",
+  caseWhereRemove: "Quitar",
+  caseWhereRemoveLabel: "Quitar {place}",
+
+  caseCheckTitle: "¿No sabes dónde aparece? Formas seguras de comprobarlo",
+  caseCheckWarning:
+    "Puede que veas la imagen al comprobarlo. Si prefieres no hacerlo, una persona de confianza puede hacerlo por ti.",
+  caseCheckImage: "Buscar con una imagen",
+  caseCheckImageText: "Busca copias de una foto con un buscador de imágenes.",
+  caseCheckName: "Buscar tu nombre",
+  caseCheckNameText: "Busca tu nombre, entre comillas, en Google y Bing.",
+  caseCheckPlatforms: "Revisar las plataformas que usas",
+  caseCheckPlatformsText: "Mira tus cuentas y los grupos donde gente que conoces podría compartir cosas.",
+  caseCheckOpen: "Abrir {name}",
+
+  caseRightsTitle: "¿Es esto abuso?",
+  caseRightsText:
+    "Sí. Crear o compartir una imagen íntima de alguien sin su consentimiento es abuso, aunque la imagen sea falsa o esté hecha con IA. No es culpa tuya y no tienes que decidir nada ahora.",
+  caseRightsMore: "¿Qué se puede hacer?",
+  caseRightsMoreText:
+    "Puedes pedir a las plataformas y a los buscadores que lo retiren. En España también hay servicios nacionales que pueden actuar rápido y apoyarte. Verás estas opciones en el paso 3.",
+
+  caseDecideIntro: "¿Qué te gustaría hacer ahora? Cualquier opción está bien y puedes cambiar de idea más adelante.",
+  caseDecideReportNow: "Denunciar ahora", // TODO(review-es): "denunciar" vs "notificar"
+  caseDecideReportNowText: "Mira dónde puedes pedir que se retire y prepara las denuncias.",
+  caseDecideDocument: "Solo guardar un registro por ahora",
+  caseDecideDocumentText: "Anota lo ocurrido y guárdalo, sin denunciar nada.",
+  caseDecideTalk: "Hablar antes con alguien",
+  caseDecideTalkText: "Mira los servicios de apoyo a los que puedes acudir antes de decidir.",
+  caseDecideNotNow: "Ahora no",
+  caseDecideNotNowText: "Guarda lo que tienes y sal. Puedes volver cuando quieras.",
+  caseDecideHint: "Elige una opción para continuar.",
+  caseDecideGoRoutes: "Ver opciones para denunciar",
+  caseDecideGoDocument: "Continuar para anotarlo",
+  caseDecideTalkRoutes: "Ver las opciones para denunciar de todos modos",
+  caseSupportTitle: "Hablar con alguien",
+
+  casePathwayIntro:
+    "Estos son los sitios a los que puedes pedir ayuda para retirarlo. Hemos marcado los que encajan con lo que añadiste. Elige los que quieras.",
+  casePathwayEmpty: "Primero añade al menos un sitio en el paso 1.",
+  casePathwayEmptyLink: "Ir al paso 1",
+  casePathwayNeeds: "Necesitarás: {items}",
+  casePathwayAlreadySent: "Ya enviado",
+  casePathwayAlreadyPrepared: "Ya preparado",
+  casePathwayChooseHint: "Elige al menos una opción para continuar.",
+  casePathwayContinue: "Continuar para preparar",
+  casePathwayLawTitle: "Sobre la ley",
+  casePathwayLawText: // TODO(review-es): legal wording
+    "En la UE, la Ley de Servicios Digitales obliga a las plataformas a revisar las denuncias de contenido ilegal. Que una imagen íntima hecha con IA sea ilegal depende hoy de la ley de cada país. Una directiva europea (2024/1385) debe aplicarse en todos los Estados miembros antes de junio de 2027.",
+
+  casePrepareIntro:
+    "Describe lo ocurrido una sola vez; NEST lo usa en todas las denuncias. Después revisa qué recibirá cada sitio.",
+  casePrepareIntroDocument: "Anota lo ocurrido. No se enviará nada.",
+  casePrepareGoFollowup: "Continuar al seguimiento",
+  casePrepareSwitchToReport: "Al final quiero denunciar",
+
+  caseEvidenceTitle: "Guarda un registro antes de que cambie",
+  caseEvidenceTip1: "Guarda los enlaces y los nombres de usuario antes de bloquear o denunciar una cuenta. Las publicaciones y los mensajes temporales pueden desaparecer.",
+  caseEvidenceTip2: "No reenvíes la imagen ni la guardes en una carpeta compartida en la nube.",
+  caseEvidenceTip3: "En un dispositivo compartido, usa una ventana privada.",
+  caseEvidenceFingerprint: "Opcional: crear una huella de un archivo que ya tengas",
+
+  caseDescribeTitle: "Descríbelo una vez",
+  caseDescribeLabel: "¿Qué pasó y dónde aparece?",
+  caseDescribeName: "Tu nombre o un seudónimo",
+  caseDescribeEmail: "Correo para respuestas (opcional)",
+  caseDescribeNotSaved:
+    "Tu nombre y tu correo no se guardan en este dispositivo. Si sales, tendrás que escribirlos de nuevo.",
+
+  caseDisclosureTitle: "Revisa qué se compartirá",
+  caseDisclosureIntro:
+    "Una denuncia a una plataforma normalmente incluye tu nombre y tu correo; sin ellos puede que no se tramite. Las plataformas pueden avisar a la cuenta denunciada de que se ha hecho una denuncia. Revisa qué recibirá cada sitio.",
+  caseDisclosureNone: "No hay opciones seleccionadas.",
+  caseDisclosureNoneLink: "Elegir opciones en el paso 3",
+  caseDisclosureWillReceive: "{recipient} recibirá: {items}.",
+  caseDisclosureEdit: "Ver o editar el texto",
+  caseDisclosureEditLabel: "Texto para: {title}",
+  caseDisclosureReset: "Volver al texto original",
+  caseDisclosureReviewed: "He revisado qué se compartirá",
+  caseShareName: "tu nombre o seudónimo",
+  caseSharePlaceholder: "un texto de ejemplo en lugar de tu nombre",
+  caseShareEmail: "tu correo",
+  caseShareLinks: "los enlaces",
+  caseShareDescription: "tu descripción",
+  caseShareFingerprint: "la huella del archivo",
+  caseShareHash: "nada desde NEST. Usas StopNCII tú misma, solo si quieres", // TODO(review-es): gendered "misma"
+  caseSend: "Enviar seleccionados ({count})",
+  caseSending: "Preparando…",
+  caseSendSimulated: "Esto es un prototipo: no se envía nada de verdad. El envío es simulado.",
+
+  caseSentTitle: "Guardado en tu registro",
+  caseSentText: "Esto es lo que ha pasado con cada opción.",
+  caseSentSimulated: "{recipient}: envío simulado. En este prototipo nada sale de tu dispositivo.",
+  caseSentManual: "{recipient}: listo para que lo envíes tú. Copia el texto y pégalo en el formulario oficial.",
+  caseSentMarked: "Marcado como enviado.",
+  caseCopyOpen: "Copiar el texto y abrir el formulario oficial",
+  caseMarkSent: "Ya lo he enviado",
+
+  caseFollowNextTitle: "Qué pasa ahora",
+  caseFollowNextText:
+    "Las plataformas suelen responder en pocos días, pero puede tardar más. NEST pone una fecha de recordatorio 7 días después de enviar. En tu registro puedes anotar respuestas, obtener un mensaje de recordatorio o pedir una revisión si rechazan una denuncia.",
+  caseFollowOpenLog: "Abrir mi registro",
+  caseFollowSupportText: "Los servicios de apoyo pueden ayudarte con cómo te sientes y con dudas legales.",
+  caseFollowShowSupport: "Ver servicios de apoyo",
+  caseAgainTitle: "Ha vuelto a aparecer",
+  caseAgainText: "Añade el nuevo enlace y NEST preparará una nueva denuncia. Las denuncias que ya hiciste no cambian.",
+  caseAgainLink: "Nuevo enlace",
+  caseAgainAdd: "Añadir y preparar una nueva denuncia",
+  caseRepeatNote: "Ha vuelto a aparecer",
+  reportMoved: "Esta página ha cambiado. Te llevamos a tu caso…",
+
+  /* Reporting routes */
+  routeOtherPlatform: "Otra plataforma",
+  routeDsaTitle: "Denunciar a {platform}",
+  routeDsaAbout:
+    "En la UE, las plataformas tienen que revisar las denuncias de contenido ilegal. Hay que comprobar con cada plataforma si aceptan denuncias sobre imágenes hechas con IA cuando no sabes quién las hizo.",
+  routeDeindexTitle: "Pedir a Google o Bing que oculten los resultados",
+  routeDeindexRecipient: "Google o Bing",
+  routeDeindexAbout:
+    "Esto oculta el resultado en el buscador, pero no borra la imagen de la web donde está. Consulta la política actual del buscador sobre imágenes íntimas hechas con IA.",
+  routeNationalTitle: "Canal prioritario de la AEPD (España)",
+  routeNationalRecipient: "AEPD",
+  routeNationalAbout: // TODO(review-es): institutional wording
+    "La Agencia Española de Protección de Datos (AEPD) tiene un canal rápido para contenido sexual publicado sin consentimiento. Consulta en su web qué necesita y si acepta imágenes hechas con IA.",
+  routeHashTitle: "StopNCII: ayuda a evitar que se vuelva a subir",
+  routeHashRecipient: "StopNCII",
+  routeHashAbout:
+    "StopNCII crea una huella de una imagen en tu propio dispositivo y solo comparte la huella con las plataformas participantes. Lo haces tú en su web, y solo si tienes la imagen. Si la imagen se hizo cuando eras menor de 18 años, el servicio adecuado es Take It Down.",
+  routeHostTitle: "Denunciar al alojamiento de la web",
+  routeHostRecipient: "Alojamiento o registrador de la web",
+  routeHostAbout:
+    "Si la imagen está en una web independiente, la empresa que aloja esa web puede retirarla. Una herramienta pública de consulta puede mostrar quién aloja una web.",
+  routeNeedLink: "el enlace",
+  routeNeedLinks: "los enlaces",
+  routeNeedAccount: "el nombre de la cuenta, si lo sabes",
+  routeNeedDate: "la fecha en que lo viste",
+  routeNeedDescription: "una breve descripción",
+  routeNeedSearchLink: "el enlace al resultado de búsqueda",
+  routeNeedSearchWords: "las palabras que buscaste",
+  routeNeedName: "tu nombre o un seudónimo",
+  routeNeedEmailOptional: "un correo (opcional)",
+  routeNeedFileOptional: "el archivo de la imagen en tu dispositivo, solo si lo tienes y quieres usarlo",
+  routeNeedWebsite: "el nombre de la web",
 
   /* Support directory */
   supportSpainTitle: "En España",

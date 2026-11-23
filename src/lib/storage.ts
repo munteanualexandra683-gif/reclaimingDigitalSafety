@@ -165,6 +165,14 @@ export function deleteCase(id: string): Case[] {
   return cases;
 }
 
+/** Delete one case and every report linked to it. */
+export function deleteCaseAndReports(id: string): { cases: Case[]; reports: ReportRecord[] } {
+  const cases = deleteCase(id);
+  const reports = loadReports().filter((r) => r.caseId !== id);
+  saveReports(reports);
+  return { cases, reports };
+}
+
 export function makeId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID();
