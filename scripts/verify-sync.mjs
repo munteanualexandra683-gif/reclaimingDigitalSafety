@@ -42,11 +42,12 @@ async function deriveKey(pass, salt) {
     base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"],
   );
 }
-async function encryptLogForSync(reports, pass) {
+async function encryptLogForSync(reports, pass, cases = null) {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await deriveKey(pass, salt);
-  let plaintext = textEncoder.encode(JSON.stringify(reports));
+  const envelope = cases ? { reports, cases } : reports;
+  let plaintext = textEncoder.encode(JSON.stringify(envelope));
   let c = 0;
   try { plaintext = await gzip(plaintext); c = 1; } catch { c = 0; }
   const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, plaintext);
@@ -61,7 +62,9 @@ async function decryptSyncedLog(payload, pass) {
   );
   const jsonBytes = payload.c === 1 ? await gunzip(dec) : dec;
   const parsed = JSON.parse(textDecoder.decode(jsonBytes));
-  if (!Array.isArray(parsed)) throw new Error("Invalid synced log format.");
+  if (!Array.isArray(parsed) && (!parsed || !Array.isArray(parsed.reports))) {
+    throw new Error("Invalid synced log format.");
+  }
   return parsed;
 }
 
@@ -137,6 +140,12 @@ async function main() {
   assert(serializedHuge.length > QR_CHAR_CAPACITY, "extreme log exceeds QR capacity (file fallback path)");
   const decHuge = await decryptSyncedLog(encHuge, "pw");
   assert(decHuge.length === 300, "extreme log still round-trips via the file path");
+
+  // Test 6: explicit sync verification for the new case model
+  const sampleCases = [{ id: "c_1", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), country: "Spain", description: "AI-generated intimate content", locations: [], routes: [], reportIds: ["r_1"] }];
+  const encCase = await encryptLogForSync([makeReport(1)], "pw", sampleCases);
+  const decCase = await decryptSyncedLog(encCase, "pw");
+  assert(decCase.reports.length === 1 && decCase.cases.length === 1, "reports and cases round-trip together");
 
   console.log(failures === 0 ? "\nALL CHECKS PASSED ✅" : `\n${failures} CHECK(S) FAILED ❌`);
   process.exit(failures === 0 ? 0 : 1);

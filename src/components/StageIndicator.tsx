@@ -1,10 +1,11 @@
-export type StageKey = "discover" | "pathway" | "preparation" | "followup";
+export type StageKey = "discover" | "help" | "pathway" | "preparation" | "followup";
 
 const STAGES: { key: StageKey; label: string }[] = [
   { key: "discover", label: "Discover & Assess" },
+  { key: "help", label: "Decide whether to seek help" },
   { key: "pathway", label: "Reporting Pathway" },
-  { key: "preparation", label: "Report Preparation" },
-  { key: "followup", label: "Follow-up" },
+  { key: "preparation", label: "Prepare & Submit" },
+  { key: "followup", label: "Follow-up & Support" },
 ];
 
 export default function StageIndicator({ current }: { current: StageKey }) {

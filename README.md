@@ -133,3 +133,15 @@ This is a prototype / MVP built for a defined pilot context. Support resources
 and platform endpoints should be verified with accredited regional
 organisations before any real-world deployment. The dispatch layer is
 **mocked** — no reports are actually sent to platforms.
+
+## Guided multi-platform case flow
+
+The `/case` route provides one guided, locally saved Spain-pilot journey:
+
+1. Discover & assess
+2. Decide whether to seek help
+3. Reporting pathway
+4. Prepare & submit
+5. Follow-up & support
+
+The existing `/report` route remains available as a quick single-platform path. All case data stays in `localStorage`, and encrypted sync includes both cases and reports. Platform dispatch remains mocked. The support directory contains unverified candidates only and must be reviewed with partner organisations before pilot use.

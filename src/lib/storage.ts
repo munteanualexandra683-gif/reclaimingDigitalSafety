@@ -28,9 +28,50 @@ export interface ReportRecord {
   updatedAt: string;
   /** Free-form notes the survivor keeps for their own records. */
   notes?: string;
+  caseId?: string;
+  routeType?: Route["type"];
+  referenceNumber?: string;
+  expectedResponseBy?: string;
+  escalations?: string[];
+}
+
+export interface Location {
+  id: string;
+  url: string;
+  platformId: string;
+  account?: string;
+  seenAt?: string;
+  note?: string;
+}
+
+export interface Route {
+  id: string;
+  locationId?: string;
+  type: "dsa-notice" | "deindex" | "hash-handoff" | "national" | "host-abuse";
+  selected: boolean;
+  status: "draft" | "prepared" | "submitted";
+}
+
+export interface Case {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  country: string;
+  description: string;
+  decision?: "report-now" | "document-only" | "talk-first" | "not-now";
+  locations: Location[];
+  routes: Route[];
+  reportIds: string[];
+  step?: number;
+}
+
+export interface SyncedLog {
+  reports: ReportRecord[];
+  cases: Case[];
 }
 
 const STORAGE_KEY = "rds.reports.v1";
+const CASES_STORAGE_KEY = "rds.cases.v1";
 
 /* ----------------------------- CRUD (localStorage) ----------------------------- */
 
@@ -78,6 +119,50 @@ export function deleteReport(id: string): ReportRecord[] {
 export function clearAllReports(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(STORAGE_KEY);
+}
+
+export function clearAllData(): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(STORAGE_KEY);
+  window.localStorage.removeItem(CASES_STORAGE_KEY);
+  const keys = Object.keys(window.localStorage);
+  for (const key of keys) {
+    if (key.startsWith("rds") || key.startsWith("rds_")) {
+      window.localStorage.removeItem(key);
+    }
+  }
+}
+
+export function loadCases(): Case[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(CASES_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as Case[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveCases(cases: Case[]): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(CASES_STORAGE_KEY, JSON.stringify(cases));
+}
+
+export function addOrUpdateCase(nextCase: Case): Case[] {
+  const cases = loadCases();
+  const exists = cases.some((item) => item.id === nextCase.id);
+  const updated = exists
+    ? cases.map((item) => (item.id === nextCase.id ? nextCase : item))
+    : [nextCase, ...cases];
+  saveCases(updated);
+  return updated;
+}
+
+export function deleteCase(id: string): Case[] {
+  const cases = loadCases().filter((item) => item.id !== id);
+  saveCases(cases);
+  return cases;
 }
 
 export function makeId(): string {
@@ -144,7 +229,7 @@ async function deriveKey(
     ["deriveKey"],
   );
   return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: 150_000, hash: "SHA-256" },
+    { name: "PBKDF2", salt: salt as unknown as BufferSource, iterations: 150_000, hash: "SHA-256" },
     baseKey,
     { name: "AES-GCM", length: 256 },
     false,
@@ -216,26 +301,27 @@ export function payloadFitsInQr(serialized: string): boolean {
 export async function encryptLogForSync(
   reports: ReportRecord[],
   passphrase: string,
+  cases: Case[] = [],
 ): Promise<EncryptedPayload> {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await deriveKey(passphrase, salt);
-  let plaintext = textEncoder.encode(JSON.stringify(reports));
+  const envelope: SyncedLog = { reports, cases };
+  let plaintext: Uint8Array<ArrayBufferLike> = textEncoder.encode(JSON.stringify(envelope));
   let compressed: 0 | 1 = 0;
   if (supportsCompression()) {
     try {
       plaintext = await gzip(plaintext);
       compressed = 1;
     } catch {
-      // Fall back to uncompressed if compression fails for any reason.
-      plaintext = textEncoder.encode(JSON.stringify(reports));
+      plaintext = textEncoder.encode(JSON.stringify(envelope));
       compressed = 0;
     }
   }
   const ciphertext = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
+    { name: "AES-GCM", iv: iv as unknown as BufferSource },
     key,
-    plaintext,
+    plaintext as unknown as BufferSource,
   );
   return {
     v: 1,
@@ -250,23 +336,37 @@ export async function encryptLogForSync(
 export async function decryptSyncedLog(
   payload: EncryptedPayload,
   passphrase: string,
-): Promise<ReportRecord[]> {
+): Promise<SyncedLog> {
   const salt = fromBase64(payload.salt);
   const iv = fromBase64(payload.iv);
   const key = await deriveKey(passphrase, salt);
   const decrypted = new Uint8Array(
     await crypto.subtle.decrypt(
-      { name: "AES-GCM", iv },
+      { name: "AES-GCM", iv: iv as unknown as BufferSource },
       key,
-      fromBase64(payload.data),
+      fromBase64(payload.data) as unknown as BufferSource,
     ),
   );
 
-  const jsonBytes =
-    payload.c === 1 ? await gunzip(decrypted) : decrypted;
+  const jsonBytes = payload.c === 1 ? await gunzip(decrypted) : decrypted;
   const parsed = JSON.parse(textDecoder.decode(jsonBytes));
-  if (!Array.isArray(parsed)) throw new Error("Invalid synced log format.");
-  return (parsed as Array<Partial<ReportRecord>>).map((r) => ({
+
+  // Backward compatibility: older sync payloads contained a bare report array.
+  if (Array.isArray(parsed)) {
+    return { reports: normalizeReports(parsed), cases: [] };
+  }
+  if (!parsed || !Array.isArray(parsed.reports)) {
+    throw new Error("Invalid synced log format.");
+  }
+
+  return {
+    reports: normalizeReports(parsed.reports),
+    cases: Array.isArray(parsed.cases) ? (parsed.cases as Case[]) : [],
+  };
+}
+
+function normalizeReports(records: Array<Partial<ReportRecord>>): ReportRecord[] {
+  return records.map((r) => ({
     id: r.id || makeId(),
     platformId: r.platformId || "other",
     platformName: r.platformName || "Platform",
@@ -278,5 +378,10 @@ export async function decryptSyncedLog(
     createdAt: r.createdAt || new Date().toISOString(),
     updatedAt: r.updatedAt || new Date().toISOString(),
     notes: r.notes,
+    caseId: r.caseId,
+    routeType: r.routeType,
+    referenceNumber: r.referenceNumber,
+    expectedResponseBy: r.expectedResponseBy,
+    escalations: r.escalations,
   }));
 }

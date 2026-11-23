@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { label: "Support", href: "/#support" },
   { label: "Report", href: "/report" },
   { label: "Dashboard", href: "/dashboard" },
+  { label: "Case", href: "/case" },
 ];
 
 export default function SiteHeader() {

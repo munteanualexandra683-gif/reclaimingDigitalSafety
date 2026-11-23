@@ -44,7 +44,7 @@ export default function HomePage() {
           {/* Two clear actions */}
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href="/report"
+              href="/case"
               className="rds-btn-primary w-full text-center sm:w-auto text-base px-8 py-3.5"
             >
               <svg
@@ -135,19 +135,18 @@ export default function HomePage() {
 
             <div className="mt-6 pt-4 border-t border-calm-100">
               <a
-                href="#understanding"
-                className="rds-btn-secondary w-full text-center text-sm py-2.5"
+                href="#how-it-works"
+                className="rds-btn-primary w-full text-center text-sm py-2.5"
+
               >
-                Understand my options
+                Start a guided case
               </a>
             </div>
           </div>
 
           {/* Card 2: Report */}
           <div className="rds-card flex flex-col justify-between border-t-4 border-t-accent hover:shadow-card-hover relative bg-gradient-to-b from-white to-lavender-50/30">
-            <div className="absolute -top-3 right-5 rounded-full bg-accent px-3 py-0.5 text-[11px] font-semibold text-white uppercase tracking-wider">
-              Recommended
-            </div>
+
             <div>
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -169,10 +168,11 @@ export default function HomePage() {
             <div className="mt-6 pt-4 border-t border-calm-100">
               <Link
                 href="/report"
-                className="rds-btn-primary w-full text-center text-sm py-2.5"
+                className="rds-btn-secondary w-full text-center text-sm py-2.5"
               >
                 Prepare a report
               </Link>
+              
             </div>
           </div>
 
@@ -274,7 +274,7 @@ export default function HomePage() {
               How It Works
             </span>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-calm-900 sm:text-4xl">
-              Four steps. At your own pace.
+              Five steps. At your own pace.
             </h2>
             <p className="mt-4 text-base leading-relaxed text-calm-600 sm:text-lg">
               Clearer steps, less confusion, and more control. You decide how
@@ -283,7 +283,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {/* Stage 1 */}
             <div className="rds-card flex flex-col justify-between border-t-4 border-t-calm-400 hover:shadow-card-hover transition-all">
               <div>
@@ -320,11 +320,10 @@ export default function HomePage() {
                   </span>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-calm-900">
-                  Document Privately
+                  Decide whether to seek help
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-calm-600">
-                  Create a cryptographic SHA-256 fingerprint on your device to
-                  prove file integrity. Your original image is never uploaded.
+                  Choose report now, document only, talk to someone, or save and leave. Every option is valid.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-lavender-700">
@@ -344,11 +343,10 @@ export default function HomePage() {
                   </span>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-calm-900">
-                  Prepare a DSA Notice
+                  Reporting pathway
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-calm-600">
-                  Auto-generate a standardized Article 16 notice under the EU
-                  Digital Services Act, with full freedom to review and edit.
+                  Generate priority routes for platforms, search results, StopNCII, national support, and unknown hosts.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-accent">
@@ -368,15 +366,37 @@ export default function HomePage() {
                   </span>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-calm-900">
-                  Follow-up &amp; Sync
+                  Prepare &amp; submit
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-calm-600">
-                  Keep notes and track status in your private browser log, with
-                  encrypted QR code sync to transfer records directly to your phone.
+                  Capture evidence safely, describe the case once, review disclosure, and prepare or mock-send selected routes.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-sage-700">
                 Peer-to-peer encrypted sync
+              </div>
+            </div>
+
+            {/* Stage 5 */}
+            <div className="rds-card flex flex-col justify-between border-t-4 border-t-red-500 hover:shadow-card-hover transition-all">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-sm font-bold text-red-800">
+                    05
+                  </span>
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-red-600">
+                    Stage 5
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-calm-900">
+                  Follow-up &amp; support
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-calm-600">
+                  Track references and response dates, escalate when needed, and re-report new appearances.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-calm-100 text-xs font-medium text-red-700">
+                Submission &amp; tracking
               </div>
             </div>
           </div>

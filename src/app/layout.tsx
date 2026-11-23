@@ -3,6 +3,7 @@ import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PersistentDisclaimer from "@/components/PersistentDisclaimer";
+import QuickExit from "@/components/QuickExit";
 
 export const metadata: Metadata = {
   title: "Reclaiming Digital Safety | Privacy-Preserving NCII & Deepfake Navigator",
@@ -30,6 +31,7 @@ export default function RootLayout({
         </main>
         <SiteFooter />
         <PersistentDisclaimer />
+        <QuickExit />
       </body>
     </html>
   );

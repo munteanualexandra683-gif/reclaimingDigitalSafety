@@ -6,8 +6,11 @@ import {
   decryptSyncedLog,
   encryptLogForSync,
   loadReports,
+  loadCases,
+  saveCases,
   payloadFitsInQr,
   saveReports,
+  type Case,
   type EncryptedPayload,
   type ReportRecord,
 } from "@/lib/storage";
@@ -16,10 +19,12 @@ type Mode = "closed" | "send" | "receive";
 
 interface SyncPanelProps {
   reports: ReportRecord[];
+  cases?: Case[];
   onReceived: (reports: ReportRecord[]) => void;
+  onCasesReceived?: (cases: Case[]) => void;
 }
 
-export default function SyncPanel({ reports, onReceived }: SyncPanelProps) {
+export default function SyncPanel({ reports, cases = [], onReceived, onCasesReceived }: SyncPanelProps) {
   const [mode, setMode] = useState<Mode>("closed");
 
   /* ----- Send ----- */
@@ -43,7 +48,7 @@ export default function SyncPanel({ reports, onReceived }: SyncPanelProps) {
     setSendError(null);
     setPayload(null);
     try {
-      const encrypted = await encryptLogForSync(reports, sendPass || "sync");
+      const encrypted = await encryptLogForSync(reports, sendPass || "sync", cases);
       setPayload(JSON.stringify(encrypted));
     } catch (e) {
       setSendError(
@@ -76,15 +81,22 @@ export default function SyncPanel({ reports, onReceived }: SyncPanelProps) {
     try {
       const parsed = JSON.parse(raw) as EncryptedPayload;
       const incoming = await decryptSyncedLog(parsed, recvPass || "sync");
-      // Merge: keep existing, add any records with new ids from the incoming log.
       const existing = loadReports();
       const existingIds = new Set(existing.map((r) => r.id));
-      const added = incoming.filter((r) => !existingIds.has(r.id));
+      const added = incoming.reports.filter((r) => !existingIds.has(r.id));
       const merged = [...added, ...existing];
       saveReports(merged);
       onReceived(merged);
+
+      const existingCases = loadCases();
+      const existingCaseIds = new Set(existingCases.map((item) => item.id));
+      const addedCases = incoming.cases.filter((item) => !existingCaseIds.has(item.id));
+      const mergedCases = [...addedCases, ...existingCases];
+      saveCases(mergedCases);
+      onCasesReceived?.(mergedCases);
+
       setRecvMsg(
-        `Imported ${incoming.length} record(s) (${added.length} new). Your log is now in sync on this device.`,
+        `Imported ${incoming.reports.length} report(s) and ${incoming.cases.length} case(s) (${added.length + addedCases.length} new). Your log is now in sync on this device.`,
       );
       setRecvRaw("");
     } catch {
