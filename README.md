@@ -19,37 +19,45 @@ prepare, submit, and track platform takedown reports.
 
 ---
 
-## Core architectural guarantee: zero-knowledge, client-side only
+## Core architectural guarantee: client-side only
 
 This application runs **entirely in the browser**. It is configured for Next.js
 [static export](https://nextjs.org/docs/app/guides/static-exports) (`output:
 "export"`), so there is **no server runtime** that could receive, process, or
-store any uploaded file.
+store any data.
 
-- **Images never leave the device.** Files are fingerprinted locally with the
+- **No images needed, and files never leave the device.** The flow works with
+  links. Fingerprinting a file is optional and happens locally with the
   browser's [Web Crypto API](https://developer.mozilla.org/docs/Web/API/Web_Crypto_API)
-  (SHA-256). The raw image bytes are read into memory and discarded — never
-  uploaded or transmitted.
-- **No accounts, no telemetry.** There is no sign-up and no cloud database.
-- **Your case log lives only in `localStorage`** and can be permanently deleted
-  by you at any time.
-- **Cross-device sync is end-to-end encrypted.** The "Sync to Phone" feature
-  encrypts your log with AES-GCM (key derived from your passphrase via PBKDF2)
-  and renders it as a QR code. The data transfers device-to-device with no
-  cloud account and no server copy.
+  (SHA-256); the file is never uploaded or displayed.
+- **No accounts, no analytics, no telemetry.** There is no sign-up and no
+  cloud database, and no user data is placed in any network request.
+- **The case log lives only in `localStorage`, unencrypted.** It is readable
+  by anyone using the same browser profile, which matters on a shared device.
+  The UI says so and offers "Delete everything" (with confirmation). Name and
+  email typed for a report are kept in memory only and are never stored.
+- **Moving the log to another device is encrypted.** The QR code / `.rdsync`
+  file is encrypted with AES-GCM (key from a passphrase of at least 6
+  characters via PBKDF2). There is no default passphrase.
+- **Platform sending is simulated.** Nothing is sent to any platform; the UI
+  labels it "simulated". Manual routes are copied and submitted by the person
+  on the official form.
 
 ## Features
 
-| Module | What it does |
+| Area | What it does |
 | --- | --- |
-| **1. Zero-Knowledge Evidence** | Select an image; a SHA-256 fingerprint is computed locally and displayed, with a clear "Your file never leaves this device" disclaimer. |
-| **2. Dynamic Triage & DSA Templating** | A multi-step intake form asks where the content is hosted and auto-populates a standardized EU Digital Services Act (Reg. (EU) 2022/2065, Art. 16) takedown notice with placeholders for the hash, date, and platform. Fully editable before submission. |
-| **3. Automated API Dispatch (mocked)** | "Submit Report" simulates an automated Notice-and-Action API call with a 2-second loading state and a success confirmation. For **closed platforms**, it generates a pre-filled text block with a "Copy to Clipboard & Open Official Form" action. |
-| **4. Encrypted Local Follow-Up Log & QR Sync** | A dashboard tracks report status in `localStorage`. "Sync to Phone" encrypts the log and shows it as a QR code for cloud-free multi-device transfer. |
+| **Guided case (`/case`)** | Five stages (below). Records where the content appears (links only), lets the person decide what to do (report now, keep a record only, talk to someone first, not now), suggests reporting routes per platform, prepares the texts once, shows exactly what each recipient would receive, and saves everything locally. Save-and-leave and resume at any step. |
+| **Case log (`/dashboard`)** | Tracks each report's status, reference and expected answer date; shows a reminder text when no answer has arrived, a review-request text when a report is declined, and records escalations. "It appeared again" starts a new report without touching earlier ones. |
+| **Move to another device** | Encrypted QR code or `.rdsync` file, passphrase required. |
+| **Safety** | Quick exit on every page (button or Esc twice outside form fields), discreet mode (plain tab icon), neutral tab title "NEST", English with Spanish backup. |
+
+`/report` (the former single-report flow) now redirects to `/case`.
 
 ## User flow (stages)
 
-`Discover & Assess` → `Reporting Pathway Identification` → `Report Preparation` → `Follow-up`
+`Discover & assess` → `Decide whether to seek help` → `Reporting pathway` →
+`Prepare & submit` → `Follow-up & support`
 
 ## Tech stack
 
@@ -105,53 +113,52 @@ rejection, QR-capacity sizing, and the large-log file-fallback path.
 
 ## Verifying the privacy guarantee
 
-Open your browser's DevTools → **Network** tab, then upload an image and submit a
-report. You will see **no outbound request carrying the image or report data** —
-all processing is local. This is the "network inspection" check described in the
-project's evaluation plan.
+Open your browser's DevTools → **Network** tab, then go through a case and
+"send" it. You will see **no outbound request carrying case data**: all
+processing is local. Links to official forms open in a new tab without a
+referrer and carry no case data (the text is copied to the clipboard instead).
 
 ## Project structure
 
 ```
 src/
   app/
-    layout.tsx          # Root layout, persistent disclaimer, header
-    page.tsx            # Home — Discover & Assess
-    report/page.tsx     # Intake → DSA template → dispatch
-    dashboard/page.tsx  # Encrypted local follow-up log + QR sync
-    globals.css         # Trauma-informed theme tokens
+    layout.tsx          # Root layout: header, footer, disclaimer, quick exit
+    page.tsx            # Home
+    case/page.tsx       # Guided five-stage case
+    dashboard/page.tsx  # Case log + move to another device
+    report/page.tsx     # Redirect to /case (old links keep working)
+    globals.css         # Theme tokens and component classes
   components/
-    EvidenceModule.tsx    # Local SHA-256 hashing UI
-    DispatchPanel.tsx     # Mocked API dispatch / closed-platform copy flow
-    SyncPanel.tsx         # Encrypted QR sync (send/receive)
-    StageIndicator.tsx    # 4-stage progress indicator
-    SiteHeader.tsx
+    EvidenceModule.tsx       # Optional local file fingerprint
     PersistentDisclaimer.tsx
+    QuickExit.tsx
+    SiteFooter.tsx
+    SiteHeader.tsx           # Navigation, language, discreet mode
+    StageIndicator.tsx       # Five-stage progress (compact on phones)
+    SupportDirectory.tsx     # Spain directory + EU numbers (unverified)
+    SyncPanel.tsx            # Encrypted QR / file transfer
+  data/
+    directory.es.ts     # Spain support directory (unverified candidates)
   lib/
+    caseRoutes.ts       # Route suggestions; merging keeps earlier choices
+    dictionary.en.ts    # English strings (default, complete)
+    dictionary.es.ts    # Spanish strings (backup; falls back to English)
+    discreet.ts         # Discreet mode
     hashing.ts          # Web Crypto SHA-256 fingerprinting
-    platforms.ts        # Platform catalog (api vs. closed dispatch)
-    template.ts         # DSA Notice-and-Action templating engine
-    storage.ts          # localStorage CRUD + AES-GCM encryption for sync
+    i18n.ts             # t(), language switching, date formatting
+    platforms.ts        # Platform catalog (simulated vs. manual sending)
+    storage.ts          # localStorage CRUD + AES-GCM encryption for transfer
+    template.ts         # Notice texts sent to platforms (English)
 ```
 
 ## Disclaimer
 
-This is a prototype / MVP built for a defined pilot context. Support resources
-and platform endpoints should be verified with accredited regional
-organisations before any real-world deployment. The dispatch layer is
-**mocked** — no reports are actually sent to platforms.
-
-## Guided multi-platform case flow
-
-The `/case` route provides one guided, locally saved Spain-pilot journey:
-
-1. Discover & assess
-2. Decide whether to seek help
-3. Reporting pathway
-4. Prepare & submit
-5. Follow-up & support
-
-The existing `/report` route remains available as a quick single-platform path. All case data stays in `localStorage`, and encrypted sync includes both cases and reports. Platform dispatch remains mocked. The support directory contains unverified candidates only and must be reviewed with partner organisations before pilot use.
+This is a prototype / MVP built for a defined pilot context (Spain). Legal
+content, support resources and platform endpoints are marked "to be verified
+with a partner organisation" and must be verified before any real-world use.
+Sending is **simulated**: no reports are actually sent to platforms. Spanish
+copy marked `TODO(review-es)` needs review by a Spanish partner.
 
 ## About the project
 

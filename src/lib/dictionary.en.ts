@@ -37,6 +37,80 @@ export const en = {
   progressLabel: "Your progress",
 
   /* ------------------------------------------------------------------ */
+  /* Header, footer, disclaimer                                          */
+  /* ------------------------------------------------------------------ */
+  skipToContent: "Skip to main content",
+  navLabel: "Main",
+  navMenu: "Menu",
+  navStart: "Start or continue",
+  navCaseLog: "My case log",
+  navSupport: "Support",
+  navPrivacy: "Privacy",
+  discreetModeHint: "Shows a plain tab icon. The tab title is always the neutral “NEST”.",
+  footerNavLabel: "Footer",
+  footerHome: "Home",
+  footerHow: "How it works",
+  footerQuestions: "Questions",
+  footerTagline: "Clear steps, at your own pace. Everything stays on your device.",
+  footerDisclaimer: "NEST does not give legal or medical advice and cannot guarantee that content is removed.",
+  disclaimerLabel: "Important information",
+  disclaimerText:
+    "NEST does not give legal or medical advice and cannot guarantee that content is removed. Platforms and authorities make those decisions. If you are in immediate danger, call 112.",
+  disclaimerDismiss: "I understand",
+
+  /* ------------------------------------------------------------------ */
+  /* File fingerprint (optional)                                         */
+  /* ------------------------------------------------------------------ */
+  evidenceIntro:
+    "If you already have the file, NEST can create a fingerprint of it: a code that identifies this exact file, so you can later show it is the same one.",
+  evidenceStaysLocal: "The file stays on this device. It is never uploaded or shown.",
+  evidenceChoose: "Choose a file",
+  evidenceBusy: "Working on this device…",
+  evidenceError: "This file could not be read on this device. You can continue without a fingerprint.",
+  evidenceDone: "Fingerprint created",
+  evidenceRemove: "Remove",
+  evidenceFile: "File: {name} ({size}). Only the fingerprint is kept.",
+  evidenceShowCode: "Show the fingerprint code",
+  evidenceTech: "SHA-256 hash, calculated in your browser.",
+
+  /* ------------------------------------------------------------------ */
+  /* Move to another device                                              */
+  /* ------------------------------------------------------------------ */
+  syncTitle: "Move your case to another device",
+  syncIntro:
+    "For example from a shared laptop to your own phone. Your case is locked with a passphrase you choose, then moved as a QR code or a file. No account and no server.",
+  syncTech:
+    "The data is encrypted on this device with AES-GCM, using a key made from your passphrase (PBKDF2). The QR code or file cannot be read without the passphrase.",
+  syncSend: "Send to another device",
+  syncReceive: "Receive from another device",
+  syncClose: "Close",
+  syncSendStep1: "Choose a passphrase you will remember.",
+  syncSendStep2: "Scan the QR code with your other device, or save the file.",
+  syncSendStep3: "On the other device, open NEST › My case log › Receive, and type the same passphrase.",
+  syncPassphrase: "Passphrase",
+  syncPassphraseHint: "At least {min} characters. Don't write it down next to the file.",
+  syncShow: "Show",
+  syncHide: "Hide",
+  syncPrepare: "Lock and prepare",
+  syncPrepareAgain: "Prepare again",
+  syncPreparing: "Locking…",
+  syncPrepareError: "This could not be prepared on this device.",
+  syncQrLabel: "Locked copy of your case log",
+  syncQrText: "Scan this with your other device's camera, then paste the text on its Receive screen with the same passphrase.",
+  syncDownloadInstead: "Save as a file instead",
+  syncTooBig: "Your case log is too big for one QR code. Save it as a file instead.",
+  syncDownload: "Save locked file",
+  syncFileAdvice:
+    "Move the file directly to your other device, for example with a cable or nearby sharing, and delete it afterwards. Sending it through a messaging or cloud service stores a copy there (still locked).",
+  syncReceiveIntro: "Type the passphrase you chose, then choose the saved file. Older backups made without a passphrase: leave it empty.",
+  syncChooseFile: "Choose the saved file",
+  syncPasteTitle: "I scanned a QR code instead",
+  syncPasteLabel: "Paste the text from the QR code",
+  syncImport: "Import",
+  syncImported: "Imported {reports} report(s) and {cases} case(s) ({added} new).",
+  syncImportError: "This could not be opened. Check the passphrase and that the whole file or code was used.",
+
+  /* ------------------------------------------------------------------ */
   /* Home                                                                */
   /* ------------------------------------------------------------------ */
   homeHeroTitle: "You decide what happens next.",

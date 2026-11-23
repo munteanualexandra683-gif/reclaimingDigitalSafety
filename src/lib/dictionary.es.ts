@@ -38,6 +38,74 @@ export const es: Partial<typeof en> = {
   stageOf: "Paso {current} de {total}",
   progressLabel: "Tu progreso",
 
+  /* Header, footer, disclaimer */
+  skipToContent: "Saltar al contenido principal",
+  navLabel: "Principal",
+  navMenu: "Menú",
+  navStart: "Empezar o continuar",
+  navCaseLog: "Mi registro",
+  navSupport: "Apoyo",
+  navPrivacy: "Privacidad",
+  discreetModeHint: "Muestra un icono de pestaña neutro. El título de la pestaña es siempre «NEST».",
+  footerNavLabel: "Pie de página",
+  footerHome: "Inicio",
+  footerHow: "Cómo funciona",
+  footerQuestions: "Preguntas",
+  footerTagline: "Pasos claros, a tu ritmo. Todo se queda en tu dispositivo.",
+  footerDisclaimer: "NEST no ofrece asesoramiento legal ni médico y no puede garantizar que se retire el contenido.",
+  disclaimerLabel: "Información importante",
+  disclaimerText:
+    "NEST no ofrece asesoramiento legal ni médico y no puede garantizar que se retire el contenido. Esas decisiones las toman las plataformas y las autoridades. Si estás en peligro inmediato, llama al 112.",
+  disclaimerDismiss: "Entendido",
+
+  /* File fingerprint */
+  evidenceIntro:
+    "Si ya tienes el archivo, NEST puede crear una huella: un código que identifica ese archivo exacto, para poder demostrar más adelante que es el mismo.",
+  evidenceStaysLocal: "El archivo se queda en este dispositivo. Nunca se sube ni se muestra.",
+  evidenceChoose: "Elegir un archivo",
+  evidenceBusy: "Procesando en este dispositivo…",
+  evidenceError: "No se ha podido leer este archivo en este dispositivo. Puedes continuar sin huella.",
+  evidenceDone: "Huella creada",
+  evidenceRemove: "Quitar",
+  evidenceFile: "Archivo: {name} ({size}). Solo se guarda la huella.",
+  evidenceShowCode: "Ver el código de la huella",
+  evidenceTech: "Hash SHA-256, calculado en tu navegador.",
+
+  /* Move to another device */
+  syncTitle: "Pasar tu caso a otro dispositivo",
+  syncIntro:
+    "Por ejemplo, de un portátil compartido a tu propio móvil. Tu caso se bloquea con una contraseña que eliges y se pasa como código QR o como archivo. Sin cuenta y sin servidor.",
+  syncTech:
+    "Los datos se cifran en este dispositivo con AES-GCM, con una clave creada a partir de tu contraseña (PBKDF2). El código QR o el archivo no se pueden leer sin la contraseña.",
+  syncSend: "Enviar a otro dispositivo",
+  syncReceive: "Recibir de otro dispositivo",
+  syncClose: "Cerrar",
+  syncSendStep1: "Elige una contraseña que vayas a recordar.",
+  syncSendStep2: "Escanea el código QR con tu otro dispositivo o guarda el archivo.",
+  syncSendStep3: "En el otro dispositivo, abre NEST › Mi registro › Recibir y escribe la misma contraseña.",
+  syncPassphrase: "Contraseña",
+  syncPassphraseHint: "Al menos {min} caracteres. No la apuntes junto al archivo.",
+  syncShow: "Mostrar",
+  syncHide: "Ocultar",
+  syncPrepare: "Bloquear y preparar",
+  syncPrepareAgain: "Preparar de nuevo",
+  syncPreparing: "Bloqueando…",
+  syncPrepareError: "No se ha podido preparar en este dispositivo.",
+  syncQrLabel: "Copia bloqueada de tu registro",
+  syncQrText: "Escanéalo con la cámara de tu otro dispositivo y pega el texto en su pantalla Recibir con la misma contraseña.",
+  syncDownloadInstead: "Guardar como archivo",
+  syncTooBig: "Tu registro es demasiado grande para un solo código QR. Guárdalo como archivo.",
+  syncDownload: "Guardar archivo bloqueado",
+  syncFileAdvice:
+    "Pasa el archivo directamente a tu otro dispositivo, por ejemplo con un cable o con el envío cercano, y bórralo después. Si lo envías por una app de mensajería o por la nube, se guarda una copia allí (aunque sigue bloqueada).",
+  syncReceiveIntro: "Escribe la contraseña que elegiste y elige el archivo guardado. Copias antiguas hechas sin contraseña: déjala vacía.",
+  syncChooseFile: "Elegir el archivo guardado",
+  syncPasteTitle: "He escaneado un código QR",
+  syncPasteLabel: "Pega el texto del código QR",
+  syncImport: "Importar",
+  syncImported: "Se han importado {reports} denuncia(s) y {cases} caso(s) ({added} nuevos).",
+  syncImportError: "No se ha podido abrir. Comprueba la contraseña y que se haya usado el archivo o el código completo.",
+
   /* Home */
   homeHeroTitle: "Tú decides qué pasa ahora.",
   homeHeroText:

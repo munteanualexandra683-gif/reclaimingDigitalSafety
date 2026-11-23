@@ -48,26 +48,26 @@ section[id] {
   .rds-btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3
       font-medium text-white shadow-sm transition-all duration-200 hover:bg-accent-hover
-      hover:shadow hover:scale-[1.01] active:scale-[0.99] focus-visible:outline-none
+      hover:shadow hover:scale-[1.01] active:scale-[0.99]
       disabled:cursor-not-allowed disabled:bg-calm-300 disabled:shadow-none;
   }
 
   .rds-btn-secondary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl border border-calm-300
       bg-white px-6 py-3 font-medium text-deep-indigo transition-all duration-200
-      hover:bg-calm-50 hover:border-calm-400 focus-visible:outline-none
+      hover:bg-calm-50 hover:border-calm-400
       disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .rds-btn-warm {
     @apply inline-flex items-center justify-center gap-2 rounded-xl border border-warm-300
       bg-white px-5 py-2.5 text-sm font-medium text-deep-indigo transition-all duration-200
-      hover:bg-warm-100/70 hover:border-warm-300 focus-visible:outline-none;
+      hover:bg-warm-100/70 hover:border-warm-300;
   }
 
   .rds-input {
     @apply w-full rounded-xl border border-calm-200 bg-calm-50 px-4 py-3 text-calm-900
-      placeholder:text-calm-400 transition-colors focus:border-accent focus:bg-white
+      placeholder:text-calm-500 transition-colors focus:border-accent focus:bg-white
       focus:outline-none;
   }
 

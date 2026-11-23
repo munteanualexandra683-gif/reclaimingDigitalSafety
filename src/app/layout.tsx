@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PersistentDisclaimer from "@/components/PersistentDisclaimer";
 import QuickExit from "@/components/QuickExit";
+import SkipLink from "@/components/SkipLink";
 
 export const metadata: Metadata = {
   // Neutral on purpose: the tab title and description are visible in browser
@@ -20,14 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-white font-sans text-deep-indigo antialiased selection:bg-lavender-200 selection:text-deep-indigo">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-white focus:px-4 focus:py-2 focus:text-accent focus:shadow-card focus:ring-2 focus:ring-accent"
-        >
-          Skip to main content
-        </a>
+        <SkipLink />
         <SiteHeader />
-        <main id="main">
+        <main id="main" tabIndex={-1} className="focus:outline-none">
           {children}
         </main>
         <SiteFooter />

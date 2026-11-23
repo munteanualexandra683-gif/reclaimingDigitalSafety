@@ -1,10 +1,16 @@
 /**
- * Encrypted local follow-up log.
+ * Local case log.
  *
- * Case records are stored ONLY in the browser's localStorage. Nothing is sent
- * to any server. For the cross-device "Sync to Phone" feature, the log is
- * encrypted with AES-GCM (derived from a passphrase via PBKDF2) using the Web
- * Crypto API before being encoded into a QR payload.
+ * Cases and reports are stored ONLY in this browser's localStorage, in plain
+ * (unencrypted) JSON. Nothing is sent to any server. Anyone using the same
+ * browser profile can read them, so the UI explains this and offers deletion.
+ *
+ * Moving the log to another device ("Move your case to another device") is
+ * encrypted with AES-GCM, using a key derived from a passphrase via PBKDF2
+ * (Web Crypto API), before it is encoded into a QR code or a .rdsync file.
+ *
+ * Storage keys ("rds.*") and the sync format are intentionally unchanged
+ * since the rename to NEST, so existing saved cases still load.
  */
 
 export type ReportStatus =
