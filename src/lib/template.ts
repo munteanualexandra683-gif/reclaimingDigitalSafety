@@ -163,7 +163,7 @@ Please check the official AEPD page for current access requirements before submi
 export function buildStopNciiHandoff(): string {
   return `STOPNCII HAND-OFF
 
-StopNCII is a service that may let you create a fingerprint (hash) of an intimate image on your own device, without uploading the image, and share only that fingerprint with participating platforms. NEST does not create or send this for you: you do it yourself on the StopNCII website, only if you have the image and choose to.
+StopNCII is a service that may let you create a fingerprint (hash) of an intimate image on your own device, without uploading the image, and share only that fingerprint with participating platforms. N.E.S.T. does not create or send this for you: you do it yourself on the StopNCII website, only if you have the image and choose to.
 
 If the image was made when you were under 18, Take It Down is the service for that situation.
 

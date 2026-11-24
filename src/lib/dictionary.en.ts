@@ -6,7 +6,8 @@ export const en = {
   /* ------------------------------------------------------------------ */
   /* Common                                                              */
   /* ------------------------------------------------------------------ */
-  appName: "NEST",
+  appName: "N.E.S.T.",
+  appTagline: "Navigate · Evidence · Support · Track",
   quickExit: "Quick exit",
   quickExitAdvice: "Leave this site right away. You can also press Esc twice.",
   quickExitExplain:
@@ -51,17 +52,17 @@ export const en = {
   footerHow: "How it works",
   footerQuestions: "Questions",
   footerTagline: "Clear steps, at your own pace. Everything stays on your device.",
-  footerDisclaimer: "NEST does not give legal or medical advice and cannot guarantee that content is removed.",
+  footerDisclaimer: "N.E.S.T. does not give legal or medical advice and cannot guarantee that content is removed.",
   disclaimerLabel: "Important information",
   disclaimerText:
-    "NEST does not give legal or medical advice and cannot guarantee that content is removed. Platforms and authorities make those decisions. If you are in immediate danger, call 112.",
+    "N.E.S.T. does not give legal or medical advice and cannot guarantee that content is removed. Platforms and authorities make those decisions. If you are in immediate danger, call 112.",
   disclaimerDismiss: "I understand",
 
   /* ------------------------------------------------------------------ */
   /* File fingerprint (optional)                                         */
   /* ------------------------------------------------------------------ */
   evidenceIntro:
-    "If you already have the file, NEST can create a fingerprint of it: a code that identifies this exact file, so you can later show it is the same one.",
+    "If you already have the file, N.E.S.T. can create a fingerprint of it: a code that identifies this exact file, so you can later show it is the same one.",
   evidenceStaysLocal: "The file stays on this device. It is never uploaded or shown.",
   evidenceChoose: "Choose a file",
   evidenceBusy: "Working on this device…",
@@ -85,7 +86,7 @@ export const en = {
   syncClose: "Close",
   syncSendStep1: "Choose a passphrase you will remember.",
   syncSendStep2: "Scan the QR code with your other device, or save the file.",
-  syncSendStep3: "On the other device, open NEST › My case log › Receive, and type the same passphrase.",
+  syncSendStep3: "On the other device, open N.E.S.T. › My case log › Receive, and type the same passphrase.",
   syncPassphrase: "Passphrase",
   syncPassphraseHint: "At least {min} characters. Don't write it down next to the file.",
   syncShow: "Show",
@@ -114,7 +115,7 @@ export const en = {
   /* ------------------------------------------------------------------ */
   homeHeroTitle: "You decide what happens next.",
   homeHeroText:
-    "If an intimate image of you was made or shared without your consent, even one made with AI, NEST helps you take clear, calm steps at your own pace.",
+    "If an intimate image of you was made or shared without your consent, even one made with AI, N.E.S.T. helps you take clear, calm steps at your own pace.",
   homeAlreadyReported: "I've already reported",
   homeTalkFirst: "Talk to someone first",
 
@@ -143,7 +144,7 @@ export const en = {
     "On a shared device: your notes are saved without encryption in this browser. When you are done, use “Delete everything” in your case log, or use a private window.",
   homePrivacyTechTitle: "Technical details",
   homePrivacyTechText:
-    "NEST is a static website: there is no backend, no analytics and no tracking. Your case is kept in the browser's localStorage. If you choose, NEST can create a SHA-256 fingerprint of a file on your device; the file itself is never uploaded. Moving your case to another device uses AES-GCM encryption with a key made from your passphrase (PBKDF2).",
+    "N.E.S.T. is a static website: there is no backend, no analytics and no tracking. Your case is kept in the browser's localStorage. If you choose, N.E.S.T. can create a SHA-256 fingerprint of a file on your device; the file itself is never uploaded. Moving your case to another device uses AES-GCM encryption with a key made from your passphrase (PBKDF2).",
 
   homeSupportTitle: "You don't have to do this alone",
   homeSupportText:
@@ -152,16 +153,16 @@ export const en = {
   homeFaqTitle: "Questions",
   homeFaqUploadQ: "Do I need to upload the image?",
   homeFaqUploadA:
-    "No. NEST works with links and your own description. If you want, you can create a fingerprint of a file you already have; the file stays on your device.",
+    "No. N.E.S.T. works with links and your own description. If you want, you can create a fingerprint of a file you already have; the file stays on your device.",
   homeFaqRemovalQ: "Will the content definitely be removed?",
   homeFaqRemovalA:
     "No one can promise that: the platforms decide. In the EU, platforms have to look at reports of illegal content and tell you what they decided.",
   homeFaqNameQ: "Do I have to give my real name?",
   homeFaqNameA:
-    "A report to a platform normally asks for a name and an email address. You choose what to give, and NEST shows you exactly what each place will receive before anything is sent. Whether a report without your real name is accepted depends on the platform.",
+    "A report to a platform normally asks for a name and an email address. You choose what to give, and N.E.S.T. shows you exactly what each place will receive before anything is sent. Whether a report without your real name is accepted depends on the platform.",
   homeFaqPauseQ: "Can I stop and come back later?",
   homeFaqPauseA:
-    "Yes. NEST saves your case in this browser. Open NEST again on the same device and choose “Continue my case”.",
+    "Yes. N.E.S.T. saves your case in this browser. Open N.E.S.T. again on the same device and choose “Continue my case”.",
 
   /* ------------------------------------------------------------------ */
   /* Guided case (/case)                                                 */
@@ -181,7 +182,7 @@ export const en = {
 
   caseSavedTitle: "Your case is saved",
   caseSavedText:
-    "It is saved in this browser on this device. When you're ready, open NEST again and choose “Continue my case”. Nothing has been sent.",
+    "It is saved in this browser on this device. When you're ready, open N.E.S.T. again and choose “Continue my case”. Nothing has been sent.",
   caseSavedShared:
     "On a shared device, anyone using this browser could open it. You can delete it below, or use Quick exit at any time.",
   caseSavedHome: "Go to the home page",
@@ -251,7 +252,7 @@ export const en = {
     "In the EU, the Digital Services Act requires platforms to review reports about illegal content. Whether an AI-made intimate image is illegal currently depends on national law. An EU directive (2024/1385) must be applied in all member states by June 2027.",
 
   casePrepareIntro:
-    "Describe what happened once; NEST uses it for every report. Then check what each place will receive.",
+    "Describe what happened once; N.E.S.T. uses it for every report. Then check what each place will receive.",
   casePrepareIntroDocument: "Write down what happened. Nothing will be sent.",
   casePrepareGoFollowup: "Continue to follow-up",
   casePrepareSwitchToReport: "I'd like to report after all",
@@ -285,7 +286,7 @@ export const en = {
   caseShareLinks: "the links",
   caseShareDescription: "your description",
   caseShareFingerprint: "the file fingerprint",
-  caseShareHash: "nothing from NEST. You use StopNCII yourself, only if you choose to",
+  caseShareHash: "nothing from N.E.S.T. You use StopNCII yourself, only if you choose to",
   caseSend: "Send selected ({count})",
   caseSending: "Preparing…",
   caseSendSimulated: "This is a prototype: nothing is really sent. Sending is simulated.",
@@ -300,12 +301,12 @@ export const en = {
 
   caseFollowNextTitle: "What happens next",
   caseFollowNextText:
-    "Platforms often reply within a few days, but it can take longer. NEST sets a reminder date 7 days after you send. In your case log you can note answers, get a reminder message, or ask for a review if a report is declined.",
+    "Platforms often reply within a few days, but it can take longer. N.E.S.T. sets a reminder date 7 days after you send. In your case log you can note answers, get a reminder message, or ask for a review if a report is declined.",
   caseFollowOpenLog: "Open my case log",
   caseFollowSupportText: "Support services can help with how you feel, and with legal questions.",
   caseFollowShowSupport: "Show support services",
   caseAgainTitle: "It appeared again",
-  caseAgainText: "Add the new link and NEST will prepare a new report. Reports you already made stay as they are.",
+  caseAgainText: "Add the new link and N.E.S.T. will prepare a new report. Reports you already made stay as they are.",
   caseAgainLink: "New link",
   caseAgainAdd: "Add and prepare a new report",
   caseRepeatNote: "Appeared again",
@@ -356,7 +357,7 @@ export const en = {
   logCaseNoReports: "No reports yet. Your notes are saved and you can continue whenever you want.",
   logCaseDeleted: "The case was deleted from this browser.",
   logOtherReports: "Other reports",
-  logAgainText: "Found it somewhere new? Add the new link and NEST will prepare a new report.",
+  logAgainText: "Found it somewhere new? Add the new link and N.E.S.T. will prepare a new report.",
   logAgainButton: "Add a new link",
 
   logStatus: "Status",

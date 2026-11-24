@@ -43,6 +43,11 @@ export default function HomePage() {
       <section className="overflow-hidden border-b border-calm-200 bg-white">
         <div className="mx-auto grid max-w-6xl items-center gap-4 px-4 sm:px-6 lg:grid-cols-[1fr_26rem]">
           <div className="relative z-10 py-14 sm:py-24 lg:pl-10">
+            <p className="mb-3 flex flex-wrap items-center gap-x-2 text-xs font-semibold tracking-wider text-calm-600 sm:text-sm">
+              <span className="font-display font-semibold tracking-normal text-ink">N.E.S.T.</span>
+              <span className="text-calm-400" aria-hidden>·</span>
+              <span className="font-normal text-calm-600">{t("appTagline")}</span>
+            </p>
             <h1 className="max-w-[14ch] text-[2.5rem] font-medium leading-[1.08] text-ink sm:text-[4rem]">
               {t("homeHeroTitle")}
             </h1>

@@ -9,7 +9,8 @@ import type { en } from "./dictionary.en";
  */
 export const es: Partial<typeof en> = {
   /* Common */
-  appName: "NEST",
+  appName: "N.E.S.T.",
+  appTagline: "Navigate · Evidence · Support · Track",
   quickExit: "Salida rápida",
   quickExitAdvice: "Sal de esta web al instante. También puedes pulsar Esc dos veces.",
   quickExitExplain:
@@ -51,15 +52,15 @@ export const es: Partial<typeof en> = {
   footerHow: "Cómo funciona",
   footerQuestions: "Preguntas",
   footerTagline: "Pasos claros, a tu ritmo. Todo se queda en tu dispositivo.",
-  footerDisclaimer: "NEST no ofrece asesoramiento legal ni médico y no puede garantizar que se retire el contenido.",
+  footerDisclaimer: "N.E.S.T. no ofrece asesoramiento legal ni médico y no puede garantizar que se retire el contenido.",
   disclaimerLabel: "Información importante",
   disclaimerText:
-    "NEST no ofrece asesoramiento legal ni médico y no puede garantizar que se retire el contenido. Esas decisiones las toman las plataformas y las autoridades. Si estás en peligro inmediato, llama al 112.",
+    "N.E.S.T. no ofrece asesoramiento legal ni médico y no puede garantizar que se retire el contenido. Esas decisiones las toman las plataformas y las autoridades. Si estás en peligro inmediato, llama al 112.",
   disclaimerDismiss: "Entendido",
 
   /* File fingerprint */
   evidenceIntro:
-    "Si ya tienes el archivo, NEST puede crear una huella: un código que identifica ese archivo exacto, para poder demostrar más adelante que es el mismo.",
+    "Si ya tienes el archivo, N.E.S.T. puede crear una huella: un código que identifica ese archivo exacto, para poder demostrar más adelante que es el mismo.",
   evidenceStaysLocal: "El archivo se queda en este dispositivo. Nunca se sube ni se muestra.",
   evidenceChoose: "Elegir un archivo",
   evidenceBusy: "Procesando en este dispositivo…",
@@ -81,7 +82,7 @@ export const es: Partial<typeof en> = {
   syncClose: "Cerrar",
   syncSendStep1: "Elige una contraseña que vayas a recordar.",
   syncSendStep2: "Escanea el código QR con tu otro dispositivo o guarda el archivo.",
-  syncSendStep3: "En el otro dispositivo, abre NEST › Mi registro › Recibir y escribe la misma contraseña.",
+  syncSendStep3: "En el otro dispositivo, abre N.E.S.T. › Mi registro › Recibir y escribe la misma contraseña.",
   syncPassphrase: "Contraseña",
   syncPassphraseHint: "Al menos {min} caracteres. No la apuntes junto al archivo.",
   syncShow: "Mostrar",
@@ -108,7 +109,7 @@ export const es: Partial<typeof en> = {
   /* Home */
   homeHeroTitle: "Tú decides qué pasa ahora.",
   homeHeroText:
-    "Si alguien creó o compartió una imagen íntima tuya sin tu consentimiento, aunque esté hecha con IA, NEST te ayuda a dar pasos claros y tranquilos, a tu ritmo.",
+    "Si alguien creó o compartió una imagen íntima tuya sin tu consentimiento, aunque esté hecha con IA, N.E.S.T. te ayuda a dar pasos claros y tranquilos, a tu ritmo.",
   homeAlreadyReported: "Ya lo he denunciado", // TODO(review-es)
   homeTalkFirst: "Hablar antes con alguien",
 
@@ -137,7 +138,7 @@ export const es: Partial<typeof en> = {
     "En un dispositivo compartido: tus notas se guardan sin cifrar en este navegador. Cuando termines, usa «Borrar todo» en tu registro o usa una ventana privada.",
   homePrivacyTechTitle: "Detalles técnicos",
   homePrivacyTechText:
-    "NEST es una web estática: no hay servidor, ni analítica, ni seguimiento. Tu caso se guarda en el localStorage del navegador. Si quieres, NEST puede crear una huella SHA-256 de un archivo de tu dispositivo; el archivo nunca se sube. Para pasar tu caso a otro dispositivo se usa cifrado AES-GCM con una clave creada a partir de tu contraseña (PBKDF2).",
+    "N.E.S.T. es una web estática: no hay servidor, ni analítica, ni seguimiento. Tu caso se guarda en el localStorage del navegador. Si quieres, N.E.S.T. puede crear una huella SHA-256 de un archivo de tu dispositivo; el archivo nunca se sube. Para pasar tu caso a otro dispositivo se usa cifrado AES-GCM con una clave creada a partir de tu contraseña (PBKDF2).",
 
   homeSupportTitle: "No tienes que hacerlo sola", // TODO(review-es): gendered "sola"; confirm tone with partner
   homeSupportText:
@@ -146,16 +147,16 @@ export const es: Partial<typeof en> = {
   homeFaqTitle: "Preguntas",
   homeFaqUploadQ: "¿Tengo que subir la imagen?",
   homeFaqUploadA:
-    "No. NEST funciona con enlaces y con tu propia descripción. Si quieres, puedes crear una huella de un archivo que ya tengas; el archivo se queda en tu dispositivo.",
+    "No. N.E.S.T. funciona con enlaces y con tu propia descripción. Si quieres, puedes crear una huella de un archivo que ya tengas; el archivo se queda en tu dispositivo.",
   homeFaqRemovalQ: "¿Seguro que se retirará el contenido?",
   homeFaqRemovalA:
     "Nadie puede prometerlo: deciden las plataformas. En la UE, las plataformas tienen que revisar las denuncias de contenido ilegal y decirte qué han decidido.",
   homeFaqNameQ: "¿Tengo que dar mi nombre real?",
   homeFaqNameA:
-    "Una denuncia a una plataforma normalmente pide un nombre y un correo electrónico. Tú eliges qué dar, y NEST te muestra exactamente qué recibirá cada sitio antes de enviar nada. Que se acepte una denuncia sin tu nombre real depende de la plataforma.",
+    "Una denuncia a una plataforma normalmente pide un nombre y un correo electrónico. Tú eliges qué dar, y N.E.S.T. te muestra exactamente qué recibirá cada sitio antes de enviar nada. Que se acepte una denuncia sin tu nombre real depende de la plataforma.",
   homeFaqPauseQ: "¿Puedo parar y volver más tarde?",
   homeFaqPauseA:
-    "Sí. NEST guarda tu caso en este navegador. Vuelve a abrir NEST en el mismo dispositivo y elige «Continuar mi caso».",
+    "Sí. N.E.S.T. guarda tu caso en este navegador. Vuelve a abrir N.E.S.T. en el mismo dispositivo y elige «Continuar mi caso».",
 
   /* Guided case (/case) */
   caseNavLabel: "Pasos del caso",
@@ -173,7 +174,7 @@ export const es: Partial<typeof en> = {
 
   caseSavedTitle: "Tu caso está guardado",
   caseSavedText:
-    "Está guardado en este navegador, en este dispositivo. Cuando quieras, vuelve a abrir NEST y elige «Continuar mi caso». No se ha enviado nada.",
+    "Está guardado en este navegador, en este dispositivo. Cuando quieras, vuelve a abrir N.E.S.T. y elige «Continuar mi caso». No se ha enviado nada.",
   caseSavedShared:
     "En un dispositivo compartido, cualquiera que use este navegador podría abrirlo. Puedes borrarlo aquí abajo o usar la salida rápida en cualquier momento.",
   caseSavedHome: "Ir a la página de inicio",
@@ -243,7 +244,7 @@ export const es: Partial<typeof en> = {
     "En la UE, la Ley de Servicios Digitales obliga a las plataformas a revisar las denuncias de contenido ilegal. Que una imagen íntima hecha con IA sea ilegal depende hoy de la ley de cada país. Una directiva europea (2024/1385) debe aplicarse en todos los Estados miembros antes de junio de 2027.",
 
   casePrepareIntro:
-    "Describe lo ocurrido una sola vez; NEST lo usa en todas las denuncias. Después revisa qué recibirá cada sitio.",
+    "Describe lo ocurrido una sola vez; N.E.S.T. lo usa en todas las denuncias. Después revisa qué recibirá cada sitio.",
   casePrepareIntroDocument: "Anota lo ocurrido. No se enviará nada.",
   casePrepareGoFollowup: "Continuar al seguimiento",
   casePrepareSwitchToReport: "Al final quiero denunciar",
@@ -277,7 +278,7 @@ export const es: Partial<typeof en> = {
   caseShareLinks: "los enlaces",
   caseShareDescription: "tu descripción",
   caseShareFingerprint: "la huella del archivo",
-  caseShareHash: "nada desde NEST. Usas StopNCII tú misma, solo si quieres", // TODO(review-es): gendered "misma"
+  caseShareHash: "nada desde N.E.S.T. Usas StopNCII tú misma, solo si quieres", // TODO(review-es): gendered "misma"
   caseSend: "Enviar seleccionados ({count})",
   caseSending: "Preparando…",
   caseSendSimulated: "Esto es un prototipo: no se envía nada de verdad. El envío es simulado.",
@@ -292,12 +293,12 @@ export const es: Partial<typeof en> = {
 
   caseFollowNextTitle: "Qué pasa ahora",
   caseFollowNextText:
-    "Las plataformas suelen responder en pocos días, pero puede tardar más. NEST pone una fecha de recordatorio 7 días después de enviar. En tu registro puedes anotar respuestas, obtener un mensaje de recordatorio o pedir una revisión si rechazan una denuncia.",
+    "Las plataformas suelen responder en pocos días, pero puede tardar más. N.E.S.T. pone una fecha de recordatorio 7 días después de enviar. En tu registro puedes anotar respuestas, obtener un mensaje de recordatorio o pedir una revisión si rechazan una denuncia.",
   caseFollowOpenLog: "Abrir mi registro",
   caseFollowSupportText: "Los servicios de apoyo pueden ayudarte con cómo te sientes y con dudas legales.",
   caseFollowShowSupport: "Ver servicios de apoyo",
   caseAgainTitle: "Ha vuelto a aparecer",
-  caseAgainText: "Añade el nuevo enlace y NEST preparará una nueva denuncia. Las denuncias que ya hiciste no cambian.",
+  caseAgainText: "Añade el nuevo enlace y N.E.S.T. preparará una nueva denuncia. Las denuncias que ya hiciste no cambian.",
   caseAgainLink: "Nuevo enlace",
   caseAgainAdd: "Añadir y preparar una nueva denuncia",
   caseRepeatNote: "Ha vuelto a aparecer",
@@ -346,7 +347,7 @@ export const es: Partial<typeof en> = {
   logCaseNoReports: "Todavía no hay denuncias. Tus notas están guardadas y puedes continuar cuando quieras.",
   logCaseDeleted: "El caso se ha borrado de este navegador.",
   logOtherReports: "Otras denuncias",
-  logAgainText: "¿Lo has encontrado en otro sitio? Añade el nuevo enlace y NEST preparará una nueva denuncia.",
+  logAgainText: "¿Lo has encontrado en otro sitio? Añade el nuevo enlace y N.E.S.T. preparará una nueva denuncia.",
   logAgainButton: "Añadir un nuevo enlace",
 
   logStatus: "Estado",

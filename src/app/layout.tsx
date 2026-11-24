@@ -8,7 +8,7 @@ import QuickExit from "@/components/QuickExit";
 import SkipLink from "@/components/SkipLink";
 
 // next/font downloads these at build time and serves them from this site, so
-// no request ever goes to a font provider while someone is using NEST.
+// no request ever goes to a font provider while someone is using N.E.S.T.
 const display = Literata({
   subsets: ["latin", "latin-ext"],
   axes: ["opsz"],
@@ -29,8 +29,8 @@ const sans = Atkinson_Hyperlegible_Next({
 export const metadata: Metadata = {
   // Neutral on purpose: the tab title and description are visible in browser
   // history and on shared screens, so they must not reveal what the app is for.
-  title: "NEST",
-  description: "NEST: private notes and next steps, kept on your own device.",
+  title: "N.E.S.T.",
+  description: "N.E.S.T.: private notes and next steps, kept on your own device.",
 };
 
 export default function RootLayout({
@@ -40,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     // suppressHydrationWarning: browser extensions (e.g. Grammarly) add attributes
-    // to <body> before React loads, and NEST changes <html lang> when the
+    // to <body> before React loads, and N.E.S.T. changes <html lang> when the
     // language is switched. This only ignores attribute differences on these
     // two elements, not their children.
     <html lang="en" suppressHydrationWarning className={`${display.variable} ${sans.variable}`}>

@@ -13,17 +13,6 @@ const NAV_LINKS: { label: TKey; href: string; primary?: boolean }[] = [
   { label: "navPrivacy", href: "/#privacy" },
 ];
 
-/** A closed exercise book: neutral on a shared screen. */
-function Logo() {
-  return (
-    <svg aria-hidden width="22" height="26" viewBox="0 0 22 26" fill="none" className="flex-none">
-      <rect x="1" y="1" width="20" height="24" rx="2.5" fill="#fff" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M6.5 1.8v22.4" stroke="#B84F68" strokeWidth="1.6" />
-      <path d="M10 8h7M10 12h7M10 16h4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" opacity=".55" />
-    </svg>
-  );
-}
-
 export default function SiteHeader() {
   const t = useT();
   const language = useLanguage();
@@ -74,9 +63,8 @@ export default function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5 font-display text-xl font-semibold tracking-wide text-ink">
-          <Logo />
-          <span>{t("appName")}</span>
+        <Link href="/" className="font-display text-xl font-semibold tracking-wide text-ink">
+          {t("appName")}
         </Link>
 
         {/* Desktop */}
