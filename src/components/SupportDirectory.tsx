@@ -13,13 +13,13 @@ export default function SupportDirectory({ showEu = true }: { showEu?: boolean }
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h3 className="text-base font-semibold text-calm-900">{t("supportSpainTitle")}</h3>
+        <h3 className="text-base font-semibold text-ink">{t("supportSpainTitle")}</h3>
         <ul className="mt-3 grid gap-3 sm:grid-cols-2">
           {DIRECTORY_ES.map((entry) => (
-            <li key={entry.id} className="rounded-xl border border-calm-200 bg-white p-4">
+            <li key={entry.id} className="rounded-xl border border-calm-200 bg-white p-5">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <strong className="text-sm text-calm-900">{entry.name}</strong>
-                <span className="rounded-full bg-lavender-100 px-2 py-0.5 text-xs text-lavender-800">
+                <span className="rounded-full border border-calm-300 px-2 py-0.5 text-xs text-calm-700">
                   {t("verifiedPending")}
                 </span>
               </div>
@@ -44,16 +44,16 @@ export default function SupportDirectory({ showEu = true }: { showEu?: boolean }
 
       {showEu && (
         <div>
-          <h3 className="text-base font-semibold text-calm-900">{t("supportEuTitle")}</h3>
+          <h3 className="text-base font-semibold text-ink">{t("supportEuTitle")}</h3>
           <ul className="mt-3 grid gap-3 sm:grid-cols-2">
             {[
               [t("supportEu116006"), t("supportEu116006Text")],
               [t("supportEu116016"), t("supportEu116016Text")],
             ].map(([title, text]) => (
-              <li key={title} className="rounded-xl border border-calm-200 bg-white p-4">
+              <li key={title} className="rounded-xl border border-calm-200 bg-white p-5">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <strong className="text-sm text-calm-900">{title}</strong>
-                  <span className="rounded-full bg-lavender-100 px-2 py-0.5 text-xs text-lavender-800">
+                  <span className="rounded-full border border-calm-300 px-2 py-0.5 text-xs text-calm-700">
                     {t("verifiedPending")}
                   </span>
                 </div>
@@ -64,7 +64,7 @@ export default function SupportDirectory({ showEu = true }: { showEu?: boolean }
         </div>
       )}
 
-      <p className="rounded-xl bg-lavender-50 px-3 py-2 text-xs text-lavender-800">
+      <p className="border-l-2 border-margin pl-3 text-sm text-lavender-800">
         {t("toBeVerified")}
       </p>
     </div>

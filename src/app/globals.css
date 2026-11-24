@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #3F3D56;
+  --paper: #F4F6F5;
+  --grid: #DCE4EA;
+  --ink: #1E2944;
+  --pen: #2D47A8;
+  --margin: #B84F68;
+  --highlight: #EEF07A;
 }
 
 html {
@@ -12,10 +16,40 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  line-height: 1.55;
+}
+
+@layer base {
+  /* Page and section headings are set in the book face; everything you read
+     or type stays in the legibility face. */
+  h1,
+  h2 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--highlight);
+    color: var(--ink);
+  }
+
+  summary {
+    text-underline-offset: 4px;
+  }
+  summary:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Reduced motion preferences */
@@ -28,11 +62,18 @@ body {
   }
 }
 
-/* Reassuring, gentle focus ring for keyboard navigation */
+/* Keyboard focus: a solid pen-blue outline, never hidden. */
 :focus-visible {
-  outline: 3px solid #6C63FF;
+  outline: 3px solid var(--pen);
   outline-offset: 2px;
-  border-radius: 8px;
+  border-radius: 6px;
+}
+
+/* Headings receive focus from code when a step changes (so screen readers
+   announce them); they are not interactive, so they need no ring. */
+h1[tabindex="-1"]:focus,
+h2[tabindex="-1"]:focus {
+  outline: none;
 }
 
 /* Custom section scroll offset for sticky header */
@@ -41,64 +82,80 @@ section[id] {
 }
 
 @layer components {
+  /* A sheet of paper: flat, white, one ruled edge. */
   .rds-card {
-    @apply rounded-2xl border border-calm-200/80 bg-white p-6 shadow-card transition-all duration-200;
+    @apply rounded-xl border border-calm-200 bg-white p-6 transition-colors duration-150;
   }
 
   .rds-btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3
-      font-medium text-white shadow-sm transition-all duration-200 hover:bg-accent-hover
-      hover:shadow hover:scale-[1.01] active:scale-[0.99]
-      disabled:cursor-not-allowed disabled:bg-calm-300 disabled:shadow-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3
+      font-semibold text-white transition-colors duration-150 hover:bg-accent-hover
+      disabled:cursor-not-allowed disabled:bg-calm-300;
   }
 
   .rds-btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-calm-300
-      bg-white px-6 py-3 font-medium text-deep-indigo transition-all duration-200
-      hover:bg-calm-50 hover:border-calm-400
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-calm-300
+      bg-white px-6 py-3 font-semibold text-ink transition-colors duration-150
+      hover:border-calm-500 hover:bg-calm-50
       disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .rds-btn-warm {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-warm-300
-      bg-white px-5 py-2.5 text-sm font-medium text-deep-indigo transition-all duration-200
-      hover:bg-warm-100/70 hover:border-warm-300;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-calm-300
+      bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-150
+      hover:border-calm-500 hover:bg-calm-50;
   }
 
+  /* Inputs sit on the page like a ruled line you write on. */
   .rds-input {
-    @apply w-full rounded-xl border border-calm-200 bg-calm-50 px-4 py-3 text-calm-900
-      placeholder:text-calm-500 transition-colors focus:border-accent focus:bg-white
-      focus:outline-none;
+    @apply w-full rounded-lg border border-calm-300 bg-white px-4 py-3 text-ink
+      placeholder:text-calm-500 transition-colors focus:border-accent focus:outline-none;
   }
 
   .rds-label {
-    @apply mb-1.5 block text-sm font-medium text-calm-700;
+    @apply mb-1.5 block text-sm font-semibold text-calm-800;
   }
 }
 
-/* Subtle animations */
-@keyframes floatGentle {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-6px);
+/* ---------- Notebook motifs ---------- */
+
+/* The woven nest on the home page: each stroke is drawn once, in sequence.
+   This is the page's only ambient motion. */
+.nest-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: nestDraw 1100ms cubic-bezier(0.3, 0.6, 0.2, 1) forwards;
+}
+
+@keyframes nestDraw {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
-@keyframes pulseSubtle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.75;
+@media (prefers-reduced-motion: reduce) {
+  .nest-stroke {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }
 
-.animate-float-gentle {
-  animation: floatGentle 5s ease-in-out infinite;
+/* Highlighter stroke: marks "you are here", nothing else. */
+.nest-highlight {
+  background-image: linear-gradient(
+    transparent 52%,
+    var(--highlight) 52%,
+    var(--highlight) 92%,
+    transparent 92%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.15em;
+  margin: 0 -0.15em;
 }
 
-.animate-pulse-subtle {
-  animation: pulseSubtle 3s ease-in-out infinite;
+@media (forced-colors: active) {
+  .nest-highlight {
+    text-decoration: underline;
+  }
 }

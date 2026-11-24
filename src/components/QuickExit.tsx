@@ -40,7 +40,7 @@ export default function QuickExit() {
     <button
       type="button"
       onClick={quickExit}
-      className="fixed bottom-4 right-4 z-[70] rounded-xl bg-calm-900 px-4 py-3 text-sm font-bold text-white shadow-lg hover:bg-calm-800"
+      className="fixed bottom-4 right-4 z-[70] rounded-full bg-ink px-5 py-3 text-sm font-bold text-white shadow-lift ring-2 ring-white hover:bg-calm-800"
       title={t("quickExitAdvice")}
       aria-describedby="quick-exit-advice"
     >

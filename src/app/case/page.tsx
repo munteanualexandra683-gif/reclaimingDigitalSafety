@@ -365,7 +365,7 @@ export default function CasePage() {
   if (view === "resume") {
     return (
       <div className="mx-auto w-full max-w-2xl px-4 pb-32 pt-10 sm:px-6">
-        <h1 ref={headingRef} tabIndex={-1} className="text-2xl font-semibold text-calm-900">
+        <h1 ref={headingRef} tabIndex={-1} className="text-3xl text-ink">
           {t("caseResumeTitle")}
         </h1>
         <p className="mt-2 text-calm-700">
@@ -392,7 +392,7 @@ export default function CasePage() {
   if (view === "saved") {
     return (
       <div className="mx-auto w-full max-w-2xl px-4 pb-32 pt-10 sm:px-6">
-        <h1 ref={headingRef} tabIndex={-1} className="text-2xl font-semibold text-calm-900">
+        <h1 ref={headingRef} tabIndex={-1} className="text-3xl text-ink">
           {t("caseSavedTitle")}
         </h1>
         <p className="mt-2 text-calm-700">{t("caseSavedText")}</p>
@@ -443,7 +443,7 @@ export default function CasePage() {
         </p>
       )}
 
-      <h1 ref={headingRef} tabIndex={-1} className="mb-2 text-2xl font-semibold text-calm-900">
+      <h1 ref={headingRef} tabIndex={-1} className="mb-3 text-3xl text-ink sm:text-[2.25rem]">
         {t(STAGE_TITLES[stage])}
       </h1>
 
@@ -451,7 +451,7 @@ export default function CasePage() {
       {stage === 0 && (
         <div className="flex flex-col gap-5">
           <p className="text-calm-700">{t("caseDiscoverIntro")}</p>
-          <p className="rounded-xl border border-calm-200 bg-calm-50 px-3 py-2 text-sm text-calm-700">{t("quickExitExplain")}</p>
+          <p className="border-l-2 border-calm-300 pl-3 text-sm text-calm-700">{t("quickExitExplain")}</p>
 
           <section className="rds-card" aria-labelledby="where-title">
             <h2 id="where-title" className="text-lg font-semibold text-calm-900">{t("caseWhereTitle")}</h2>
@@ -568,7 +568,7 @@ export default function CasePage() {
             </ul>
           </details>
 
-          <section className="rounded-2xl border-l-4 border-l-accent bg-lavender-50/70 p-5">
+          <section className="border-l-2 border-margin py-1 pl-5">
             <h2 className="font-semibold text-calm-900">{t("caseRightsTitle")}</h2>
             <p className="mt-1 text-sm text-calm-700">{t("caseRightsText")}</p>
             <details className="mt-3">

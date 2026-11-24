@@ -34,7 +34,7 @@ const STATUS_ORDER: ReportStatus[] = ["draft", "submitted", "follow-up", "acknow
 const STATUS_STYLES: Record<ReportStatus, string> = {
   draft: "bg-sand-200 text-calm-800",
   submitted: "bg-calm-200 text-calm-800",
-  acknowledged: "bg-lavender-100 text-lavender-800",
+  acknowledged: "bg-soft-blue-100 text-accent-hover",
   "follow-up": "bg-calm-100 text-calm-800",
   removed: "bg-sage-200 text-sage-700",
   declined: "bg-lavender-200 text-lavender-800",
@@ -317,8 +317,8 @@ export default function DashboardPage() {
   return (
     <div className="mx-auto w-full max-w-3xl px-4 pb-32 pt-8 sm:px-6">
       <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-accent">{t("stageFollowup")}</p>
-        <h1 className="mt-1 text-2xl font-semibold text-calm-900">{t("logTitle")}</h1>
+        <p className="text-sm font-semibold text-calm-600">{t("stageFollowup")}</p>
+        <h1 className="mt-1 text-3xl text-ink">{t("logTitle")}</h1>
         <p className="mt-1 text-sm text-calm-700">{t("logIntro")}</p>
         {hydrated && (
           <Link href={cases.length ? "/case?go=continue" : "/case"} className="rds-btn-primary mt-4 w-full sm:w-auto">

@@ -1,8 +1,20 @@
 import type { Config } from "tailwindcss";
 
 /**
- * NEST - Trauma-informed palette
- * Soft blues, lavenders, warm neutrals, and calming indigos.
+ * NEST - "Pen and paper" identity.
+ *
+ * Cool paper, blue-black ink, a fountain-pen blue for actions, a rose
+ * margin line for caveats and destructive actions, and a highlighter used only
+ * to mark "you are here". It should read as a private notebook on a shared
+ * screen, not as a crisis service.
+ *
+ * The scale names (calm, lavender, accent, sage, sand, warm...) are kept from
+ * the earlier palette so existing markup keeps working; their values changed:
+ *   calm      -> blue-black ink scale (neutrals, text, rules)
+ *   lavender  -> margin rose (caveats, "to be verified", delete)
+ *   accent    -> fountain-pen blue (primary actions, links)
+ *   sage      -> green ink (done, saved, stays-local)
+ *   sand/warm -> paper tones (quiet notes)
  */
 const config: Config = {
   content: [
@@ -13,99 +25,100 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        paper: "#F4F6F5",
+        grid: "#DCE4EA",
+        ink: "#1E2944",
+        highlight: "#EEF07A",
+        margin: "#B84F68",
         calm: {
-          50: "#f6f7fb",
-          100: "#eef0f8",
-          200: "#dde1f0",
-          300: "#c3cae4",
-          400: "#9aa5d1",
-          500: "#7784bd",
-          600: "#5f68a3",
-          700: "#4e5585",
-          800: "#43486c",
-          900: "#3a3e58",
+          50: "#F5F7F8",
+          100: "#EBEFF2",
+          200: "#DCE3E9",
+          300: "#C3CCD6",
+          400: "#97A3B4",
+          500: "#687489",
+          600: "#535E75",
+          700: "#434D66",
+          800: "#2E3852",
+          900: "#1E2944",
         },
         lavender: {
-          DEFAULT: "#E6E0F3",
-          50: "#faf8fd",
-          100: "#f3eefb",
-          200: "#e8def6",
-          300: "#d5c3ee",
-          400: "#bb9fe1",
-          500: "#a27fd3",
-          600: "#8a63bf",
-          700: "#744fa3",
-          800: "#604285",
-          900: "#50386c",
+          DEFAULT: "#F0CCD4",
+          50: "#FCF3F4",
+          100: "#F8E4E8",
+          200: "#F0CCD4",
+          300: "#E3A9B6",
+          400: "#CF7A8F",
+          500: "#B84F68",
+          600: "#A03B54",
+          700: "#872F46",
+          800: "#70263A",
+          900: "#5A1F2F",
         },
         "soft-blue": {
-          DEFAULT: "#CADAF0",
-          50: "#f3f7fc",
-          100: "#e4edfa",
-          200: "#CADAF0",
-          300: "#a5c2e6",
-          400: "#7da4db",
-          500: "#5a86ce",
+          DEFAULT: "#D6DEF3",
+          50: "#F2F5FC",
+          100: "#E8ECF8",
+          200: "#D6DEF3",
+          300: "#B3C1E8",
+          400: "#7F94D4",
+          500: "#4A63BC",
         },
         "pale-blue": {
-          DEFAULT: "#F0F5FB",
-          50: "#f8fafd",
-          100: "#F0F5FB",
-          200: "#e0ebf7",
-          300: "#c8ddf1",
+          DEFAULT: "#EEF2F7",
+          50: "#F7F9FB",
+          100: "#EEF2F7",
+          200: "#DCE4EA",
+          300: "#C6D2DC",
         },
         "deep-indigo": {
-          DEFAULT: "#3F3D56",
-          light: "#585577",
-          dark: "#2c2a3e",
+          DEFAULT: "#1E2944",
+          light: "#434D66",
+          dark: "#141C30",
         },
         accent: {
-          DEFAULT: "#6C63FF",
-          hover: "#5b52e0",
-          light: "#eeedff",
+          DEFAULT: "#2D47A8",
+          hover: "#233A8C",
+          light: "#E8ECF8",
         },
         sage: {
-          100: "#eef4ef",
-          200: "#d7e6db",
-          300: "#b4cfbb",
-          500: "#6fa37d",
-          700: "#4e7a5b",
+          100: "#E6F1EA",
+          200: "#CFE4D6",
+          300: "#A9CDB5",
+          500: "#4F8A65",
+          700: "#2F6B4F",
         },
         sand: {
-          50: "#fbfaf7",
-          100: "#f5f2ec",
-          200: "#e9e3d7",
+          50: "#F7F8F5",
+          100: "#F0F2EE",
+          200: "#E2E6E0",
         },
         warm: {
-          50: "#fdfbf9",
-          100: "#fbf6f1",
-          200: "#f7ece2",
-          300: "#eedbca",
-          rose: "#FDF2F0",
-          peach: "#F9E8E4",
+          50: "#F7F8F5",
+          100: "#F0F2EE",
+          200: "#E2E6E0",
+          300: "#CDD3CB",
+          rose: "#FCF3F4",
+          peach: "#F8E4E8",
         },
       },
       fontFamily: {
-        sans: [
-          "-apple-system",
-          "BlinkMacSystemFont",
-          '"Segoe UI"',
-          "Roboto",
-          "Helvetica",
-          "Arial",
-          "sans-serif",
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-        ],
+        sans: ["var(--font-sans)", "system-ui", "-apple-system", '"Segoe UI"', "Arial", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
       },
       boxShadow: {
-        soft: "0 2px 20px -8px rgba(79, 85, 133, 0.25)",
-        card: "0 1px 3px rgba(67, 72, 108, 0.08), 0 8px 24px -12px rgba(67, 72, 108, 0.18)",
-        "card-hover": "0 4px 20px -4px rgba(108, 99, 255, 0.15), 0 2px 6px -1px rgba(63, 61, 86, 0.08)",
+        // Paper does not float: shadows are reserved for things that sit above
+        // the page (menus, the quick-exit button).
+        soft: "0 1px 0 rgba(30, 41, 68, 0.06)",
+        card: "none",
+        "card-hover": "none",
+        lift: "0 6px 20px -8px rgba(30, 41, 68, 0.35)",
       },
       borderRadius: {
-        xl: "1rem",
-        "2xl": "1.5rem",
+        // Tighter than before: sheets are paper, not bubbles.
+        lg: "0.375rem",
+        xl: "0.5rem",
+        "2xl": "0.625rem",
       },
     },
   },
