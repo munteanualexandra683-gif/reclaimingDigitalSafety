@@ -98,3 +98,20 @@ export const PLATFORMS: Platform[] = [
 export function getPlatform(id: string): Platform | undefined {
   return PLATFORMS.find((p) => p.id === id);
 }
+
+export function detectPlatformId(url: string): string {
+  try {
+    const hostname = new URL(url).hostname.toLowerCase().replace(/^www\./, "");
+    if (hostname.includes("instagram.")) return "meta-instagram";
+    if (hostname.includes("facebook.")) return "meta-facebook";
+    if (hostname.includes("telegram.") || hostname === "t.me") return "telegram";
+    if (hostname.includes("google.")) return "google-search";
+    if (hostname.includes("bing.")) return "google-search";
+    if (hostname.includes("tiktok.")) return "tiktok";
+    if (hostname.includes("twitter.") || hostname.includes("x.com")) return "x-twitter";
+    if (hostname.includes("reddit.")) return "reddit";
+    return "other";
+  } catch {
+    return "other";
+  }
+}

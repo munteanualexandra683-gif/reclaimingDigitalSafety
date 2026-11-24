@@ -1,24 +1,23 @@
 "use client";
 
 import { useRef, useState } from "react";
-import {
-  computeFileFingerprint,
-  formatBytes,
-  type FileFingerprint,
-} from "@/lib/hashing";
+import { computeFileFingerprint, formatBytes, type FileFingerprint } from "@/lib/hashing";
+import { useT } from "@/lib/i18n";
 
 interface EvidenceModuleProps {
   fingerprint: FileFingerprint | null;
   onFingerprint: (fp: FileFingerprint | null) => void;
 }
 
-export default function EvidenceModule({
-  fingerprint,
-  onFingerprint,
-}: EvidenceModuleProps) {
+/**
+ * Optional fingerprint of a file the person already has. The file is read in
+ * the browser only; just the SHA-256 digest is kept. Nothing is uploaded and
+ * no image is ever displayed.
+ */
+export default function EvidenceModule({ fingerprint, onFingerprint }: EvidenceModuleProps) {
+  const t = useT();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [dragOver, setDragOver] = useState(false);
   const [copied, setCopied] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -27,12 +26,9 @@ export default function EvidenceModule({
     setError(null);
     setBusy(true);
     try {
-      const fp = await computeFileFingerprint(file);
-      onFingerprint(fp);
-    } catch (e) {
-      setError(
-        e instanceof Error ? e.message : "Could not process the file locally.",
-      );
+      onFingerprint(await computeFileFingerprint(file));
+    } catch {
+      setError(t("evidenceError"));
       onFingerprint(null);
     } finally {
       setBusy(false);
@@ -46,147 +42,71 @@ export default function EvidenceModule({
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {
-      /* clipboard may be blocked; ignore silently */
+      /* clipboard may be blocked */
     }
   }
 
   return (
-    <div className="rds-card">
-      <h2 className="text-lg font-semibold text-calm-800">
-        1 · Evidence (optional, stays on your device)
-      </h2>
-      <p className="mt-1 text-sm leading-relaxed text-calm-600">
-        If you have the image, you can create a secure fingerprint of it. This
-        proves the file&apos;s integrity for your notice without the picture ever
-        leaving your device.
-      </p>
-
-      {/* Strong privacy disclaimer */}
-      <div className="mt-4 flex items-center gap-2 rounded-xl border border-sage-200 bg-sage-100 px-4 py-3">
-        <span aria-hidden className="text-sage-700">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 3l7 3v5c0 4.5-3 8.2-7 9-4-0.8-7-4.5-7-9V6l7-3z"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M9 12l2 2 4-4"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-        <p className="text-sm font-medium text-sage-700">
-          Your file never leaves this device. Only a one-way SHA-256 fingerprint
-          is created locally.
-        </p>
-      </div>
+    <div>
+      <p className="text-sm text-calm-700">{t("evidenceIntro")}</p>
+      <p className="mt-2 text-sm font-medium text-sage-700">{t("evidenceStaysLocal")}</p>
 
       {!fingerprint && (
-        <div
-          role="button"
-          tabIndex={0}
-          aria-label="Select an image to fingerprint locally"
-          onClick={() => inputRef.current?.click()}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              inputRef.current?.click();
-            }
-          }}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragOver(true);
-          }}
-          onDragLeave={() => setDragOver(false)}
-          onDrop={(e) => {
-            e.preventDefault();
-            setDragOver(false);
-            void handleFile(e.dataTransfer.files?.[0]);
-          }}
-          className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-colors ${
-            dragOver
-              ? "border-calm-400 bg-calm-50"
-              : "border-calm-200 bg-calm-50/50 hover:border-calm-300"
-          }`}
-        >
+        <>
           <input
             ref={inputRef}
+            id="evidence-file"
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             className="sr-only"
             onChange={(e) => void handleFile(e.target.files?.[0])}
           />
-          <span className="text-sm font-medium text-calm-700">
-            {busy ? "Processing locally…" : "Click to choose an image, or drop it here"}
-          </span>
-          <span className="mt-1 text-xs text-calm-500">
-            Nothing is uploaded — processing happens entirely in your browser.
-          </span>
-        </div>
+          <label
+            htmlFor="evidence-file"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              void handleFile(e.dataTransfer.files?.[0]);
+            }}
+            className="mt-3 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-calm-300 bg-calm-50/50 px-6 py-6 text-center hover:border-calm-400"
+          >
+            <span className="text-sm font-medium text-calm-800">{busy ? t("evidenceBusy") : t("evidenceChoose")}</span>
+          </label>
+        </>
       )}
 
-      {error && (
-        <p className="mt-3 rounded-xl bg-lavender-50 px-4 py-3 text-sm text-lavender-800">
-          {error}
-        </p>
-      )}
+      {error && <p className="mt-3 rounded-xl bg-lavender-50 px-4 py-3 text-sm text-lavender-800" role="alert">{error}</p>}
 
       {fingerprint && (
-        <div className="mt-4 rounded-2xl border border-calm-200 bg-calm-50 p-4">
+        <div className="mt-3 rounded-2xl border border-calm-200 bg-calm-50 p-4" role="status">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="flex items-center gap-1.5 text-sm font-semibold text-sage-800">
-              <svg className="h-4 w-4 text-sage-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              Fingerprint created locally
-            </p>
+            <p className="text-sm font-semibold text-sage-700">{t("evidenceDone")}</p>
             <button
               type="button"
               onClick={() => {
                 onFingerprint(null);
                 if (inputRef.current) inputRef.current.value = "";
               }}
-              className="text-xs font-medium text-calm-500 underline-offset-2 hover:underline"
+              className="text-sm font-medium text-calm-700 underline underline-offset-2"
             >
-              Remove &amp; choose another
+              {t("evidenceRemove")}
             </button>
           </div>
-
-          <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-            <div>
-              <dt className="text-calm-500">File (stays local)</dt>
-              <dd className="font-medium text-calm-800">
-                {fingerprint.fileName}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-calm-500">Size</dt>
-              <dd className="font-medium text-calm-800">
-                {formatBytes(fingerprint.sizeBytes)}
-              </dd>
-            </div>
-          </dl>
-
-          <div className="mt-3">
-            <dt className="text-sm text-calm-500">SHA-256 fingerprint</dt>
-            <div className="mt-1 flex items-start gap-2">
+          <p className="mt-2 text-sm text-calm-700">
+            {t("evidenceFile", { name: fingerprint.fileName, size: formatBytes(fingerprint.sizeBytes) })}
+          </p>
+          <details className="mt-2">
+            <summary className="cursor-pointer text-sm font-medium text-accent">{t("evidenceShowCode")}</summary>
+            <div className="mt-2 flex items-start gap-2">
               <code className="block flex-1 break-all rounded-lg bg-white px-3 py-2 font-mono text-xs text-calm-800">
                 {fingerprint.sha256}
               </code>
-              <button
-                type="button"
-                onClick={copyHash}
-                className="rds-btn-secondary flex-none px-3 py-2 text-sm"
-              >
-                {copied ? "Copied" : "Copy"}
+              <button type="button" onClick={copyHash} className="rds-btn-secondary flex-none px-3 py-2 text-sm">
+                {copied ? t("copied") : t("copy")}
               </button>
             </div>
-          </div>
+            <p className="mt-1 text-xs text-calm-600">{t("evidenceTech")}</p>
+          </details>
         </div>
       )}
     </div>

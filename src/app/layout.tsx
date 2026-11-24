@@ -1,13 +1,36 @@
 import type { Metadata } from "next";
+import { Atkinson_Hyperlegible_Next, Literata } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PersistentDisclaimer from "@/components/PersistentDisclaimer";
+import QuickExit from "@/components/QuickExit";
+import SkipLink from "@/components/SkipLink";
+
+// next/font downloads these at build time and serves them from this site, so
+// no request ever goes to a font provider while someone is using NEST.
+const display = Literata({
+  subsets: ["latin", "latin-ext"],
+  axes: ["opsz"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const sans = Atkinson_Hyperlegible_Next({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
+  display: "swap",
+  // Next.js has no metrics for this (newer) font, so it cannot build a
+  // size-matched fallback and logs an error. Name plain fallbacks instead.
+  adjustFontFallback: false,
+  fallback: ["system-ui", "Segoe UI", "Arial", "sans-serif"],
+});
 
 export const metadata: Metadata = {
-  title: "Reclaiming Digital Safety | Privacy-Preserving NCII & Deepfake Navigator",
-  description:
-    "A privacy-preserving, survivor-centred digital toolkit helping you document, prepare, and follow up on AI-generated intimate image abuse entirely on your own device.",
+  // Neutral on purpose: the tab title and description are visible in browser
+  // history and on shared screens, so they must not reveal what the app is for.
+  title: "NEST",
+  description: "NEST: private notes and next steps, kept on your own device.",
 };
 
 export default function RootLayout({
@@ -16,20 +39,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-white font-sans text-deep-indigo antialiased selection:bg-lavender-200 selection:text-deep-indigo">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-white focus:px-4 focus:py-2 focus:text-accent focus:shadow-card focus:ring-2 focus:ring-accent"
-        >
-          Skip to main content
-        </a>
+    // suppressHydrationWarning: browser extensions (e.g. Grammarly) add attributes
+    // to <body> before React loads, and NEST changes <html lang> when the
+    // language is switched. This only ignores attribute differences on these
+    // two elements, not their children.
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${sans.variable}`}>
+      <body suppressHydrationWarning className="min-h-screen bg-paper font-sans text-ink antialiased">
+        <SkipLink />
         <SiteHeader />
-        <main id="main">
+        <main id="main" tabIndex={-1} className="focus:outline-none">
           {children}
         </main>
         <SiteFooter />
         <PersistentDisclaimer />
+        <QuickExit />
       </body>
     </html>
   );
