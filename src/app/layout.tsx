@@ -19,8 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-white font-sans text-deep-indigo antialiased selection:bg-lavender-200 selection:text-deep-indigo">
+    // suppressHydrationWarning: browser extensions (e.g. Grammarly) add attributes
+    // to <body> before React loads, and NEST changes <html lang> when the
+    // language is switched. This only ignores attribute differences on these
+    // two elements, not their children.
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning className="min-h-screen bg-white font-sans text-deep-indigo antialiased selection:bg-lavender-200 selection:text-deep-indigo">
         <SkipLink />
         <SiteHeader />
         <main id="main" tabIndex={-1} className="focus:outline-none">
