@@ -9,9 +9,10 @@ export const en = {
   appName: "NEST",
   quickExit: "Quick exit",
   quickExitAdvice: "Leave this site right away. You can also press Esc twice.",
-  discreetMode: "Discreet mode",
-  on: "On",
-  off: "Off",
+  quickExitExplain:
+    "Need to leave fast? Tap “Quick exit” (bottom right) or press Esc twice. A weather website opens straight away, and the Back button won't bring you back here.",
+  startCase: "Get started",
+  continueCase: "Continue my case",
   language: "Language",
   english: "English",
   spanish: "Español",
@@ -42,11 +43,9 @@ export const en = {
   skipToContent: "Skip to main content",
   navLabel: "Main",
   navMenu: "Menu",
-  navStart: "Start or continue",
   navCaseLog: "My case log",
   navSupport: "Support",
   navPrivacy: "Privacy",
-  discreetModeHint: "Shows a plain tab icon. The tab title is always the neutral “NEST”.",
   footerNavLabel: "Footer",
   footerHome: "Home",
   footerHow: "How it works",
@@ -116,7 +115,6 @@ export const en = {
   homeHeroTitle: "You decide what happens next.",
   homeHeroText:
     "If an intimate image of you was made or shared without your consent, even one made with AI, NEST helps you take clear, calm steps at your own pace.",
-  homeStart: "Start or continue",
   homeAlreadyReported: "I've already reported",
   homeTalkFirst: "Talk to someone first",
 
@@ -163,7 +161,7 @@ export const en = {
     "A report to a platform normally asks for a name and an email address. You choose what to give, and NEST shows you exactly what each place will receive before anything is sent. Whether a report without your real name is accepted depends on the platform.",
   homeFaqPauseQ: "Can I stop and come back later?",
   homeFaqPauseA:
-    "Yes. NEST saves your case in this browser. Open NEST again on the same device and choose “Start or continue”.",
+    "Yes. NEST saves your case in this browser. Open NEST again on the same device and choose “Continue my case”.",
 
   /* ------------------------------------------------------------------ */
   /* Guided case (/case)                                                 */
@@ -183,7 +181,7 @@ export const en = {
 
   caseSavedTitle: "Your case is saved",
   caseSavedText:
-    "It is saved in this browser on this device. When you're ready, open NEST again and choose “Start or continue”. Nothing has been sent.",
+    "It is saved in this browser on this device. When you're ready, open NEST again and choose “Continue my case”. Nothing has been sent.",
   caseSavedShared:
     "On a shared device, anyone using this browser could open it. You can delete it below, or use Quick exit at any time.",
   caseSavedHome: "Go to the home page",

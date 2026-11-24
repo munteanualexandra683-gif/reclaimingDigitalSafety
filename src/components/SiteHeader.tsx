@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { setLanguage, useLanguage, useT, type Language, type TKey } from "@/lib/i18n";
-import { getDiscreet, setDiscreet } from "@/lib/discreet";
+import { useHasSavedCase } from "@/lib/useSavedCase";
 
 const NAV_LINKS: { label: TKey; href: string; primary?: boolean }[] = [
-  { label: "navStart", href: "/case", primary: true },
+  { label: "startCase", href: "/case", primary: true },
   { label: "navCaseLog", href: "/dashboard" },
   { label: "navSupport", href: "/#support" },
   { label: "navPrivacy", href: "/#privacy" },
@@ -29,10 +29,11 @@ export default function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [discreet, setDiscreetState] = useState(false);
+  const hasCase = useHasSavedCase();
+  const label = (link: (typeof NAV_LINKS)[number]) =>
+    link.primary && hasCase ? t("continueCase") : t(link.label);
 
   useEffect(() => {
-    setDiscreetState(getDiscreet());
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -50,12 +51,6 @@ export default function SiteHeader() {
 
   const isCurrent = (href: string) => !href.includes("#") && pathname?.replace(/\/$/, "") === href;
 
-  function toggleDiscreet() {
-    const next = !discreet;
-    setDiscreetState(next);
-    setDiscreet(next);
-  }
-
   const settings = (idSuffix: string) => (
     <div className="flex items-center gap-2">
       <label className="sr-only" htmlFor={`language-${idSuffix}`}>{t("language")}</label>
@@ -68,15 +63,6 @@ export default function SiteHeader() {
         <option value="en" lang="en">{t("english")}</option>
         <option value="es" lang="es">{t("spanish")}</option>
       </select>
-      <button
-        type="button"
-        onClick={toggleDiscreet}
-        aria-pressed={discreet}
-        className="rounded-lg border border-calm-200 bg-white px-2 py-1.5 text-sm text-calm-800 hover:bg-calm-50"
-        title={t("discreetModeHint")}
-      >
-        {t("discreetMode")}: {discreet ? t("on") : t("off")}
-      </button>
     </div>
   );
 
@@ -108,7 +94,7 @@ export default function SiteHeader() {
                       }`
                 }
               >
-                {t(link.label)}
+                {label(link)}
               </Link>
             ))}
           </nav>
@@ -147,7 +133,7 @@ export default function SiteHeader() {
                     : "rounded-lg px-4 py-3 text-sm font-medium text-calm-800 hover:bg-accent/5"
                 }
               >
-                {t(link.label)}
+                {label(link)}
               </Link>
             ))}
           </nav>

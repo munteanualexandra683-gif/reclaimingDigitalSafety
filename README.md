@@ -50,7 +50,7 @@ store any data.
 | **Guided case (`/case`)** | Five stages (below). Records where the content appears (links only), lets the person decide what to do (report now, keep a record only, talk to someone first, not now), suggests reporting routes per platform, prepares the texts once, shows exactly what each recipient would receive, and saves everything locally. Save-and-leave and resume at any step. |
 | **Case log (`/dashboard`)** | Tracks each report's status, reference and expected answer date; shows a reminder text when no answer has arrived, a review-request text when a report is declined, and records escalations. "It appeared again" starts a new report without touching earlier ones. |
 | **Move to another device** | Encrypted QR code or `.rdsync` file, passphrase required. |
-| **Safety** | Quick exit on every page (button or Esc twice outside form fields), discreet mode (plain tab icon), neutral tab title "NEST", English with Spanish backup. |
+| **Safety** | Quick exit on every page (button or Esc twice outside form fields; opens a weather site and Back does not return), explained on the home page and in step 1; neutral tab title "NEST" on every page; English with Spanish backup. |
 
 `/report` (the former single-report flow) now redirects to `/case`.
 
@@ -134,7 +134,7 @@ src/
     PersistentDisclaimer.tsx
     QuickExit.tsx
     SiteFooter.tsx
-    SiteHeader.tsx           # Navigation, language, discreet mode
+    SiteHeader.tsx           # Navigation and language
     StageIndicator.tsx       # Five-stage progress (compact on phones)
     SupportDirectory.tsx     # Spain directory + EU numbers (unverified)
     SyncPanel.tsx            # Encrypted QR / file transfer
@@ -144,11 +144,11 @@ src/
     caseRoutes.ts       # Route suggestions; merging keeps earlier choices
     dictionary.en.ts    # English strings (default, complete)
     dictionary.es.ts    # Spanish strings (backup; falls back to English)
-    discreet.ts         # Discreet mode
     hashing.ts          # Web Crypto SHA-256 fingerprinting
     i18n.ts             # t(), language switching, date formatting
     platforms.ts        # Platform catalog (simulated vs. manual sending)
     storage.ts          # localStorage CRUD + AES-GCM encryption for transfer
+    useSavedCase.ts     # "Get started" vs "Continue my case"
     template.ts         # Notice texts sent to platforms (English)
 ```
 

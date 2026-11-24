@@ -131,15 +131,15 @@ export function clearAllData(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(STORAGE_KEY);
   window.localStorage.removeItem(CASES_STORAGE_KEY);
-  // Remove every case-data key ("rds.*"). Preferences such as language,
-  // discreet mode and the dismissed disclaimer ("rds_*") are kept on purpose,
-  // so discreet mode does not silently switch off after deleting.
+  // Remove every case-data key ("rds.*"). Preferences such as the language
+  // and the dismissed disclaimer ("rds_*") are kept on purpose.
   const keys = Object.keys(window.localStorage);
   for (const key of keys) {
     if (key.startsWith("rds.")) {
       window.localStorage.removeItem(key);
     }
   }
+  window.dispatchEvent(new Event(CASES_CHANGED_EVENT));
 }
 
 export function loadCases(): Case[] {
@@ -153,9 +153,17 @@ export function loadCases(): Case[] {
   }
 }
 
+export const CASES_CHANGED_EVENT = "rds-cases-change";
+
 export function saveCases(cases: Case[]): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(CASES_STORAGE_KEY, JSON.stringify(cases));
+  window.dispatchEvent(new Event(CASES_CHANGED_EVENT));
+}
+
+/** True when a case holds something the person entered or decided. */
+export function caseHasContent(item: Case): boolean {
+  return Boolean(item.locations.length || item.description.trim() || item.decision || item.reportIds.length);
 }
 
 export function addOrUpdateCase(nextCase: Case): Case[] {

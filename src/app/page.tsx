@@ -3,6 +3,7 @@
 import Link from "next/link";
 import SupportDirectory from "@/components/SupportDirectory";
 import { useT, type TKey } from "@/lib/i18n";
+import { useHasSavedCase } from "@/lib/useSavedCase";
 
 const HOW_STEPS: { title: TKey; text: TKey }[] = [
   { title: "stageDiscover", text: "homeHowDiscover" },
@@ -29,6 +30,7 @@ function CheckIcon() {
 
 export default function HomePage() {
   const t = useT();
+  const hasCase = useHasSavedCase();
 
   return (
     <div className="w-full">
@@ -44,7 +46,7 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-col items-center gap-4">
             <Link href="/case" className="rds-btn-primary w-full px-8 py-3.5 text-base sm:w-auto">
-              {t("homeStart")}
+              {hasCase ? t("continueCase") : t("startCase")}
             </Link>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium">
               <Link href="/dashboard" className="text-accent underline underline-offset-4">
@@ -54,6 +56,7 @@ export default function HomePage() {
                 {t("homeTalkFirst")}
               </a>
             </div>
+            <p className="mx-auto max-w-xl text-sm text-calm-700">{t("quickExitExplain")}</p>
           </div>
         </div>
       </section>

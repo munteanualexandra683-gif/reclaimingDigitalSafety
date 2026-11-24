@@ -322,7 +322,7 @@ export default function DashboardPage() {
         <p className="mt-1 text-sm text-calm-700">{t("logIntro")}</p>
         {hydrated && (
           <Link href={cases.length ? "/case?go=continue" : "/case"} className="rds-btn-primary mt-4 w-full sm:w-auto">
-            {cases.length ? t("caseSavedBack") : t("homeStart")}
+            {cases.length ? t("continueCase") : t("startCase")}
           </Link>
         )}
       </header>

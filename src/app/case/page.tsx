@@ -19,6 +19,7 @@ import {
 import {
   addOrUpdateCase,
   addReport,
+  caseHasContent,
   deleteCaseAndReports,
   loadCases,
   makeId,
@@ -56,10 +57,6 @@ function newCase(): Case {
     id: makeId(), createdAt: now, updatedAt: now, country: "Spain",
     description: "", decision: undefined, locations: [], routes: [], reportIds: [], step: 0,
   };
-}
-
-function hasContent(item: Case): boolean {
-  return Boolean(item.locations.length || item.description.trim() || item.decision || item.reportIds.length);
 }
 
 export default function CasePage() {
@@ -121,7 +118,7 @@ export default function CasePage() {
       setStage(4);
       setView("wizard");
       setTimeout(() => repeatInputRef.current?.focus(), 50);
-    } else if (intent === "continue" || !hasContent(latest)) {
+    } else if (intent === "continue" || !caseHasContent(latest)) {
       setView("wizard");
     } else {
       setView("resume");
@@ -454,6 +451,7 @@ export default function CasePage() {
       {stage === 0 && (
         <div className="flex flex-col gap-5">
           <p className="text-calm-700">{t("caseDiscoverIntro")}</p>
+          <p className="rounded-xl border border-calm-200 bg-calm-50 px-3 py-2 text-sm text-calm-700">{t("quickExitExplain")}</p>
 
           <section className="rds-card" aria-labelledby="where-title">
             <h2 id="where-title" className="text-lg font-semibold text-calm-900">{t("caseWhereTitle")}</h2>

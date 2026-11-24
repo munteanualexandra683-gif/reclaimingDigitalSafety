@@ -20,7 +20,6 @@ export type TKey = keyof Dictionary;
 export type TFunction = (key: TKey, vars?: Record<string, string | number>) => string;
 
 export const LANG_STORAGE_KEY = "rds_language";
-export const DISCREET_STORAGE_KEY = "rds_discreet";
 const LANGUAGE_EVENT = "rds-language-change";
 
 export function getLanguage(): Language {

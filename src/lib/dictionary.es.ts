@@ -12,9 +12,10 @@ export const es: Partial<typeof en> = {
   appName: "NEST",
   quickExit: "Salida rápida",
   quickExitAdvice: "Sal de esta web al instante. También puedes pulsar Esc dos veces.",
-  discreetMode: "Modo discreto",
-  on: "Activado",
-  off: "Desactivado",
+  quickExitExplain:
+    "¿Necesitas salir rápido? Pulsa «Salida rápida» (abajo a la derecha) o la tecla Esc dos veces. Se abre al instante una web del tiempo y el botón Atrás no te devolverá aquí.",
+  startCase: "Empezar",
+  continueCase: "Continuar mi caso",
   language: "Idioma",
   english: "English",
   spanish: "Español",
@@ -42,11 +43,9 @@ export const es: Partial<typeof en> = {
   skipToContent: "Saltar al contenido principal",
   navLabel: "Principal",
   navMenu: "Menú",
-  navStart: "Empezar o continuar",
   navCaseLog: "Mi registro",
   navSupport: "Apoyo",
   navPrivacy: "Privacidad",
-  discreetModeHint: "Muestra un icono de pestaña neutro. El título de la pestaña es siempre «NEST».",
   footerNavLabel: "Pie de página",
   footerHome: "Inicio",
   footerHow: "Cómo funciona",
@@ -110,7 +109,6 @@ export const es: Partial<typeof en> = {
   homeHeroTitle: "Tú decides qué pasa ahora.",
   homeHeroText:
     "Si alguien creó o compartió una imagen íntima tuya sin tu consentimiento, aunque esté hecha con IA, NEST te ayuda a dar pasos claros y tranquilos, a tu ritmo.",
-  homeStart: "Empezar o continuar",
   homeAlreadyReported: "Ya lo he denunciado", // TODO(review-es)
   homeTalkFirst: "Hablar antes con alguien",
 
@@ -157,7 +155,7 @@ export const es: Partial<typeof en> = {
     "Una denuncia a una plataforma normalmente pide un nombre y un correo electrónico. Tú eliges qué dar, y NEST te muestra exactamente qué recibirá cada sitio antes de enviar nada. Que se acepte una denuncia sin tu nombre real depende de la plataforma.",
   homeFaqPauseQ: "¿Puedo parar y volver más tarde?",
   homeFaqPauseA:
-    "Sí. NEST guarda tu caso en este navegador. Vuelve a abrir NEST en el mismo dispositivo y elige «Empezar o continuar».",
+    "Sí. NEST guarda tu caso en este navegador. Vuelve a abrir NEST en el mismo dispositivo y elige «Continuar mi caso».",
 
   /* Guided case (/case) */
   caseNavLabel: "Pasos del caso",
@@ -175,7 +173,7 @@ export const es: Partial<typeof en> = {
 
   caseSavedTitle: "Tu caso está guardado",
   caseSavedText:
-    "Está guardado en este navegador, en este dispositivo. Cuando quieras, vuelve a abrir NEST y elige «Empezar o continuar». No se ha enviado nada.",
+    "Está guardado en este navegador, en este dispositivo. Cuando quieras, vuelve a abrir NEST y elige «Continuar mi caso». No se ha enviado nada.",
   caseSavedShared:
     "En un dispositivo compartido, cualquiera que use este navegador podría abrirlo. Puedes borrarlo aquí abajo o usar la salida rápida en cualquier momento.",
   caseSavedHome: "Ir a la página de inicio",

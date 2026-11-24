@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { useT } from "@/lib/i18n";
-import { applyDiscreet, getDiscreet } from "@/lib/discreet";
 
 const EXIT_URL = "https://www.bbc.com/weather";
 
@@ -18,8 +17,6 @@ export default function QuickExit() {
   const escTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    applyDiscreet(getDiscreet());
-
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       // Esc is also used to close menus and pickers while typing, so the

@@ -21,7 +21,7 @@ export default function ReportRedirectPage() {
     <div className="mx-auto max-w-2xl px-4 py-10 text-calm-700">
       <p>{t("reportMoved")}</p>
       <Link href="/case" className="rds-btn-primary mt-4">
-        {t("homeStart")}
+        {t("startCase")}
       </Link>
     </div>
   );
